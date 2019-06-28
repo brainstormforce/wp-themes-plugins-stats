@@ -18,6 +18,7 @@ class WP_Themes_Stats_Api {
 	function __construct() {
 		add_shortcode( 'wp_theme_active_install', array( $this, 'bsf_display_active_installs' ) );
 		add_shortcode( 'wp_plugin_active_install', array( $this, 'bsf_display_plugin_active_installs' ) );
+		add_shortcode( 'wp_plugin_by_author', array($this, 'bsf_display_plugin_by_author' ) );
 	}
 	/**
 	 * Display Theme Details.
@@ -51,8 +52,7 @@ class WP_Themes_Stats_Api {
 		        )
 		    )
 		);
-
-		 
+ 
 		if ( !is_wp_error($response) ) {
 		    $theme = unserialize(wp_remote_retrieve_body($response));
 		    if ( !is_object($theme) && !is_array($theme) ) {
@@ -64,10 +64,6 @@ class WP_Themes_Stats_Api {
 		    // Error object returned
 		    echo "An error has occurred";
 		}
-		// var_dump($theme);
-		// echo "<pre>";
-		// 	print_r($theme);
-		// echo "</pre>";
 
 		$out = '<li><strong>' . esc_html( $theme->name ) . '</strong> by <strong>' . esc_html( $wp_theme_author ) . '</strong> &nbsp; ';
 		$out  .= '<br> Current Version : &nbsp;' .esc_attr( $theme->version ). '&nbsp;</br>';
@@ -100,17 +96,11 @@ class WP_Themes_Stats_Api {
 		//var_dump($wp_plugin_author);
 
 			$args = (object) array( 'slug' => $wp_plugin_slug );
- 
 		    $request = array( 'action' => 'plugin_information', 'timeout' => 15, 'request' => serialize( $args) );
-		 
 		    $url = 'http://api.wordpress.org/plugins/info/1.0/';
-		 
 		    $response = wp_remote_post( $url, array( 'body' => $request ) );
-	
 		    $plugin_info = unserialize( $response['body'] );
-		 
-		 //echo '<pre>' . print_r( $plugin_info, true ) . '</pre>';
-	 			
+		 		
 	   $out = '<li><strong>' . esc_html( $plugin_info->name) . '</strong> by <strong>' . __( $wp_plugin_author ) . '</strong> &nbsp; ';
 	   $out  .= '<br> Current Version : &nbsp;' .esc_attr( $plugin_info->version ). '&nbsp;</br>';
 	   $out .=  '<br> Total 5 Star ratings : &nbsp' .esc_attr( $plugin_info->ratings[5] ). '&nbsp;</br>';
@@ -119,8 +109,50 @@ class WP_Themes_Stats_Api {
 	   $out .= '<br> Download Link : &nbsp (<a href="' .esc_url($plugin_info->download_link).'" target="_blank">'.$wp_plugin_slug.'</a>)&nbsp;</br>';
 	   $out .= '</li>';
 	    return $out;
+
 	}
-}
+	/**
+	 * Display Plugin Details by particular author.
+	 *
+	 * @param int $atts Get attribute plugin_author.
+	 */
+	function bsf_display_plugin_by_author($atts){
+		$atts = shortcode_atts(
+			array(
+				'plugin_author' => isset( $atts['plugin_author'] ) ? $atts['plugin_author'] : '',
+			), $atts
+		);
+		$wp_plugin_author = $atts['plugin_author'];
+		$args =(object) $args = array('author' => $wp_plugin_author);
+		$url= 'http://api.wordpress.org/plugins/info/1.0/';
+		$response = wp_remote_post($url,array('body' => array('action' => 'query_plugins',
+			'request' => serialize((object)$args))));
+		//var_dump($response);
+		if ( !is_wp_error($response) ) {
+		    $returned_object = unserialize(wp_remote_retrieve_body($response));
+		    $plugins = $returned_object->plugins;
+		    if ( !is_array($plugins) ) {
+		        // Response body does not contain an object/array
+		        return "An error has occurred";
+		    }
+		    else {
+		        // Display a list of the plug-ins and other information
+		        if ( $plugins ) {
+		        	$temp='';
+		            foreach ( $plugins as $plugin ) {
+		            $temp.='<li><strong>'.esc_html($plugin->name).'</strong> <br> Current Version : &nbsp;'.esc_attr($plugin->version).'&nbsp;<br>Total 5 Star ratings : &nbsp;'.esc_attr( $plugin->rating ).'&nbsp;<br>Total Downloaded : &nbsp; '.esc_html($plugin->downloaded).'&nbsp; times<br> Last Updated On : &nbsp;'.esc_attr($plugin->last_updated).'&nbsp;<br> Download link : &nbsp;<a href="'.esc_html($plugin->download_link).'" target="_blank">'.$plugin->name.'</a>&nbsp;<br></li>';
+		             
+		             }
+		             return $temp;
+		        }
+		    }
+		}
+		else {
+		    // Error object returned
+		    return "An error has occurred";
+		}	
+	}
+ }
 
 
 new WP_Themes_Stats_Api();
