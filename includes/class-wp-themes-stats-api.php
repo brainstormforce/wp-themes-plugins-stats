@@ -11,15 +11,18 @@
  *
  * @since 1.0.0
  */
+
 class WP_Themes_Stats_Api {
 	/**
 	 * Constructor calling W.ORG API Response.
 	 */
 	function __construct() {
 		add_shortcode( 'wp_theme_active_install', array( $this, 'bsf_display_active_installs' ) );
-		add_shortcode( 'wp_plugin_active_install', array( $this, 'bsf_display_plugin_active_installs' ) );
+		add_shortcode( 'wp_plugin_active_install', array( $this,'bsf_display_plugin_active_installs' ) );
 		add_shortcode( 'wp_plugin_by_author', array($this, 'bsf_display_plugin_by_author' ) );
 	}
+
+		
 	/**
 	 * Display Theme Details.
 	 *
@@ -32,14 +35,19 @@ class WP_Themes_Stats_Api {
 				'theme_author' => isset( $atts['theme_author'] ) ? $atts['theme_author'] : '',
 			), $atts
 		);
-
 		// $active_installs = false;
 		$wp_theme_slug   = $atts['wp_theme_slug'];
 		$wp_theme_author = $atts['theme_author'];
-		//var_dump($wp_theme_slug);
+		//Code To fetch todays count
+			$url= file_get_contents('http://api.wordpress.org/stats/themes/1.0/downloads.php?slug={'.$wp_theme_slug.'}&limit=1');
+			$arr1 = json_decode($url);
+			//return 'Todays Downloads:'.esc_html($arr1->{date('Y-m-d')}).'&nbsp;';
+		//--------------------------
+
+		//var_dump($arr1);
 		$args = array(
 		    'slug' => $wp_theme_slug,
-		    'fields' => array( 'active_installs' => true,'screenshot_url'=> true,'versions'=> true,'rating'=> true,'download_link'=> true )
+		    'fields' => array( 'active_installs' => true,'screenshot_url'=> true,'versions'=> true,'ratings'=> true,'download_link'=> true )
 		);
 		 
 		// Make request and extract plug-in object
@@ -52,31 +60,123 @@ class WP_Themes_Stats_Api {
 		        )
 		    )
 		);
- 
-		if ( !is_wp_error($response) ) {
-		    $theme = unserialize(wp_remote_retrieve_body($response));
-		    if ( !is_object($theme) && !is_array($theme) ) {
-		        // Response body does not contain an object/array
-		        echo "An error has occurred";
-		    }
-		}
-		else {
-		    // Error object returned
-		    echo "An error has occurred";
-		}
-
-		$out = '<li><strong>' . esc_html( $theme->name ) . '</strong> by <strong>' . esc_html( $wp_theme_author ) . '</strong> &nbsp; ';
-		$out  .= '<br> Current Version : &nbsp;' .esc_attr( $theme->version ). '&nbsp;</br>';
-	    $out .= '<br>  Active installs : &nbsp; ' .esc_attr($theme->active_installs). '&nbsp; </br>';
-	    $out .=  '<br> Ratings : &nbsp' .esc_attr( $theme->rating ). '%&nbsp;</br>';
-	    $out .=  '<br> Total Downloaded : &nbsp' .esc_attr( $theme->downloaded ). '&nbsp;</br>'; 
-	    $out .= '<br> Last Updated On : &nbsp' .esc_attr($theme->last_updated).'&nbsp;</br>';
-	    $out .= '<br> Download Link : &nbsp (<a href="' .esc_url($theme->download_link).'" target="_blank">'.$wp_theme_slug.'</a>)&nbsp;</br>';
-	    $out .= '<br> Screenshot : &nbsp<img alt="" src="' .esc_url($theme->screenshot_url).'"width="172" height="129" &nbsp;</br>';
-	  
-	    $out .= '</li>';
-	    return $out;
-		return $active_installs;
+ 		if ($wp_theme_slug === '')
+ 		{
+ 			//error when slug is empty
+ 			return "Error! Theme Slug is missing";
+ 		}
+ 		elseif ($wp_theme_author === '') {
+ 			//error when author is empty
+ 			return "Error! Theme Author is missing";
+ 		}
+ 		else{
+				if ( !is_wp_error($response) ) {
+				    $theme = unserialize(wp_remote_retrieve_body($response));
+				    if ( !is_object($theme) && !is_array($theme) ) {
+				        // Response body does not contain an object/array
+				        return "An error has occurred";
+				    }
+				}
+				else {
+				    // Error object returned
+				   return "An error has occurred";
+				}
+				//var_dump($theme);
+				// $out = '<li><strong>' . esc_html( $theme->name ) . '</strong> by <strong>' . esc_html( $theme->author ) . '</strong> &nbsp; <br>';
+				// $out .= ' Current Version : &nbsp;' .esc_attr( $theme->version ). '&nbsp;</br>';
+			 //    $out .= '  Active installations : &nbsp; ' .esc_attr($theme->active_installs). '&nbsp; </br>';
+			 //    $out .= 'Total 5 Star Ratings : &nbsp' .esc_attr( $theme->ratings[5] ). '&nbsp;</br>';
+			 //    $out .= 'Total Number of Ratings : &nbsp' .esc_attr( $theme->num_ratings ). '&nbsp;</br>';
+			 //    $out .= 'Today`s Downloads: &nbsp'.esc_attr($arr1->{date('Y-m-d')}).'&nbsp;</br>';
+			 //    $out .= 'Total Downloaded : &nbsp' .esc_attr( $theme->downloaded ). '&nbsp;</br>'; 
+			 //    $out .= 'Last Updated On : &nbsp' .esc_attr($theme->last_updated).'&nbsp;</br>';
+			 //    $out .= 'Download Link : &nbsp <a href="' .esc_url($theme->download_link).'" target="_blank">'.esc_attr($theme->name).'</a>&nbsp;</br>';
+			 //    $out .= '</li>';
+			 //    return $out;
+				return '<div class="bsfresp-table">
+					   			<div class="bsfresp-table-caption">THEME INFORMATION</div>
+									<div class="bsfresp-table-header">
+										<div class="bsftable-header-cell">
+											Name
+										</div>
+										<div class="bsftable-body-cell">&nbsp;
+												'. esc_attr( $theme->name) .'&nbsp;
+										</div>
+									</div>
+									<div class="bsfresp-table-header">
+										<div class="bsftable-header-cell">
+										Company
+										</div>
+										<div class="bsftable-body-cell">
+												&nbsp;'. strip_tags( $theme->author ) .' 
+										</div>
+									</div>
+									<div class="bsfresp-table-header">
+										<div class="bsftable-header-cell">
+										Version
+										</div>
+										<div class="bsftable-body-cell">&nbsp;
+												' .esc_attr( $theme->version ). '
+										</div>
+									</div>
+									<div class="bsfresp-table-header">
+										<div class="bsftable-header-cell">
+										Active installs
+										</div>
+										<div class="bsftable-body-cell">
+												&nbsp;' .esc_attr($theme->active_installs).'
+										</div>
+									</div>
+									<div class="bsfresp-table-header">
+										<div class="bsftable-header-cell">
+										5 Star Ratings
+										</div>
+										<div class="bsftable-body-cell">
+												&nbsp;' .esc_attr( $theme->ratings[5] ). '
+										</div>
+									</div>
+									<div class="bsfresp-table-header">
+										<div class="bsftable-header-cell">
+										Total Ratings
+										</div>
+										<div class="bsftable-body-cell">
+												&nbsp;' .esc_attr( $theme->num_ratings ). '
+										</div>
+									</div>
+									<div class="bsfresp-table-header">
+										<div class="bsftable-header-cell">
+										Today`s Download
+										</div>
+										<div class="bsftable-body-cell">&nbsp;
+												'.esc_attr($arr1->{date('Y-m-d')}).'
+										</div>
+									</div>
+									<div class="bsfresp-table-header">
+										<div class="bsftable-header-cell">
+										Total Downloads
+										</div>
+										<div class="bsftable-body-cell">
+												&nbsp;' .esc_attr( $theme->downloaded ). '
+										</div>
+									</div>
+									<div class="bsfresp-table-header">
+										<div class="bsftable-header-cell">
+										Updated on
+										</div>
+										<div class="bsftable-body-cell">
+												&nbsp;' .esc_attr($theme->last_updated). '
+										</div>
+									</div>
+									<div class="bsfresp-table-header">
+										<div class="bsftable-header-cell">
+										Download
+										</div>
+										<div class="bsftable-body-cell">
+												&nbsp;<a href="' .esc_url($theme->download_link).'" target="_blank">'.esc_attr($theme->name).'</a>
+										</div>
+									</div>
+								</div>';
+			}
 	}
 	/**
 	 * Display Plugin Details.
@@ -94,22 +194,137 @@ class WP_Themes_Stats_Api {
 		$wp_plugin_slug   = $atts['wp_plugin_slug'];
 		$wp_plugin_author = $atts['plugin_author'];
 		//var_dump($wp_plugin_author);
+		//Code To fetch todays count
+			$url= file_get_contents('http://api.wordpress.org/stats/plugin/1.0/downloads.php?slug={'.$wp_plugin_slug.'}&limit=1');
+			$arr = json_decode($url);
+			//var_dump($arr); 
+			//return 'Todays Downloads:'.esc_html($arr->{date('Y-m-d')}).'&nbsp;';
+		//--------------------------
 
-			$args = (object) array( 'slug' => $wp_plugin_slug );
+			$args = (object) array( 'slug' => $wp_plugin_slug ,'fields' => array( 'active_installs' => true,));
 		    $request = array( 'action' => 'plugin_information', 'timeout' => 15, 'request' => serialize( $args) );
 		    $url = 'http://api.wordpress.org/plugins/info/1.0/';
 		    $response = wp_remote_post( $url, array( 'body' => $request ) );
 		    $plugin_info = unserialize( $response['body'] );
-		 		
-	   $out = '<li><strong>' . esc_html( $plugin_info->name) . '</strong> by <strong>' . __( $wp_plugin_author ) . '</strong> &nbsp; ';
-	   $out  .= '<br> Current Version : &nbsp;' .esc_attr( $plugin_info->version ). '&nbsp;</br>';
-	   $out .=  '<br> Total 5 Star ratings : &nbsp' .esc_attr( $plugin_info->ratings[5] ). '&nbsp;</br>';
-	   $out .=  '<br> Total Downloaded : &nbsp' .esc_attr( $plugin_info->downloaded ). '&nbsp;</br>'; 
-	   $out .= '<br> Last Updated On : &nbsp' .esc_attr($plugin_info->last_updated).'&nbsp;</br>';
-	   $out .= '<br> Download Link : &nbsp (<a href="' .esc_url($plugin_info->download_link).'" target="_blank">'.$wp_plugin_slug.'</a>)&nbsp;</br>';
-	   $out .= '</li>';
-	    return $out;
 
+			    if ($wp_plugin_slug === ''){
+		 			//error when slug is empty
+		 			return "Error! Plugin Slug is missing";
+		 			}
+		 		elseif ($wp_plugin_author === ''){
+		 			//error when author is empty
+		 			return "Error! Plugin Author is missing";
+		 			}
+		 		else{
+			 		if ( !is_wp_error($response) ) {
+					    $plugin_info = unserialize(wp_remote_retrieve_body($response));
+					    if ( !is_object($plugin_info) && !is_array($plugin_info) ) {
+					        // Response body does not contain an object/array
+					        echo "An error has occurred";
+					    }
+										
+					   // $out = '<li><strong>' . esc_html( $plugin_info->name) . '</strong> by <strong>' . __( $wp_plugin_author ) . '</strong> &nbsp;<br> ';
+					   // $out  .= ' Current Version : &nbsp;' .esc_attr( $plugin_info->version ). '&nbsp;</br>';
+					   // $out .= ' Active installations : &nbsp' .esc_attr($plugin_info->active_installs).'&nbsp;</br>';
+					   // $out .=  ' Total 5 Star ratings : &nbsp' .esc_attr( $plugin_info->ratings[5] ). '&nbsp;</br>';
+					   // $out .= 'Total Number of Ratings : &nbsp' .esc_attr( $plugin_info->num_ratings ). '&nbsp;</br>';
+					   // $out .= ' Today`s Downloads : &nbsp'.esc_attr($arr->{date('Y-m-d')}).'&nbsp;</br>';
+					   // $out .=  ' Total Downloaded : &nbsp' .esc_attr( $plugin_info->downloaded ). '&nbsp;</br>'; 
+					   // $out .= ' Last Updated On : &nbsp' .esc_attr($plugin_info->last_updated).'&nbsp;</br>';
+					   // $out .= ' Download Link : &nbsp <a href="' .esc_url($plugin_info->download_link).'" target="_blank">'.esc_attr($plugin_info->name).'</a>&nbsp;</br>';
+					   // $out .= '</li>';
+					   //  return $out;
+					    return '<div class="bsfresp-table">
+					   				<div class=" bsfresp-table-caption">PLUGIN INFORMATION</div>
+									<div class="bsfresp-table-header">
+										<div class="bsftable-header-cell">
+											Name
+										</div>
+										<div class="bsftable-body-cell">&nbsp;
+												'. esc_attr( $plugin_info->name) .'
+										</div>
+									</div>
+									<div class="bsfresp-table-header">
+										<div class="bsftable-header-cell">
+										Company
+										</div>
+										<div class="bsftable-body-cell">
+												&nbsp; '. strip_tags($wp_plugin_author) .' 
+										</div>
+									</div>
+									<div class="bsfresp-table-header">
+										<div class="bsftable-header-cell">
+										Version
+										</div>
+										<div class="bsftable-body-cell">&nbsp;
+												' .esc_attr( $plugin_info->version ). '
+										</div>
+									</div>
+									<div class="bsfresp-table-header">
+										<div class="bsftable-header-cell">
+										Active installs
+										</div>
+										<div class="bsftable-body-cell">
+												&nbsp;' .esc_attr($plugin_info->active_installs).'
+										</div>
+									</div>
+									<div class="bsfresp-table-header">
+										<div class="bsftable-header-cell">
+										5 Star Ratings
+										</div>
+										<div class="bsftable-body-cell">
+												&nbsp;' .esc_attr( $plugin_info->ratings[5] ). '
+										</div>
+									</div>
+									<div class="bsfresp-table-header">
+										<div class="bsftable-header-cell">
+										Total Ratings
+										</div>
+										<div class="bsftable-body-cell">
+												&nbsp;' .esc_attr( $plugin_info->num_ratings ). '
+										</div>
+									</div>
+									<div class="bsfresp-table-header">
+										<div class="bsftable-header-cell">
+										Today`s Download
+										</div>
+										<div class="bsftable-body-cell">&nbsp;
+												'.esc_attr($arr->{date('Y-m-d')}).'
+										</div>
+									</div>
+									<div class="bsfresp-table-header">
+										<div class="table-header-cell">
+										Total Downloads
+										</div>
+										<div class="bsftable-body-cell">
+												&nbsp;' .esc_attr( $plugin_info->downloaded ). '
+										</div>
+									</div>
+									<div class="bsfresp-table-header">
+										<div class="bsftable-header-cell">
+										Updated on
+										</div>
+										<div class="bsftable-body-cell">
+												&nbsp;' .esc_attr($plugin_info->last_updated). '
+										</div>
+									</div>
+									<div class="bsfresp-table-header">
+										<div class="bsftable-header-cell">
+										Download
+										</div>
+										<div class="bsftable-body-cell">
+												&nbsp;<a href="' .esc_url($plugin_info->download_link).'" target="_blank">'.esc_attr($wp_plugin_slug).'</a>
+										</div>
+									</div>
+								</div>';
+
+					}
+					else {
+					    // Error object returned
+					    echo "An error has occurred";
+					}
+				}
+					
 	}
 	/**
 	 * Display Plugin Details by particular author.
@@ -123,36 +338,43 @@ class WP_Themes_Stats_Api {
 			), $atts
 		);
 		$wp_plugin_author = $atts['plugin_author'];
-		$args =(object) $args = array('author' => $wp_plugin_author);
+		$args =(object) $args = array('author' => $wp_plugin_author,'fields' => array( 'active_installs' => true,));
 		$url= 'http://api.wordpress.org/plugins/info/1.0/';
+
 		$response = wp_remote_post($url,array('body' => array('action' => 'query_plugins',
 			'request' => serialize((object)$args))));
-		//var_dump($response);
+		// var_dump($response);
+		if($wp_plugin_author === ''){
+			// Response body does not contain an object/array
+		        echo "Error! missing Plugin Author";
+		}
+		else{
 		if ( !is_wp_error($response) ) {
 		    $returned_object = unserialize(wp_remote_retrieve_body($response));
 		    $plugins = $returned_object->plugins;
+		     //var_dump($plugins);
 		    if ( !is_array($plugins) ) {
 		        // Response body does not contain an object/array
-		        return "An error has occurred";
+		        echo "An error has occurred";
 		    }
 		    else {
 		        // Display a list of the plug-ins and other information
+  
 		        if ( $plugins ) {
 		        	$temp='';
 		            foreach ( $plugins as $plugin ) {
-		            $temp.='<li><strong>'.esc_html($plugin->name).'</strong> <br> Current Version : &nbsp;'.esc_attr($plugin->version).'&nbsp;<br>Total 5 Star ratings : &nbsp;'.esc_attr( $plugin->rating ).'&nbsp;<br>Total Downloaded : &nbsp; '.esc_html($plugin->downloaded).'&nbsp; times<br> Last Updated On : &nbsp;'.esc_attr($plugin->last_updated).'&nbsp;<br> Download link : &nbsp;<a href="'.esc_html($plugin->download_link).'" target="_blank">'.$plugin->name.'</a>&nbsp;<br></li>';
-		             
+		            $temp.='<li><strong>'.esc_html($plugin->name).'</strong> <br> Current Version : &nbsp;'.esc_attr($plugin->version).'<br>Active installations : &nbsp;'.esc_attr($plugin->active_installs).'&nbsp;<br>Total 5 Star ratings : &nbsp;'.esc_attr( $plugin->ratings[5] ).'&nbsp;<br>Total Number of Ratings : &nbsp' .esc_attr( $plugin->num_ratings ). '&nbsp;<br>Total Downloaded : &nbsp; '.esc_attr($plugin->downloaded).'&nbsp; times<br> Last Updated On : &nbsp;'.esc_attr($plugin->last_updated).'&nbsp;<br> Download link : &nbsp;<a href="'.esc_url($plugin->download_link).'" target="_blank">'.$plugin->name.'</a>&nbsp;</li>';
 		             }
 		             return $temp;
-		        }
-		    }
+		        	}
+		   		 }
 		}
-		else {
-		    // Error object returned
-		    return "An error has occurred";
+			else {
+			    // Error object returned
+			    return "An error has occurred";
+			}
 		}	
 	}
+	
  }
-
-
 new WP_Themes_Stats_Api();

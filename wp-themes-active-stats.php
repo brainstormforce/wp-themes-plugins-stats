@@ -11,7 +11,7 @@
  *
  * @package WP-Themes-Stats
  */
-
+define( 'BSF_AS_PLUGIN_URL', untrailingslashit( plugins_url( '', __FILE__ ) ) );
 // Including class doc loader.
 require_once 'classes/class-wp-themes-stats-loader.php';
 

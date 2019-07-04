@@ -39,7 +39,7 @@ if ( ! class_exists( 'WP_Themes_Stats_Loader' ) ) {
 		 * Constructor.
 		 */
 		private function __construct() {
-
+			add_action('wp_enqueue_scripts', array($this,'bsf_stylesheet'));
 			$this->define_constants();
 			$this->load_files();
 		}
@@ -68,6 +68,11 @@ if ( ! class_exists( 'WP_Themes_Stats_Loader' ) ) {
 		 */
 		static private function load_files() {
 			require_once WP_THEMES_STATS_BASE_DIR . 'includes/class-wp-themes-stats-api.php';
+		}
+
+		public function bsf_stylesheet()
+		{
+			wp_enqueue_style('bsf_as_stylesheet',BSF_AS_PLUGIN_URL . '/css/as-style.css');
 		}
 	}
 
