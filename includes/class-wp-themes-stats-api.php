@@ -81,101 +81,89 @@ class WP_Themes_Stats_Api {
 				    // Error object returned
 				   return "An error has occurred";
 				}
-				//var_dump($theme);
-				// $out = '<li><strong>' . esc_html( $theme->name ) . '</strong> by <strong>' . esc_html( $theme->author ) . '</strong> &nbsp; <br>';
-				// $out .= ' Current Version : &nbsp;' .esc_attr( $theme->version ). '&nbsp;</br>';
-			 //    $out .= '  Active installations : &nbsp; ' .esc_attr($theme->active_installs). '&nbsp; </br>';
-			 //    $out .= 'Total 5 Star Ratings : &nbsp' .esc_attr( $theme->ratings[5] ). '&nbsp;</br>';
-			 //    $out .= 'Total Number of Ratings : &nbsp' .esc_attr( $theme->num_ratings ). '&nbsp;</br>';
-			 //    $out .= 'Today`s Downloads: &nbsp'.esc_attr($arr1->{date('Y-m-d')}).'&nbsp;</br>';
-			 //    $out .= 'Total Downloaded : &nbsp' .esc_attr( $theme->downloaded ). '&nbsp;</br>'; 
-			 //    $out .= 'Last Updated On : &nbsp' .esc_attr($theme->last_updated).'&nbsp;</br>';
-			 //    $out .= 'Download Link : &nbsp <a href="' .esc_url($theme->download_link).'" target="_blank">'.esc_attr($theme->name).'</a>&nbsp;</br>';
-			 //    $out .= '</li>';
-			 //    return $out;
-				return '<div class="bsfresp-table">
-					   			<div class="bsfresp-table-caption">THEME INFORMATION</div>
-									<div class="bsfresp-table-header">
-										<div class="bsftable-header-cell">
-											Name
-										</div>
-										<div class="bsftable-body-cell">&nbsp;
-												'. esc_attr( $theme->name) .'&nbsp;
-										</div>
-									</div>
-									<div class="bsfresp-table-header">
-										<div class="bsftable-header-cell">
-										Company
-										</div>
-										<div class="bsftable-body-cell">
-												&nbsp;'. strip_tags( $theme->author ) .' 
-										</div>
-									</div>
-									<div class="bsfresp-table-header">
-										<div class="bsftable-header-cell">
-										Version
-										</div>
-										<div class="bsftable-body-cell">&nbsp;
-												' .esc_attr( $theme->version ). '
-										</div>
-									</div>
-									<div class="bsfresp-table-header">
-										<div class="bsftable-header-cell">
-										Active installs
-										</div>
-										<div class="bsftable-body-cell">
-												&nbsp;' .esc_attr($theme->active_installs).'
-										</div>
-									</div>
-									<div class="bsfresp-table-header">
-										<div class="bsftable-header-cell">
-										5 Star Ratings
-										</div>
-										<div class="bsftable-body-cell">
-												&nbsp;' .esc_attr( $theme->ratings[5] ). '
-										</div>
-									</div>
-									<div class="bsfresp-table-header">
-										<div class="bsftable-header-cell">
-										Total Ratings
-										</div>
-										<div class="bsftable-body-cell">
-												&nbsp;' .esc_attr( $theme->num_ratings ). '
-										</div>
-									</div>
-									<div class="bsfresp-table-header">
-										<div class="bsftable-header-cell">
-										Today`s Download
-										</div>
-										<div class="bsftable-body-cell">&nbsp;
-												'.esc_attr($arr1->{date('Y-m-d')}).'
-										</div>
-									</div>
-									<div class="bsfresp-table-header">
-										<div class="bsftable-header-cell">
-										Total Downloads
-										</div>
-										<div class="bsftable-body-cell">
-												&nbsp;' .esc_attr( $theme->downloaded ). '
-										</div>
-									</div>
-									<div class="bsfresp-table-header">
-										<div class="bsftable-header-cell">
-										Updated on
-										</div>
-										<div class="bsftable-body-cell">
-												&nbsp;' .esc_attr($theme->last_updated). '
-										</div>
-									</div>
-									<div class="bsfresp-table-header">
-										<div class="bsftable-header-cell">
-										Download
-										</div>
-										<div class="bsftable-body-cell">
-												&nbsp;<a href="' .esc_url($theme->download_link).'" target="_blank">'.esc_attr($theme->name).'</a>
-										</div>
-									</div>
-								</div>';
+		return '<div class="bsfresp-table">
+	   			<div class="bsfresp-table-caption">THEME INFORMATION</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+							Name
+						</div>
+						<div class="bsftable-body-cell">&nbsp;
+								'. esc_attr( $theme->name) .'&nbsp;
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						Company
+						</div>
+						<div class="bsftable-body-cell">
+								&nbsp;'. strip_tags( $theme->author ) .' 
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						Version
+						</div>
+						<div class="bsftable-body-cell">&nbsp;
+								' .esc_attr( $theme->version ). '
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						Active installs
+						</div>
+						<div class="bsftable-body-cell">
+								&nbsp;' .esc_attr($theme->active_installs).'
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						5 Star Ratings
+						</div>
+						<div class="bsftable-body-cell">
+								&nbsp;' .esc_attr( $theme->ratings[5] ). '
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						Total Ratings
+						</div>
+						<div class="bsftable-body-cell">
+								&nbsp;' .esc_attr( $theme->num_ratings ). '
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						Today`s Download
+						</div>
+						<div class="bsftable-body-cell">&nbsp;
+								'.esc_attr($arr1->{date('Y-m-d')}).'
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						Total Downloads
+						</div>
+						<div class="bsftable-body-cell">
+								&nbsp;' .esc_attr( $theme->downloaded ). '
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						Updated on
+						</div>
+						<div class="bsftable-body-cell">
+								&nbsp;' .esc_attr($theme->last_updated). '
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						Download
+						</div>
+						<div class="bsftable-body-cell">
+								&nbsp;<a href="' .esc_url($theme->download_link).'" target="_blank">'.esc_attr($theme->name).'</a>
+						</div>
+					</div>
+				</div>';
 			}
 	}
 	/**
@@ -222,101 +210,89 @@ class WP_Themes_Stats_Api {
 					        // Response body does not contain an object/array
 					        echo "An error has occurred";
 					    }
-										
-					   // $out = '<li><strong>' . esc_html( $plugin_info->name) . '</strong> by <strong>' . __( $wp_plugin_author ) . '</strong> &nbsp;<br> ';
-					   // $out  .= ' Current Version : &nbsp;' .esc_attr( $plugin_info->version ). '&nbsp;</br>';
-					   // $out .= ' Active installations : &nbsp' .esc_attr($plugin_info->active_installs).'&nbsp;</br>';
-					   // $out .=  ' Total 5 Star ratings : &nbsp' .esc_attr( $plugin_info->ratings[5] ). '&nbsp;</br>';
-					   // $out .= 'Total Number of Ratings : &nbsp' .esc_attr( $plugin_info->num_ratings ). '&nbsp;</br>';
-					   // $out .= ' Today`s Downloads : &nbsp'.esc_attr($arr->{date('Y-m-d')}).'&nbsp;</br>';
-					   // $out .=  ' Total Downloaded : &nbsp' .esc_attr( $plugin_info->downloaded ). '&nbsp;</br>'; 
-					   // $out .= ' Last Updated On : &nbsp' .esc_attr($plugin_info->last_updated).'&nbsp;</br>';
-					   // $out .= ' Download Link : &nbsp <a href="' .esc_url($plugin_info->download_link).'" target="_blank">'.esc_attr($plugin_info->name).'</a>&nbsp;</br>';
-					   // $out .= '</li>';
-					   //  return $out;
-					    return '<div class="bsfresp-table">
-					   				<div class=" bsfresp-table-caption">PLUGIN INFORMATION</div>
-									<div class="bsfresp-table-header">
-										<div class="bsftable-header-cell">
-											Name
-										</div>
-										<div class="bsftable-body-cell">&nbsp;
-												'. esc_attr( $plugin_info->name) .'
-										</div>
-									</div>
-									<div class="bsfresp-table-header">
-										<div class="bsftable-header-cell">
-										Company
-										</div>
-										<div class="bsftable-body-cell">
-												&nbsp; '. strip_tags($wp_plugin_author) .' 
-										</div>
-									</div>
-									<div class="bsfresp-table-header">
-										<div class="bsftable-header-cell">
-										Version
-										</div>
-										<div class="bsftable-body-cell">&nbsp;
-												' .esc_attr( $plugin_info->version ). '
-										</div>
-									</div>
-									<div class="bsfresp-table-header">
-										<div class="bsftable-header-cell">
-										Active installs
-										</div>
-										<div class="bsftable-body-cell">
-												&nbsp;' .esc_attr($plugin_info->active_installs).'
-										</div>
-									</div>
-									<div class="bsfresp-table-header">
-										<div class="bsftable-header-cell">
-										5 Star Ratings
-										</div>
-										<div class="bsftable-body-cell">
-												&nbsp;' .esc_attr( $plugin_info->ratings[5] ). '
-										</div>
-									</div>
-									<div class="bsfresp-table-header">
-										<div class="bsftable-header-cell">
-										Total Ratings
-										</div>
-										<div class="bsftable-body-cell">
-												&nbsp;' .esc_attr( $plugin_info->num_ratings ). '
-										</div>
-									</div>
-									<div class="bsfresp-table-header">
-										<div class="bsftable-header-cell">
-										Today`s Download
-										</div>
-										<div class="bsftable-body-cell">&nbsp;
-												'.esc_attr($arr->{date('Y-m-d')}).'
-										</div>
-									</div>
-									<div class="bsfresp-table-header">
-										<div class="table-header-cell">
-										Total Downloads
-										</div>
-										<div class="bsftable-body-cell">
-												&nbsp;' .esc_attr( $plugin_info->downloaded ). '
-										</div>
-									</div>
-									<div class="bsfresp-table-header">
-										<div class="bsftable-header-cell">
-										Updated on
-										</div>
-										<div class="bsftable-body-cell">
-												&nbsp;' .esc_attr($plugin_info->last_updated). '
-										</div>
-									</div>
-									<div class="bsfresp-table-header">
-										<div class="bsftable-header-cell">
-										Download
-										</div>
-										<div class="bsftable-body-cell">
-												&nbsp;<a href="' .esc_url($plugin_info->download_link).'" target="_blank">'.esc_attr($wp_plugin_slug).'</a>
-										</div>
-									</div>
-								</div>';
+		    return '<div class="bsfresp-table">
+	   				<div class=" bsfresp-table-caption">PLUGIN INFORMATION</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+							Name
+						</div>
+						<div class="bsftable-body-cell">&nbsp;
+								'. esc_attr( $plugin_info->name) .'
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						Company
+						</div>
+						<div class="bsftable-body-cell">
+								&nbsp; '. strip_tags($wp_plugin_author) .' 
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						Version
+						</div>
+						<div class="bsftable-body-cell">&nbsp;
+								' .esc_attr( $plugin_info->version ). '
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						Active installs
+						</div>
+						<div class="bsftable-body-cell">
+								&nbsp;' .esc_attr($plugin_info->active_installs).'
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						5 Star Ratings
+						</div>
+						<div class="bsftable-body-cell">
+								&nbsp;' .esc_attr( $plugin_info->ratings[5] ). '
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						Total Ratings
+						</div>
+						<div class="bsftable-body-cell">
+								&nbsp;' .esc_attr( $plugin_info->num_ratings ). '
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						Today`s Download
+						</div>
+						<div class="bsftable-body-cell">&nbsp;
+								'.esc_attr($arr->{date('Y-m-d')}).'
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						Total Downloads
+						</div>
+						<div class="bsftable-body-cell">
+								&nbsp;' .esc_attr( $plugin_info->downloaded ). '
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						Updated on
+						</div>
+						<div class="bsftable-body-cell">
+								&nbsp;' .esc_attr($plugin_info->last_updated). '
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						Download
+						</div>
+						<div class="bsftable-body-cell">
+								&nbsp;<a href="' .esc_url($plugin_info->download_link).'" target="_blank">'.esc_attr($wp_plugin_slug).'</a>
+						</div>
+					</div>
+				</div>';
 
 					}
 					else {
@@ -361,9 +337,37 @@ class WP_Themes_Stats_Api {
 		        // Display a list of the plug-ins and other information
   
 		        if ( $plugins ) {
-		        	$temp='';
+		        	$temp='<div class="bsfresp-table">
+	   				<div class=" bsfresp-table-caption">PLUGIN INFORMATION</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+							Name
+						</div>
+						<div class="bsftable-header-cell">&nbsp;
+							Version
+						</div>
+						<div class="bsftable-header-cell">
+							Active Installs
+						</div>
+						<div class="bsftable-header-cell">&nbsp;
+							Ratings
+						</div>
+						<div class="bsftable-header-cell">
+							Total Ratings
+						</div>
+						<div class="bsftable-header-cell">&nbsp;
+							Total Downloads
+						</div>
+						<div class="bsftable-header-cell">
+							Last Updated
+						</div>
+						<div class="bsftable-header-cell">&nbsp;
+							Download
+						</div>
+					</div>';
+
 		            foreach ( $plugins as $plugin ) {
-		            $temp.='<li><strong>'.esc_html($plugin->name).'</strong> <br> Current Version : &nbsp;'.esc_attr($plugin->version).'<br>Active installations : &nbsp;'.esc_attr($plugin->active_installs).'&nbsp;<br>Total 5 Star ratings : &nbsp;'.esc_attr( $plugin->ratings[5] ).'&nbsp;<br>Total Number of Ratings : &nbsp' .esc_attr( $plugin->num_ratings ). '&nbsp;<br>Total Downloaded : &nbsp; '.esc_attr($plugin->downloaded).'&nbsp; times<br> Last Updated On : &nbsp;'.esc_attr($plugin->last_updated).'&nbsp;<br> Download link : &nbsp;<a href="'.esc_url($plugin->download_link).'" target="_blank">'.$plugin->name.'</a>&nbsp;</li>';
+		            $temp.='<div class="bsftable-body-cell"><strong>'.esc_html($plugin->name).'</strong></div><div class="bsftable-body-cell">'.esc_attr($plugin->version).'</div><div class="bsftable-body-cell">'.esc_attr($plugin->active_installs).'&nbsp;</div><div class="bsftable-body-cell">'.esc_attr( $plugin->ratings[5] ).'&nbsp;</div><div class="bsftable-body-cell">' .esc_attr( $plugin->num_ratings ). '</div><div class="bsftable-body-cell"> '.esc_attr($plugin->downloaded).'</div><div class="bsftable-body-cell">'.esc_attr($plugin->last_updated).'</div><div class="bsftable-body-cell"><a href="'.esc_url($plugin->download_link).'" target="_blank">'.$plugin->name.'</a>&nbsp;</div><br>';
 		             }
 		             return $temp;
 		        	}

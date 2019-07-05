@@ -39,7 +39,8 @@ if ( ! class_exists( 'WP_Themes_Stats_Loader' ) ) {
 		 * Constructor.
 		 */
 		private function __construct() {
-			add_action('wp_enqueue_scripts', array($this,'bsf_stylesheet'));
+			add_action( 'wp_enqueue_scripts', array($this , 'bsf_stylesheet' ));
+			add_action( 'admin_menu', array( $this, 'bsf_as_add_plugin_page' ) );
 			$this->define_constants();
 			$this->load_files();
 		}
@@ -74,6 +75,29 @@ if ( ! class_exists( 'WP_Themes_Stats_Loader' ) ) {
 		{
 			wp_enqueue_style('bsf_as_stylesheet',BSF_AS_PLUGIN_URL . '/css/as-style.css');
 		}
+    /**
+     * Add options page
+     */
+    public function bsf_as_add_plugin_page()
+    {
+        // This page will be under "Settings"
+        add_options_page(
+            'Settings Admin', 
+            'WP Advanced Stats', 
+            'manage_options', 
+            'bsf-as-setting-admin', 
+            array( $this, 'bsf_as_create_admin_page' )
+        );
+    }
+
+    /**
+     * Options page callback
+     */
+    public function bsf_as_create_admin_page()
+    {
+        require_once WP_THEMES_STATS_BASE_DIR . 'includes/wp-advance-stats-frontend.php';
+    }
+
 	}
 
 	$wp_themes_stats_loader = WP_Themes_Stats_Loader::get_instance();
