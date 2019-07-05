@@ -57,7 +57,7 @@ if ( isset( $_GET['tab'] ) ) {//PHPCS:ignore:WordPress.Security.NonceVerificatio
 	}
 } else {
 
-	require_once 'wp_as_general_settings.php';
+	require_once 'wp-as-general-settings.php';
 }
 
 ?>

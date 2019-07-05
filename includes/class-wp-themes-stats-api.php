@@ -337,39 +337,11 @@ class WP_Themes_Stats_Api {
 		        // Display a list of the plug-ins and other information
   
 		        if ( $plugins ) {
-		        	$temp='<div class="bsfresp-table">
-	   				<div class=" bsfresp-table-caption">PLUGIN INFORMATION</div>
-					<div class="bsfresp-table-header">
-						<div class="bsftable-header-cell">
-							Name
-						</div>
-						<div class="bsftable-header-cell">&nbsp;
-							Version
-						</div>
-						<div class="bsftable-header-cell">
-							Active Installs
-						</div>
-						<div class="bsftable-header-cell">&nbsp;
-							Ratings
-						</div>
-						<div class="bsftable-header-cell">
-							Total Ratings
-						</div>
-						<div class="bsftable-header-cell">&nbsp;
-							Total Downloads
-						</div>
-						<div class="bsftable-header-cell">
-							Last Updated
-						</div>
-						<div class="bsftable-header-cell">&nbsp;
-							Download
-						</div>
-					</div>';
-
-		            foreach ( $plugins as $plugin ) {
-		            $temp.='<div class="bsftable-body-cell"><strong>'.esc_html($plugin->name).'</strong></div><div class="bsftable-body-cell">'.esc_attr($plugin->version).'</div><div class="bsftable-body-cell">'.esc_attr($plugin->active_installs).'&nbsp;</div><div class="bsftable-body-cell">'.esc_attr( $plugin->ratings[5] ).'&nbsp;</div><div class="bsftable-body-cell">' .esc_attr( $plugin->num_ratings ). '</div><div class="bsftable-body-cell"> '.esc_attr($plugin->downloaded).'</div><div class="bsftable-body-cell">'.esc_attr($plugin->last_updated).'</div><div class="bsftable-body-cell"><a href="'.esc_url($plugin->download_link).'" target="_blank">'.$plugin->name.'</a>&nbsp;</div><br>';
-		             }
-		             return $temp;
+		        	$temp = '';
+		        	foreach ( $plugins as $plugin )  {
+		        		$temp.='<li><strong>'.esc_html($plugin->name).'</strong> <br> Current Version : &nbsp;'.esc_attr($plugin->version).'&nbsp;<br>Total 5 Star ratings : &nbsp;'.esc_attr( $plugin->rating ).'&nbsp;<br>Total Downloaded : &nbsp; '.esc_html($plugin->downloaded).'&nbsp; times<br> Last Updated On : &nbsp;'.esc_attr($plugin->last_updated).'&nbsp;<br> Download link : &nbsp;<a href="'.esc_html($plugin->download_link).'" target="_blank">'.$plugin->name.'</a>&nbsp;<br></li>';
+		        	}
+		        	  return $temp;
 		        	}
 		   		 }
 		}
