@@ -51,7 +51,7 @@ if ( isset( $_GET['tab'] ) ) {//PHPCS:ignore:WordPress.Security.NonceVerificatio
 		require_once 'wp-as-general-settings.php';
 
 	} 
-	elseif ( 'bsf_rt_user_manual' === $_GET['tab'] ) {//PHPCS:ignore:WordPress.Security.NonceVerification.Recommended
+	elseif ( 'wp_as_user_manual' === $_GET['tab'] ) {//PHPCS:ignore:WordPress.Security.NonceVerification.Recommended
 
 		require_once 'wp-as-user-manual.php';
 	}

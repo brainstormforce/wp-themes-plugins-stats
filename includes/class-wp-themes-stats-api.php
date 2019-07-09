@@ -18,6 +18,7 @@ class WP_Themes_Stats_Api {
 	 */
 	function __construct() {
 		add_shortcode( 'wp_theme_active_install', array( $this, 'bsf_display_active_installs' ) );
+		//add_shortcode('wp_theme_active_install',array($this,'css_t_subscribers'));
 		add_shortcode( 'wp_plugin_active_install', array( $this,'bsf_display_plugin_active_installs' ) );
 		add_shortcode( 'wp_plugin_by_author', array($this, 'bsf_display_plugin_by_author' ) );
 	}
@@ -41,10 +42,16 @@ class WP_Themes_Stats_Api {
 		//Code To fetch todays count
 			$url= file_get_contents('http://api.wordpress.org/stats/themes/1.0/downloads.php?slug={'.$wp_theme_slug.'}&limit=1');
 			$arr1 = json_decode($url);
+		//$arr12 = get_option('currenct_dowmloads');
+		//$downloads=get_option('wpas_schedule_event');
+		//echo("ghdfkuhsdgfiu");
+		//var_dump($arr1->{date('Y-m-d')});
+		//wp_die();
 			//return 'Todays Downloads:'.esc_html($arr1->{date('Y-m-d')}).'&nbsp;';
 		//--------------------------
-
-		//var_dump($arr1);
+			// set_transient( 'my_mood', 'Pretty Awesome', 60 );
+			//  $my_mood = get_transient( 'my_mood' );
+			//  var_dump($my_mood);
 		$args = array(
 		    'slug' => $wp_theme_slug,
 		    'fields' => array( 'active_installs' => true,'screenshot_url'=> true,'versions'=> true,'ratings'=> true,'download_link'=> true )
@@ -63,12 +70,23 @@ class WP_Themes_Stats_Api {
  		if ($wp_theme_slug === '')
  		{
  			//error when slug is empty
- 			return "Error! Theme Slug is missing";
+ 			if($wp_theme_author === '')
+ 			{
+ 				return "Error! Theme Slug & Author is missing";
+ 			}
+ 			else
+ 			{
+ 				return "Error! Theme Slug is missing";
+ 			}
+ 			
  		}
  		elseif ($wp_theme_author === '') {
  			//error when author is empty
  			return "Error! Theme Author is missing";
  		}
+ 		// elseif ( $wp_theme_slug === '' && $wp_theme_author === ''){
+ 		// 	return "Error! Theme Author and Slug are missing";
+ 		// }
  		else{
 				if ( !is_wp_error($response) ) {
 				    $theme = unserialize(wp_remote_retrieve_body($response));
@@ -338,7 +356,7 @@ class WP_Themes_Stats_Api {
   
 		        if ( $plugins ) {
 		        	$temp = '';
-		        	foreach ( $plugins as $plugin )  {
+		        	foreach ($variable as $key => $value) {
 		        		$temp.='<li><strong>'.esc_html($plugin->name).'</strong> <br> Current Version : &nbsp;'.esc_attr($plugin->version).'&nbsp;<br>Total 5 Star ratings : &nbsp;'.esc_attr( $plugin->rating ).'&nbsp;<br>Total Downloaded : &nbsp; '.esc_html($plugin->downloaded).'&nbsp; times<br> Last Updated On : &nbsp;'.esc_attr($plugin->last_updated).'&nbsp;<br> Download link : &nbsp;<a href="'.esc_html($plugin->download_link).'" target="_blank">'.$plugin->name.'</a>&nbsp;<br></li>';
 		        	}
 		        	  return $temp;
@@ -351,6 +369,7 @@ class WP_Themes_Stats_Api {
 			}
 		}	
 	}
+	
 	
  }
 new WP_Themes_Stats_Api();
