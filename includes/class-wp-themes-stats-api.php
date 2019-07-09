@@ -16,6 +16,7 @@ class WP_Themes_Stats_Api {
 	/**
 	 * Constructor calling W.ORG API Response.
 	 */
+	//private static $update_option;
 	function __construct() {
 		add_shortcode( 'wp_theme_active_install', array( $this, 'bsf_display_active_installs' ) );
 		//add_shortcode('wp_theme_active_install',array($this,'css_t_subscribers'));
@@ -39,19 +40,25 @@ class WP_Themes_Stats_Api {
 		// $active_installs = false;
 		$wp_theme_slug   = $atts['wp_theme_slug'];
 		$wp_theme_author = $atts['theme_author'];
+		$update_option = array( 
+			'theme_slug' => $wp_theme_slug,
+			'theme_author' => $wp_theme_author,
+		);
+		update_option( 'wp_info', $update_option );
+		////($update_option);
 		//Code To fetch todays count
 			$url= file_get_contents('http://api.wordpress.org/stats/themes/1.0/downloads.php?slug={'.$wp_theme_slug.'}&limit=1');
 			$arr1 = json_decode($url);
 		//$arr12 = get_option('currenct_dowmloads');
 		//$downloads=get_option('wpas_schedule_event');
 		//echo("ghdfkuhsdgfiu");
-		//var_dump($arr1->{date('Y-m-d')});
+		////($arr1->{date('Y-m-d')});
 		//wp_die();
 			//return 'Todays Downloads:'.esc_html($arr1->{date('Y-m-d')}).'&nbsp;';
 		//--------------------------
 			// set_transient( 'my_mood', 'Pretty Awesome', 60 );
 			//  $my_mood = get_transient( 'my_mood' );
-			//  var_dump($my_mood);
+			//  //($my_mood);
 		$args = array(
 		    'slug' => $wp_theme_slug,
 		    'fields' => array( 'active_installs' => true,'screenshot_url'=> true,'versions'=> true,'ratings'=> true,'download_link'=> true )
@@ -99,6 +106,7 @@ class WP_Themes_Stats_Api {
 				    // Error object returned
 				   return "An error has occurred";
 				}
+
 		return '<div class="bsfresp-table">
 	   			<div class="bsfresp-table-caption">THEME INFORMATION</div>
 					<div class="bsfresp-table-header">
@@ -199,11 +207,17 @@ class WP_Themes_Stats_Api {
 
 		$wp_plugin_slug   = $atts['wp_plugin_slug'];
 		$wp_plugin_author = $atts['plugin_author'];
-		//var_dump($wp_plugin_author);
+		////($wp_plugin_author);
 		//Code To fetch todays count
+		// $update_option = array( 
+		// 	'wpas_plugin_slug' => $wp_plugin_slug,
+		// 	'wpas_plugin_author' => $wp_plugin_author,
+		// );
+		// update_option( 'wp_info', $update_option );
+		//  var_dump($update_option);
 			$url= file_get_contents('http://api.wordpress.org/stats/plugin/1.0/downloads.php?slug={'.$wp_plugin_slug.'}&limit=1');
 			$arr = json_decode($url);
-			//var_dump($arr); 
+			////($arr); 
 			//return 'Todays Downloads:'.esc_html($arr->{date('Y-m-d')}).'&nbsp;';
 		//--------------------------
 
@@ -337,7 +351,7 @@ class WP_Themes_Stats_Api {
 
 		$response = wp_remote_post($url,array('body' => array('action' => 'query_plugins',
 			'request' => serialize((object)$args))));
-		// var_dump($response);
+		// //($response);
 		if($wp_plugin_author === ''){
 			// Response body does not contain an object/array
 		        echo "Error! missing Plugin Author";
@@ -346,7 +360,7 @@ class WP_Themes_Stats_Api {
 		if ( !is_wp_error($response) ) {
 		    $returned_object = unserialize(wp_remote_retrieve_body($response));
 		    $plugins = $returned_object->plugins;
-		     //var_dump($plugins);
+		     ////($plugins);
 		    if ( !is_array($plugins) ) {
 		        // Response body does not contain an object/array
 		        echo "An error has occurred";

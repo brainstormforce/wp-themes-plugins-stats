@@ -1,4 +1,5 @@
 <?php
+
 add_action( 'wp_head', 'tr_head' );
 function tr_head() {
 	$GLOBALS['tr_time_start'] = microtime( true );
@@ -16,6 +17,11 @@ function tr_footer() {
 
 add_filter( 'the_content', 'tr_the_content' );
 function tr_the_content( $content ) {
+	
+	
+	//var_dump(get_option('wp_info'));
+		//var_dump($theme);
+
 	return $content . tr_get_text();
 }
 // fuction delete_exp_transient(){
@@ -27,13 +33,37 @@ function tr_the_content( $content ) {
 
 function tr_get_text() {
 	$frequency = get_option('wpas_general_settings');
-	 var_dump($frequency);
+	//var_dump($frequency);
+	//
+	 //var_dump($wp_theme_slug);
 	// die();
-	$data = file_get_contents('http://api.wordpress.org/stats/themes/1.0/downloads.php?slug={astra}&limit=1');
-	$arr1 = json_decode($data);
+	// $data = file_get_contents('https://api.wordpress.org/themes/info/1.1/?action=theme_information&request[slug]=astra');
+	// $arr1 = json_decode($data);
+	$namet = get_option('wp_info');
+	$args = array(
+		    'slug' => $namet['theme_slug'],
+		    'fields' => array( 'active_installs' => true,'screenshot_url'=> true,'versions'=> true,'ratings'=> true,'download_link'=> true )
+	);
+		 
+		// Make request and extract plug-in object
+	$response = wp_remote_post(
+		    'http://api.wordpress.org/themes/info/1.0/?action=theme_information&request[fields][ratings]=true',
+		    array(
+		        'body' => array(
+		            'action' => 'theme_information',
+		            'request' => serialize((object)$args)
+		        )
+		    )
+	);
+	$theme = unserialize(wp_remote_retrieve_body($response));
+
+	
+		
+
+
 	$data = get_site_transient( 'tr_theme_info' );
 	// echo '<pre>';
-	// var_dump($arr1->$frequency['wpas_frequency_reload']);
+	//var_dump($data);
 	// echo '</pre>';
 
 	if( 'manual' === $frequency['wpas_frequency_reload'] ){
@@ -48,10 +78,10 @@ function tr_get_text() {
 	}
 	$data = get_site_transient( 'tr_theme_info' );
 	//if($data == delete_exp_transient)
-	//var_dump($data);
+	//var_dump($theme);
 	if ( false === $data ) {
 		$data = tr_fetch_data();
-
+		$data = (!empty($data) ? $data : '' );
 		if('hourly' == $frequency['wpas_frequency_reload'])
 		{
 			//delete_transient('_site_transient_timeout_tr_theme_info');
@@ -65,34 +95,117 @@ function tr_get_text() {
 		}
 	}
 
-	if ( empty( $data ) ) {
-		return '';
-	}
-
-	$text = sprintf( '<p>Did you know that <a href="%1$s">Astra</a> has been downloaded %3$d times, and has an average rating of %4$d&percnt; ?</p>',
-		$data->homepage,
-		$data->name,
-		$data->{date('Y-m-d')},
-		$data->rating
+	if ( empty( $theme ) ) {
+	 	return '';
+	 }
+	//var_dump($theme);
+	$text = sprintf( '<div class="bsfresp-table">
+	   			<div class="bsfresp-table-caption">THEME INFORMATION</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+							Name
+						</div>
+						<div class="bsftable-body-cell">&nbsp;
+								'. esc_attr( $theme->name) .'&nbsp;
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						Company
+						</div>
+						<div class="bsftable-body-cell">
+								&nbsp;'. strip_tags( $theme->author ) .' 
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						Version
+						</div>
+						<div class="bsftable-body-cell">&nbsp;
+								' .esc_attr( $theme->version ). '
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						Active installs
+						</div>
+						<div class="bsftable-body-cell">
+								&nbsp;' .esc_attr($theme->active_installs).'
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						5 Star Ratings
+						</div>
+						<div class="bsftable-body-cell">
+								&nbsp;' .esc_attr( $theme->ratings[5] ). '
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						Total Ratings
+						</div>
+						<div class="bsftable-body-cell">
+								&nbsp;' .esc_attr( $theme->num_ratings ). '
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						Total Downloads
+						</div>
+						<div class="bsftable-body-cell">
+								&nbsp;' .esc_attr( $theme->downloaded ). '
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						Updated on
+						</div>
+						<div class="bsftable-body-cell">
+								&nbsp;' .esc_attr($theme->last_updated). '
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+						Download
+						</div>
+						<div class="bsftable-body-cell">
+								&nbsp;<a href="' .esc_url($theme->download_link).'" target="_blank">'.esc_attr($theme->name).'</a>
+						</div>
+					</div>
+		 		</div>'
+		// $data->homepage,
+		// $data->name,
+		// $data->{date('Y-m-d')},
+		// $data->rating
 	);
+
 	//var_dump($text);
+	
 	return $text;
 }
 
-function tr_fetch_data() {
-	$url = 'http://api.wordpress.org/stats/themes/1.0/downloads.php?slug={astra}&limit=1';
-	$response = wp_remote_request( $url, array(
-    'ssl_verify' => true
-) );
-
-	if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
-		$body = wp_remote_retrieve_body( $response );
-		$json = json_decode( $body );
-		if ( ! is_null( $json ) ) {
-			return $json;
-		}
-	}
-	//var_dump($response);
-	return false;
+function tr_fetch_data() {	
+	$namet = get_option('wp_info');
+	//$namep = get_option('wp_info');
+	$argst = array(
+		    'slug' => $namet['theme_slug'],
+		    'fields' => array( 'active_installs' => true,'screenshot_url'=> true,'versions'=> true,'ratings'=> true,'download_link'=> true )
+		);
+		 
+		// Make request and extract plug-in object
+		$responset = wp_remote_post(
+		    'http://api.wordpress.org/themes/info/1.0/?action=theme_information&request[fields][ratings]=true',
+		    array(
+		        'body' => array(
+		            'action' => 'theme_information',
+		            'request' => serialize((object)$argst)
+		        )
+		    )
+		);
+		$theme = unserialize(wp_remote_retrieve_body($responset));
+		//var_dump($theme);
+	
+	return $theme;
 }
 ?>
