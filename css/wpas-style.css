@@ -1,0 +1,37 @@
+.bsfresp-table {
+width: 80% !important;
+display: table !important;
+padding: 60px 30px 60px 30px;
+margin: 20px;
+}
+.bsfresp-table-caption{
+display: table-caption;
+text-align: center;
+font-size: 30px;
+font-weight: bold;
+}
+.bsfresp-table-header{
+display: table-header-group;
+background-color: #dde6ea;
+text-align: justify;
+font-weight: bold;
+font-size: 18px;
+}
+.bsftable-header-cell{
+display: table-cell;
+padding: 10px 18px 10px 18px;
+text-align: justify;
+border-bottom: 1px solid black;
+}
+.bsfresp-table-body{
+display: table-row-group;
+}
+.bsfresp-table-row{
+display: table-row;
+}
+.bsftable-body-cell{
+display: table-cell;
+background: #f2f2f2;
+border-bottom: 1px solid black;
+padding: 10px 0px 10px 18px;
+}
