@@ -70,14 +70,11 @@ if ( ! class_exists( 'WP_Themes_Stats_Loader' ) ) {
 		 */
 		static private function load_files() {
 			require_once WP_THEMES_STATS_BASE_DIR . 'includes/class-wp-themes-stats-api.php';
+			require_once WP_THEMES_STATS_BASE_DIR . 'includes/class-wp-plugins-stats-api.php';
 		}
 		public function bsf_wpas_stylesheet()
 		{
-			//wp_die();
 			wp_register_style( 'bsf_wpas_as_stylesheet', BSF_AS_PLUGIN_URL . '/css/wpas-style.css', null,'1.0', false );
-			//wp_enqueue_style('bsf_wpas_as_stylesheet',BSF_AS_PLUGIN_URL . 'css/wpas-style.css');
-			//var_dump(BSF_AS_PLUGIN_URL);
-			//die();
 		}
 		public function bsf_as_add_plugin_page()
    		 {

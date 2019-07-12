@@ -51,9 +51,6 @@ $frequency = (!empty($wp_info['Frequency']) ? $wp_info['Frequency'] : '');
 </th>
 </tr>
 </table>
-
-
 </form>
 </div>
-
 <?php
