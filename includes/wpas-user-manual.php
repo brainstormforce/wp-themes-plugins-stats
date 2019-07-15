@@ -5,10 +5,18 @@ wp_enqueue_style('bsf_wpas_as_stylesheet');
 	   			<div class="bsfresp-table-caption">THEME SHORTCODE TABLE</div>
 					<div class="bsfresp-table-header">
 						<div class="bsftable-header-cell">
+							Theme Name 
+						</div>
+						<div class="bsftable-body-cell">
+							[adv_stats_theme_name theme='theme_slug']
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
 							Total Active Installs
 						</div>
 						<div class="bsftable-body-cell">
-							[wp_theme_active_install wp_theme_slug='astra']
+							[adv_stats_theme_active_install theme='theme_slug']
 						</div>
 					</div>
 					<div class="bsfresp-table-header">
@@ -16,7 +24,7 @@ wp_enqueue_style('bsf_wpas_as_stylesheet');
 							Last Updated
 						</div>
 						<div class="bsftable-body-cell">
-							[wp_theme_last_updated wp_theme_slug='astra']
+							[adv_stats_theme_last_updated theme='theme_slug']
 						</div>
 					</div>
 					<div class="bsfresp-table-header">
@@ -24,7 +32,7 @@ wp_enqueue_style('bsf_wpas_as_stylesheet');
 							Theme Version
 						</div>
 						<div class="bsftable-body-cell">
-							[wp_theme_version wp_theme_slug='astra']
+							[adv_stats_theme_version theme='theme_slug']
 						</div>
 					</div>
 					<div class="bsfresp-table-header">
@@ -32,7 +40,7 @@ wp_enqueue_style('bsf_wpas_as_stylesheet');
 							Theme Ratings
 						</div>
 						<div class="bsftable-body-cell">
-							[wp_theme_ratings wp_theme_slug='astra']
+							[adv_stats_theme_ratings theme='theme_slug']
 						</div>
 					</div>
 					<div class="bsfresp-table-header">
@@ -40,7 +48,7 @@ wp_enqueue_style('bsf_wpas_as_stylesheet');
 							5 Star Ratings
 						</div>
 						<div class="bsftable-body-cell">
-							[wp_theme_5starRate wp_theme_slug='astra']
+							[adv_stats_theme_ratings_5star theme='theme_slug']
 						</div>
 					</div>
 					<div class="bsfresp-table-header">
@@ -48,7 +56,7 @@ wp_enqueue_style('bsf_wpas_as_stylesheet');
 							Average Ratings
 						</div>
 						<div class="bsftable-body-cell">
-							[wp_theme_averageRate wp_theme_slug='astra']
+							[adv_stats_theme_ratings_average theme='theme_slug']
 						</div>
 					</div>
 					<div class="bsfresp-table-header">
@@ -56,7 +64,7 @@ wp_enqueue_style('bsf_wpas_as_stylesheet');
 							Total Downloads
 						</div>
 						<div class="bsftable-body-cell">
-							[wp_theme_total_downloads wp_theme_slug='astra']
+							[adv_stats_theme_downloads theme='theme_slug']
 						</div>
 					</div>
 					<div class="bsfresp-table-header">
@@ -64,18 +72,26 @@ wp_enqueue_style('bsf_wpas_as_stylesheet');
 							 Download
 						</div>
 						<div class="bsftable-body-cell">
-							 [wp_theme_downloadlink wp_theme_slug='astra']
+							 [adv_stats_theme_download_link theme='theme_slug' label='label']
 						</div>
 					</div>
 				</div>
 				<div class="bsfresp-table">
 	   			<div class="bsfresp-table-caption">PLUGIN SHORTCODE TABLE</div>
+	   				<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+							Plugin Name
+						</div>
+						<div class="bsftable-body-cell">
+							 [adv_stats_name plugin='plugin_slug']
+						</div>
+					</div>
 					<div class="bsfresp-table-header">
 						<div class="bsftable-header-cell">
 							Total Active Installs
 						</div>
 						<div class="bsftable-body-cell">
-							[wp_plugin_active_install wp_plugin_slug='astra-hook' ]
+							[adv_stats_active_install plugin='plugin_slug']
 						</div>
 					</div>
 					<div class="bsfresp-table-header">
@@ -83,7 +99,7 @@ wp_enqueue_style('bsf_wpas_as_stylesheet');
 							Last Updated
 						</div>
 						<div class="bsftable-body-cell">
-							[wp_plugin_last_updated wp_plugin_slug='astra-hook']
+							[adv_stats_last_updated plugin='plugin_slug']
 						</div>
 					</div>
 					<div class="bsfresp-table-header">
@@ -91,7 +107,7 @@ wp_enqueue_style('bsf_wpas_as_stylesheet');
 							plugin Version
 						</div>
 						<div class="bsftable-body-cell">
-							[wp_plugin_version wp_plugin_slug='astra-hook'] 
+							[adv_stats_version plugin='plugin_slug']
 						</div>
 					</div>
 					<div class="bsfresp-table-header">
@@ -99,7 +115,7 @@ wp_enqueue_style('bsf_wpas_as_stylesheet');
 							plugin Ratings
 						</div>
 						<div class="bsftable-body-cell">
-							[wp_plugin_ratings wp_plugin_slug='astra-hook']
+							[adv_stats_ratings plugin='plugin_slug']
 						</div>
 					</div>
 					<div class="bsfresp-table-header">
@@ -107,7 +123,7 @@ wp_enqueue_style('bsf_wpas_as_stylesheet');
 							5 Star Ratings
 						</div>
 						<div class="bsftable-body-cell">
-							[wp_plugin_5starrate wp_plugin_slug='astra-hook'] 
+							[adv_stats_ratings_5star plugin='plugin_slug']
 						</div>
 					</div>
 					<div class="bsfresp-table-header">
@@ -115,7 +131,7 @@ wp_enqueue_style('bsf_wpas_as_stylesheet');
 							Average Ratings
 						</div>
 						<div class="bsftable-body-cell">
-							[wp_plugin_averagerate wp_plugin_slug='astra-hook']
+							[adv_stats_ratings_average plugin='plugin_slug']
 						</div>
 					</div>
 					<div class="bsfresp-table-header">
@@ -123,7 +139,7 @@ wp_enqueue_style('bsf_wpas_as_stylesheet');
 							Total Downloads
 						</div>
 						<div class="bsftable-body-cell">
-							[wp_plugin_totaldownloads wp_plugin_slug='astra-hook']
+							[adv_stats_downloads plugin='plugin_slug']
 						</div>
 					</div>
 					<div class="bsfresp-table-header">
@@ -131,7 +147,23 @@ wp_enqueue_style('bsf_wpas_as_stylesheet');
 							 Download
 						</div>
 						<div class="bsftable-body-cell">
-							 [wp_plugin_downloadlink wp_plugin_slug='astra-hook']
+							  [adv_stats_download_link plugin='plugin_slug' label='label']
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+							 Active Plugin Count
+						</div>
+						<div class="bsftable-body-cell">
+							 [adv_stats_total_active author='author_name']
+						</div>
+					</div>
+					<div class="bsfresp-table-header">
+						<div class="bsftable-header-cell">
+							 Total Download Count
+						</div>
+						<div class="bsftable-body-cell">
+							 [adv_stats_downloads_counts author='author_name']
 						</div>
 					</div>
 				</div>

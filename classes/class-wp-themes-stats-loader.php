@@ -91,6 +91,7 @@ if ( ! class_exists( 'WP_Themes_Stats_Loader' ) ) {
     	{
         	require_once WP_THEMES_STATS_BASE_DIR . 'includes/wpas-frontend.php';
     	}
+
 	}
 
 	$wp_themes_stats_loader = WP_Themes_Stats_Loader::get_instance();
