@@ -27,7 +27,8 @@ class WP_Themes_Stats_Api {
 	    add_shortcode( 'adv_stats_theme_downloads', array( $this, 'bsf_display_theme_totaldownloads' ) );
 	    add_shortcode( 'adv_stats_theme_last_updated', array( $this, 'bsf_display_theme_lastupdated' ) );
 	    add_shortcode( 'adv_stats_theme_download_link', array( $this, 'bsf_display_theme_downloadlink' ) );
-	    add_shortcode( 'adv_stats_theme_active_count', array($this, 'bsf_display_theme_active_count'));
+	    add_shortcode( 'adv_stats_theme_active_count', array( $this, 'bsf_display_theme_active_count'));
+	    add_shortcode( 'adv_stats_theme_downloads_count', array( $this, 'bsf_display_theme_downloaded_count'));
 	}
 
 	/**
@@ -496,7 +497,7 @@ class WP_Themes_Stats_Api {
 		}
 		
   	}
-  	function bsf_display_theme_active_count( $atts ){
+	function bsf_display_theme_active_count( $atts ){
   		$atts = shortcode_atts(
 			array(
 				'theme_author'    => isset( $atts['author'] ) ? $atts['author'] : '',
@@ -511,7 +512,81 @@ class WP_Themes_Stats_Api {
 				'per_page' => 1,
 			);
 		// var_dump($atts['theme_author']);
-		$themes = $this->bsf_get_theme_active_count(  'query _ themes',$api_params ['theme_author']);
+		$themes = $this->bsf_get_theme_active_count(  'query_themes',$api_params ['theme_author']);
+		return $themes;
+  	}
+  	function bsf_get_theme_downloads_count( $action , $api_params=array() ){
+		// var_dump($api_params);
+		// wp_die();
+		$frequency  = get_option('wp_info');
+		$second = 0;
+		$day = 0;
+		if(!empty($frequency['Frequency'])) {
+			$day    = (($frequency['Frequency'] *24)*60)*60;
+			$second = ( $second + $day );
+		}
+		$args =(object) $args = array('author' =>$api_params,'fields' => array( 'downloaded' => true,));
+		$url= 'https://api.wordpress.org/themes/info/1.0/';
+
+		$response = wp_remote_post($url,array('body' => array('action' => 'query_themes',
+			'request' => serialize((object)$args))));
+		// var_dump($response);
+		if($api_params === ''){
+			// Response body does not contain an object/array
+		        return "Error! missing Theme Author";
+		}
+		else{
+		if ( !is_wp_error($response) ) {
+		    $returned_object = unserialize(wp_remote_retrieve_body($response));
+		     $themes = $returned_object->themes;
+		     	$temp = 0;
+		        	// $t = 0;
+		        	foreach ($themes as $key) 
+		        	{
+		        		$temp = $temp + $key->downloaded;
+		        		// $t=$t+$key->downloaded;
+		        		// echo $temp;
+		        		// echo "--";
+		        	}
+		        	
+		        	
+		    $author ='bsf_tr_themes_downloaded_Count_' .$api_params;
+			$themes = get_site_transient($author);
+
+			// var_dump($themes);
+		        	// wp_die();
+		    if ( false === $themes || empty($themes) ) {
+		        	
+		        	//var_dump($temp);
+		    $second = (!empty($second) ? $second : 86400 );
+			set_site_transient( $author , $temp ,$second );
+
+	   		}
+	   		if ( empty( $themes ) ) {
+			 	return '';
+			 }
+			 return $themes;
+		 }	
+		}
+		
+  	}
+  	function bsf_display_theme_downloaded_count( $atts ){
+  		$atts = shortcode_atts(
+			array(
+				'theme_author'    => isset( $atts['author'] ) ? $atts['author'] : '',
+			), $atts
+		);
+		$wp_theme_author = $atts['theme_author'];
+		// var_dump($atts);
+		// wp_die();
+		$api_params = array(
+				
+				'theme_author'   => $wp_theme_author,
+				'per_page' => 1,
+			);
+		// var_dump($atts['theme_author']);
+		// wp_die();
+		$themes = $this->bsf_get_theme_downloads_count(  'query_themes',$api_params ['theme_author']);
 		return $themes;
   	}
 }
