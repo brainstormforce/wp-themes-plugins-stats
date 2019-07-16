@@ -2,7 +2,15 @@
 wp_enqueue_style('bsf_wpas_as_stylesheet');
 	?>
 	<h2> <?php esc_html_e('Welcome to Advanced Stats!'); ?></h2>
-	<p><?php esc_html_e('The Advanced Stats plugin is built to help you to track a plugins and themes on your website. Just paste the shortcode in the desired position!')?></p>
+	<p><?php esc_html_e('The Advanced Stats plugin is built to track plugins and themes information on your website. Just paste the shortcode in the desired position!')?></p>
+	<br><label class="wpas_page_title" for="howtouse">
+		<?php
+		echo 'How to Use? </label><br><br>
+	<b>Step 1</b> : Set frequency to update the API (by default Frequency is one day).<br><br>
+	<b>Step 2</b> : Set Date format if required (by default Date format is y-m-d).<br><br>
+	<b>Step 3</b> : Paste the shortcode in the desired position.<br><br>
+	<b>Step 4</b> : That' . "'" . 's it! Visit Post/Page to see results.  <br><br><br>';
+		?>
 		<div class="bsfresp-table">
 	   			<div class="bsfresp-table-caption">THEME SHORTCODE TABLE</div>
 					<div class="bsfresp-table-header">
@@ -58,7 +66,7 @@ wp_enqueue_style('bsf_wpas_as_stylesheet');
 							Average Ratings
 						</div>
 						<div class="bsftable-body-cell">
-							[adv_stats_theme_ratings_average theme='theme_slug']
+							[adv_stats_theme_ratings_average theme='theme_slug' outof='5']
 						</div>
 					</div>
 					<div class="bsfresp-table-header">
@@ -149,7 +157,7 @@ wp_enqueue_style('bsf_wpas_as_stylesheet');
 							Average Ratings
 						</div>
 						<div class="bsftable-body-cell">
-							[adv_stats_ratings_average plugin='plugin_slug']
+							[adv_stats_ratings_average plugin='plugin_slug' outof='5']
 						</div>
 					</div>
 					<div class="bsfresp-table-header">

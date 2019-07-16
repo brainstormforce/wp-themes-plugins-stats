@@ -6,43 +6,80 @@
  * @package    BSF
  * @author     Brainstorm Force.
  */
+wp_enqueue_style('bsf_wpas_as_stylesheet');
 $wp_info = get_option('wp_info');
-$frequency = (!empty($wp_info['Frequency']) ? $wp_info['Frequency'] : ''); 
+$frequency = (!empty($wp_info['Frequency']) ? $wp_info['Frequency'] : 1); 
+
 ?>
 <div class="wp_as_global_settings" id="wp_as_global_settings">
 <form method="post" name="wpas_settings_form">
-<table class="form-table" >
+<table class="wpas-form-table" >
 	<br>
-	<tr class="wp-as-frequency">
+	<tr class="wpas-frequency">
 			<th scope="row">
 				<label for="UpdateFrequency"><?php esc_html_e( 'Frequency', 'wp-as' ); ?></label>
 			</th>
 			<td>
-				<!-- <select name="wpas_frequency_reload"> -->
-					<input type="input" name="frequency" id="wpas-frequency" size="5" maxlength="5" value="<?php echo $frequency ?>">
+				
+					<input class="small-text" type="input" name="frequency" id="wpas-frequency" size="5" maxlength="5" value="<?php echo $frequency ?>">
 					<label><?php esc_html_e( 'Days', 'wp-as' ); ?></label>
-				<!-- </select> -->
+				
 			</td>
-			<!-- var_dump($_POST["frequency"]) -->
+			
 		</tr>
-		<tr class="wp_as__api_note">
+		<tr class="wpas_description">
 			<td>
 			</td>
-			<td class="wp_as_api_note_td" colspan="3">
-				<p class="description wp_as_apidescription">
-					<?php esc_html_e( 'Set how frequently you want to update the API . This setting is helpful to reduce API calls.', 'wp-as' );?>
+			<td class="wpas_description" colspan="3">
+				<p class="description wpas_description">
+					<?php esc_html_e( 'Set how frequently you want to update the API calls.', 'wp-as' );?>
 				</p>
 			</td>
 		</tr>
+		<tr class="wpas-dateformat">
+			<th scope="row">
+				<label for="dateformat"><?php esc_html_e( 'Date Format', 'wp-as' ); ?></label>
+			</th>
+			<td>
+				<?php
+				if( $wp_info['Choice'] == '')
+				{
+					?> <input type="radio" name="wpasoption" value="d/m/y" checked/>
+					 <?php esc_html_e( 'Day, month and two digit year ( e.g 24/03/12)', 'wp-as' );?>
+					 <br></br>
+						<input type="radio" name="wpasoption" value="dS F Y" />
+					 <?php esc_html_e( 'Day, textual month and year ( e.g 24th March 2012)', 'wp-as' ); ?>
+					<br></br>
+					    <input type="radio" name="wpasoption" value="F jS Y" />
+					 <?php esc_html_e( 'Textual month, day and year ( e.g March 24th, 2012)', 'wp-as' ); ?>
+					<br></br>
+					 	<input type="radio" name="wpasoption" value="d.m.Y" />
+					 <?php esc_html_e( 'Month, day and year ( e.g 24.03.2012)', 'wp-as' ); ?>
+					<br></br>
+					 	<input type="radio" name="wpasoption" value="y M d" />
+					 <?php esc_html_e( 'Year, month abbreviation and day ( e.g 19 Mar 24)', 'wp-as' ); 
+				} else {
+				?>
+					<input type="radio" name="wpasoption" value="d/m/y"<?php checked( 'd/m/y' == $wp_info['Choice'] ); ?> />
+					 <?php esc_html_e( 'Day, month and two digit year ( e.g 24/03/12)', 'wp-as' ); ?>
+					<br></br>
+						<input type="radio" name="wpasoption" value="dS F Y"<?php checked( 'dS F Y' == $wp_info['Choice'] ); ?> />
+					 <?php esc_html_e( 'Day, textual month and year ( e.g 24th March 2012)', 'wp-as' ); ?>
+					<br></br>
+					    <input type="radio" name="wpasoption" value="F jS Y"<?php checked( 'F jS Y' == $wp_info['Choice'] ); ?> />
+					 <?php esc_html_e( 'Textual month, day and year ( e.g March 24th, 2012)', 'wp-as' ); ?>
+					<br></br>
+					 	<input type="radio" name="wpasoption" value="d.m.Y"<?php checked( 'd.m.Y' == $wp_info['Choice'] ); ?> />
+					 <?php esc_html_e( 'Month, day and year ( e.g 24.03.2012)', 'wp-as' ); ?>
+					<br></br>
+					 	<input type="radio" name="wpasoption" value="y M d"<?php checked( 'y M d' == $wp_info['Choice'] ); ?> />
+					 <?php esc_html_e( 'Year, month abbreviation and day ( e.g 19 Mar 24)', 'wp-as' ); 
+				}
+				?>
+			</td>
+		</tr>
 </table>
-<?php 
-	//var_dump($_POST["frequency"])
-	    $update_option = array( 
-			'Frequency' => (!empty($_POST['frequency']) ? $_POST['frequency'] : '' ),
-		);
-		update_option('wp_info', $update_option);
-		//var_dump($update_option['Frequency']); 
-?>
+
 <table class="form-table">
 <tr>
 <th>

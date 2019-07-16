@@ -59,5 +59,4 @@ if ( isset( $_GET['tab'] ) ) {//PHPCS:ignore:WordPress.Security.NonceVerificatio
 
 	require_once 'wpas-general-settings.php';
 }
-
 ?>

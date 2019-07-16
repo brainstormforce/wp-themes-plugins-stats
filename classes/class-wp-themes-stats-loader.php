@@ -44,6 +44,7 @@ if ( ! class_exists( 'WP_Themes_Stats_Loader' ) ) {
 			$this->load_files();
 			add_action( 'admin_menu', array( $this, 'bsf_as_add_plugin_page' ) );
 			add_action( 'admin_enqueue_scripts', array($this , 'bsf_wpas_stylesheet' ));
+			add_action('init',array($this,'bsf_wpas_process_form_general_settings'));
 		}
 
 		/**
@@ -61,7 +62,6 @@ if ( ! class_exists( 'WP_Themes_Stats_Loader' ) ) {
 			define( 'WP_THEMES_STATS_BASE_DIR', plugin_dir_path( WP_THEMES_STATS_BASE_FILE ) );
 			define( 'WP_THEMES_STATS_BASE_URL', plugins_url( '/', WP_THEMES_STATS_BASE_FILE ) );
 		}
-
 		/**
 		 * Loads classes and includes.
 		 *
@@ -91,9 +91,28 @@ if ( ! class_exists( 'WP_Themes_Stats_Loader' ) ) {
     	{
         	require_once WP_THEMES_STATS_BASE_DIR . 'includes/wpas-frontend.php';
     	}
+    	/**
+		 * Process plugin's General setting Tab form Data.
+		 *
+		 * @return Nothing.
+		 */
+		public function bsf_wpas_process_form_general_settings() {
 
+
+			$page = isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : null;
+
+			if ( 'bsf-as-setting-admin' !== $page ) {
+				return;
+			}
+			if ( isset( $_POST['wpas-form'] ) && wp_verify_nonce( $_POST['wpas-form'], 'wpas-form-nonce' ) ) {
+
+				  $update_option = array( 
+			'Frequency' => (!empty($_POST['frequency']) ? $_POST['frequency'] : '' ),
+			'Choice'    => (!empty($_POST['wpasoption']) ? $_POST['wpasoption'] : 'd/m/y'),
+		);
+		update_option('wp_info', $update_option);
 	}
-
+}
+	}
 	$wp_themes_stats_loader = WP_Themes_Stats_Loader::get_instance();
-
 }
