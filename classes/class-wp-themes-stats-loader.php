@@ -3,7 +3,7 @@
  * Responsible for setting up constants, classes and includes.
  *
  * @author BrainstormForce
- * @package WP_STATS/Loader
+ * @package WP Advanced Stats/Loader
  */
 
 if ( ! class_exists( 'WP_Themes_Stats_Loader' ) ) {
@@ -61,6 +61,7 @@ if ( ! class_exists( 'WP_Themes_Stats_Loader' ) ) {
 			define( 'WP_THEMES_STATS_BASE_FILE', trailingslashit( $file ) . WP_THEMES_STATS_DIR_NAME . '.php' );
 			define( 'WP_THEMES_STATS_BASE_DIR', plugin_dir_path( WP_THEMES_STATS_BASE_FILE ) );
 			define( 'WP_THEMES_STATS_BASE_URL', plugins_url( '/', WP_THEMES_STATS_BASE_FILE ) );
+			// define( 'BSF_AS_PLUGIN_URL', plugins_url( '', BSF_AS_PLUGIN_URL ) );
 		}
 		/**
 		 * Loads classes and includes.
@@ -74,7 +75,7 @@ if ( ! class_exists( 'WP_Themes_Stats_Loader' ) ) {
 		}
 		public function bsf_wpas_stylesheet()
 		{
-			wp_register_style( 'bsf_wpas_as_stylesheet', BSF_AS_PLUGIN_URL . '/css/wpas-style.css', null,'1.0', false );
+			wp_register_style( 'bsf_wpas_stylesheet', BSF_AS_PLUGIN_URL . '/css/wpas-style.css', null, WP_THEMES_STATS_VERSION , false );
 		}
 		public function bsf_as_add_plugin_page()
    		 {
@@ -98,7 +99,6 @@ if ( ! class_exists( 'WP_Themes_Stats_Loader' ) ) {
 		 */
 		public function bsf_wpas_process_form_general_settings() {
 
-
 			$page = isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : null;
 
 			if ( 'bsf-as-setting-admin' !== $page ) {
@@ -107,8 +107,8 @@ if ( ! class_exists( 'WP_Themes_Stats_Loader' ) ) {
 			if ( isset( $_POST['wpas-form'] ) && wp_verify_nonce( $_POST['wpas-form'], 'wpas-form-nonce' ) ) {
 
 				  $update_option = array( 
-			'Frequency' => (!empty($_POST['frequency']) ? $_POST['frequency'] : '' ),
-			'Choice'    => (!empty($_POST['wpasoption']) ? $_POST['wpasoption'] : 'd/m/y'),
+			'Frequency' => (!empty($_POST['frequency']) ? sanitize_text_field($_POST['frequency']) : 1 ),
+			'Choice'    => (!empty($_POST['wpasoption']) ? sanitize_text_field($_POST['wpasoption']) : 'd/m/y'),
 		);
 		update_option('wp_info', $update_option);
 	}

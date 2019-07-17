@@ -2,7 +2,7 @@
 /**
  * Calling W.ORG API Response.
  *
- * @package WP plugins Active Stats
+ * @package WP Advanced Stats
  * @author Brainstorm Force
  */
 
@@ -12,6 +12,27 @@
  * @since 1.0.0
  */
 class WP_plugin_Stats_Api {
+	/**
+		 * The unique instance of the plugin.
+		 *
+		 * @var Instance variable
+		 */
+		private static $instance;
+
+		/**
+		 * Gets an instance of our plugin.
+		 */
+		/**
+		 * Gets an instance of our plugin.
+		 */
+		public static function get_instance() {
+
+			if ( null === self::$instance ) {
+				self::$instance = new self();
+			}
+
+			return self::$instance;
+		}
 	/**
 	 * Constructor calling W.ORG API Response.
 	 */
@@ -33,6 +54,7 @@ class WP_plugin_Stats_Api {
 	 *
 	 * @param int $action Get attributes plugin Details.
 	 * @param int $api_params Get attributes plugin Details.
+	 * @return array $plugin Get plugin Details.
 	 */
 	function bsf_plugin_get_text( $action, $api_params = array() ){
 		$plugin_slug = isset( $api_params['plugin'] ) ? $api_params['plugin'] : '';
@@ -53,6 +75,7 @@ class WP_plugin_Stats_Api {
 			        )
 			    )
 			);
+		if ( !is_wp_error($response) || wp_remote_retrieve_response_code( $response ) === 200 ) {
 		$wp_plugin = unserialize(wp_remote_retrieve_body($response));
 		$slug ='bsf_tr_plugin_info_' . $plugin_slug;
 		$plugin = get_site_transient($slug);
@@ -66,8 +89,15 @@ class WP_plugin_Stats_Api {
 			 }
 			
 		return $plugin;
+		}
 	}
-		function bsf_display_plugin_name( $atts ) {
+	/**
+	 * shortcode.
+	 *
+	 * @param int $atts Get attributes plugin Slug.
+	 * @return array $plugin Get plugin Details.
+	 */
+	function bsf_display_plugin_name( $atts ) {
 		$atts = shortcode_atts(
 			array(
 				'plugin'   => isset( $atts['wp_plugin_slug'] ) ? $atts['wp_plugin_slug'] : '',
@@ -106,6 +136,12 @@ class WP_plugin_Stats_Api {
 		return $plugin->name;
 
 		}
+	/**
+	 * shortcode.
+	 *
+	 * @param int $atts Get attributes plugin Slug.
+	 * @return array $plugin Get plugin Details.
+	 */
 	function bsf_display_plugin_active_installs( $atts ) {
 		$atts = shortcode_atts(
 			array(
@@ -145,6 +181,12 @@ class WP_plugin_Stats_Api {
 		return $plugin->active_installs;
 
 		}
+			/**
+	 * shortcode.
+	 *
+	 * @param int $atts Get attributes plugin Slug.
+	 * @return array $plugin Get plugin Details.
+	 */
 	function bsf_display_plugin__version( $atts ) {
 		$atts = shortcode_atts(
 			array(
@@ -171,7 +213,6 @@ class WP_plugin_Stats_Api {
 				);
 
 				$plugin = $this->bsf_plugin_get_text( 'plugin_information',$api_params);
-				
 				// return if we get false response.
 				if ( false == $plugin ) {
 					return 'Please Verify plugin Details!';
@@ -180,6 +221,12 @@ class WP_plugin_Stats_Api {
 		return $plugin->version;
 
 		}
+	/**
+	 * shortcode.
+	 *
+	 * @param int $atts Get attributes plugin Slug.
+	 * @return array $plugin Get plugin Details.
+	 */
 	function bsf_display_plugin__ratings( $atts ) {
 
 		$atts = shortcode_atts(
@@ -207,7 +254,6 @@ class WP_plugin_Stats_Api {
 				);
 
 				$plugin = $this->bsf_plugin_get_text( 'plugin_information',$api_params);
-				
 				// return if we get false response.
 				if ( false == $plugin ) {
 					return 'Please Verify plugin Details!';
@@ -216,6 +262,12 @@ class WP_plugin_Stats_Api {
 		return $plugin->num_ratings;
 		
 		}
+	/**
+	 * shortcode.
+	 *
+	 * @param int $atts Get attributes plugin Slug.
+	 * @return array $plugin Get plugin Details.
+	 */
 	function bsf_display_plugin__fiveStar_ratings( $atts) {
 
 		$atts = shortcode_atts(
@@ -241,22 +293,21 @@ class WP_plugin_Stats_Api {
 						'ratings' => true,
 					),
 				);
-
 				$plugin = $this->bsf_plugin_get_text( 'plugin_information',$api_params);
-				
 				// return if we get false response.
 				if ( false == $plugin ) {
 					return 'Please Verify plugin Details!';
 				}
 			}
-			
-			// wp_die();
 		return $plugin->ratings[5];
-			//return $outof;
 		}
+	/**
+	 * shortcode.
+	 *
+	 * @param int $atts Get attributes plugin Slug.
+	 * @return array $plugin Get plugin Details.
+	 */
 	function bsf_display_plugin__average_ratings( $atts ) {
-		//var_dump($atts['outof']);//Error
-		
 		$atts = shortcode_atts(
 			array(
 				'plugin'   => isset( $atts['wp_plugin_slug'] ) ? $atts['wp_plugin_slug'] : '',
@@ -284,19 +335,16 @@ class WP_plugin_Stats_Api {
 				);
 
 				$plugin = $this->bsf_plugin_get_text( 'plugin_information',$api_params);
-				
-				// return if we get false response.
+					// return if we get false response.
 				if ( false == $plugin ) {
 					return 'Please Verify plugin Details!';
 				}
 			}
-			// var_dump($outof);
-			// wp_die();
+		
 			if(is_numeric($outof)|| empty($outof))
 			{
 				$outof = (!empty($outof) ? $outof : 100 );
 				$outof = ( ($plugin->rating) / 100 ) * $outof ;
-				// var_dump($atts['outof']);
 				return $outof;
 			}
 			else
@@ -304,8 +352,13 @@ class WP_plugin_Stats_Api {
 				return "Out Of Value Must Be Nummeric!";
 			}
 		}
+	/**
+	 * shortcode.
+	 *
+	 * @param int $atts Get attributes plugin Slug.
+	 * @return array $plugin Get plugin Details.
+	 */
 	function bsf_display_plugin__totaldownloads( $atts ) {
-
 		$atts = shortcode_atts(
 			array(
 				'plugin'   => isset( $atts['wp_plugin_slug'] ) ? $atts['wp_plugin_slug'] : '',
@@ -331,19 +384,21 @@ class WP_plugin_Stats_Api {
 				);
 
 				$plugin = $this->bsf_plugin_get_text( 'plugin_information',$api_params);
-				
 				// return if we get false response.
 				if ( false == $plugin ) {
 					return 'Please Verify plugin Details!';
 				}
 			}
 		return $plugin->downloaded;
-		
 		}
+	/**
+	 * shortcode.
+	 *
+	 * @param int $atts Get attributes plugin Slug.
+	 * @return array $plugin Get plugin Details.
+	 */
 	function bsf_display_plugin__lastupdated( $atts ) {
 		$dateformat  = get_option('wp_info');
-		// var_dump($dateformat);
-		// wp_die();
 		$atts = shortcode_atts(
 			array(
 				'plugin'   => isset( $atts['wp_plugin_slug'] ) ? $atts['wp_plugin_slug'] : '',
@@ -375,16 +430,17 @@ class WP_plugin_Stats_Api {
 					return 'Please Verify plugin Details!';
 				}
 			}
-			// $originalDate = "2010-03-21";
-
 			$dateformat['Choice'] = (!empty($dateformat['Choice']) ? $dateformat['Choice'] : 'Y-m-d' );
-			//(!empty($second) ? $second : 86400 );
-				 //var_dump($dateformat['Choice']);
-		// wp_die();
 			$newDate = date($dateformat['Choice'], strtotime($plugin->last_updated));
 		return $newDate;
 		
 		}
+	/**
+	 * shortcode.
+	 *
+	 * @param int $atts Get attributes plugin Slug.
+	 * @return array $plugin Get plugin Details.
+	 */
 	function bsf_display_plugin__downloadlink( $atts ,$label ) {
 		//$label= $label;
 		$atts = shortcode_atts(
@@ -424,6 +480,13 @@ class WP_plugin_Stats_Api {
 		
 		return '<a href="'.esc_url($plugin->download_link).'" target="_blank">'.$label.'</a>';		
 		}
+	/**
+	 * Get the plugin Details.
+	 *
+	 * @param int $action Get attributes plugin Details.
+	 * @param int $api_params Get attributes plugin Details.
+	 * @return array $plugin Get plugin Details.
+	 */
 	function bsf_display_plugins_active_count($action,$api_params=array()){
 		$frequency  = get_option('wp_info');
 		$second = 0;
@@ -443,9 +506,12 @@ class WP_plugin_Stats_Api {
 		        return "Error! missing Plugin Author";
 		}
 		else{
-		if ( !is_wp_error($response) ) {
+		if ( !is_wp_error($response) || wp_remote_retrieve_response_code( $response ) === 200 ) {
 		    $returned_object = unserialize(wp_remote_retrieve_body($response));
 		     $plugins = $returned_object->plugins;
+		     // var_dump($response);
+		     // wp_die();
+		     
 		     	$temp = 0;
 		        	// $t = 0;
 		        	foreach ($plugins as $key) 
@@ -457,7 +523,7 @@ class WP_plugin_Stats_Api {
 			$plugins = get_site_transient($author);
 
 
-		    if ( false === $plugins || empty($plugins) ) {
+		    if ( false === $plugins || empty($plugins)) {
 	
 		    $second = (!empty($second) ? $second : 86400 );
 			set_site_transient( $author , $temp ,$second );
@@ -467,10 +533,15 @@ class WP_plugin_Stats_Api {
 			 	return '';
 			 }
 			 return $plugins;
-		 }	
+		    }	
 		}
-		
   	}
+  	/**
+	 * shortcode.
+	 *
+	 * @param int $atts Get attributes plugin Slug.
+	 * @return array $plugin Get plugin Details.
+	 */
   	function bsf_display_Active_installs( $atts ){
   		$atts = shortcode_atts(
 			array(
@@ -484,19 +555,24 @@ class WP_plugin_Stats_Api {
 				'per_page' => 1,
 			);
 		$plugins = $this->bsf_display_plugins_active_count( 'query_plugins',$api_params['plugin_author']);
-		if ( false == $plugins ) 
+		// var_dump($plugins);
+		// wp_die();
+		if ( false === is_numeric($plugins) )
 		{
 					return 'Please Verify plugin Author!';
 		}
-		// setlocale(LC_MONETARY, 'en_US.UTF-8');
-		// $plugins = money_format('%.2n', $plugins);
-		// var_dump($plugins);
-		// wp_die();
-
+		else{
 		return number_format($plugins);
-		// $number_format = $this->number_format_unchanged_precision($plugins);
-		// return $number_format;
+		}
+			
   	}
+  	/**
+	 * Get the plugin Details.
+	 *
+	 * @param int $action Get attributes plugin Details.
+	 * @param int $api_params Get attributes plugin Details.
+	 * @return array $plugin Get plugin Details.
+	 */
   	function bsf_display_total_plugin_download_count($action,$api_params=array()){
 		$frequency  = get_option('wp_info');
 		$second = 0;
@@ -515,7 +591,7 @@ class WP_plugin_Stats_Api {
 		        return "Error! missing Plugin Author";
 		}
 		else{
-		if ( !is_wp_error($response) ) {
+		if ( !is_wp_error($response) || wp_remote_retrieve_response_code( $response ) === 200 ) {
 		    $returned_object = unserialize(wp_remote_retrieve_body($response));
 		     $plugins = $returned_object->plugins;
 		     	$temp = 0;
@@ -555,11 +631,14 @@ class WP_plugin_Stats_Api {
 				'per_page' => 1,
 			);
 		$plugins = $this->bsf_display_total_plugin_download_count( 'query_plugins',$api_params['plugin_author']);
-		if ( false == $plugins )
+		if ( false === is_numeric($plugins) )
 		{
 					return 'Please Verify plugin Author!';
 		}
+		else{
 		return number_format($plugins);
+		}
   	}
 }
 new WP_plugin_Stats_Api();
+$WP_plugin_Stats_Api = WP_plugin_Stats_Api::get_instance();

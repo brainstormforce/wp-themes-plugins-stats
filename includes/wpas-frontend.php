@@ -1,4 +1,11 @@
 <?php
+/**
+ * Tab on Setting Page.
+ *
+ * @package WP Advanced Stats
+ * @author Brainstorm Force
+ * @since 1.0.0
+ */
 // Navigation.
 
 // To get the tab value from URL and store in $active_tab variable.
@@ -7,13 +14,13 @@ esc_attr_e( 'WP Advanced Stats', 'wp-as' );
 echo '</h1>';
 $active_tab = 'wp_as_general_settings';
 
-if ( isset( $_GET['tab'] ) ) {//PHPCS:ignore:WordPress.Security.NonceVerification.Recommended
+if ( isset( $_GET['tab'] ) ) {
 
-	if ( 'wp_as_general_settings' === $_GET['tab'] ) {//PHPCS:ignore:WordPress.Security.NonceVerification.Recommended
+	if ( 'wp_as_general_settings' === $_GET['tab'] ) {
 
 		$active_tab = 'wp_as_general_settings';
 
-	} elseif ( 'wp_as_user_manual' === $_GET['tab'] ) {//PHPCS:ignore:WordPress.Security.NonceVerification.Recommended
+	} elseif ( 'wp_as_user_manual' === $_GET['tab'] ) {
 
 		$active_tab = 'wp_as_user_manual';
 	}
@@ -21,9 +28,6 @@ if ( isset( $_GET['tab'] ) ) {//PHPCS:ignore:WordPress.Security.NonceVerificatio
 
 ?>
 
-<!-- WordPress provides the styling for tabs. -->
-
-<!-- when tab buttons are clicked we jump back to the same page but with a new parameter that represents the clicked tab. accordingly we make it active -->
 
 <h2 class="nav-tab-wrapper">
 <a href="?page=bsf-as-setting-admin&tab=wp_as_general_settings" class="nav-tab tb 
@@ -43,15 +47,15 @@ if ( isset( $_GET['tab'] ) ) {//PHPCS:ignore:WordPress.Security.NonceVerificatio
 </h2>
 
 <?php
-// here we display the sections and options in the settings page based on the active tab.
-if ( isset( $_GET['tab'] ) ) {//PHPCS:ignore:WordPress.Security.NonceVerification.Recommended
 
-	if ( 'wp_as_general_settings' === $_GET['tab'] ) {//PHPCS:ignore:WordPress.Security.NonceVerification.Recommended
-		//echo "klcgbklg";
+if ( isset( $_GET['tab'] ) ) {
+
+	if ( 'wp_as_general_settings' === $_GET['tab'] ) {
+	
 		require_once 'wpas-general-settings.php';
 
 	} 
-	elseif ( 'wp_as_user_manual' === $_GET['tab'] ) {//PHPCS:ignore:WordPress.Security.NonceVerification.Recommended
+	elseif ( 'wp_as_user_manual' === $_GET['tab'] ) {
 
 		require_once 'wpas-user-manual.php';
 	}

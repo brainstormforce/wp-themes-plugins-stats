@@ -6,10 +6,10 @@
  * @package    BSF
  * @author     Brainstorm Force.
  */
-wp_enqueue_style('bsf_wpas_as_stylesheet');
+wp_enqueue_style('bsf_wpas_stylesheet');
 $wp_info = get_option('wp_info');
 $frequency = (!empty($wp_info['Frequency']) ? $wp_info['Frequency'] : 1); 
-
+$choice = (!empty($wp_info['Choice']) ? $wp_info['Choice'] : 'd/m/y');
 ?>
 <div class="wp_as_global_settings" id="wp_as_global_settings">
 <form method="post" name="wpas_settings_form">
@@ -60,26 +60,25 @@ $frequency = (!empty($wp_info['Frequency']) ? $wp_info['Frequency'] : 1);
 					 <?php esc_html_e( 'Year, month abbreviation and day ( e.g 19 Mar 24)', 'wp-as' ); 
 				} else {
 				?>
-					<input type="radio" name="wpasoption" value="d/m/y"<?php checked( 'd/m/y' == $wp_info['Choice'] ); ?> />
+					<input type="radio" name="wpasoption" value="d/m/y"<?php checked( 'd/m/y' == $choice ); ?> />
 					 <?php esc_html_e( 'Day, month and two digit year ( e.g 24/03/12)', 'wp-as' ); ?>
 					<br></br>
-						<input type="radio" name="wpasoption" value="dS F Y"<?php checked( 'dS F Y' == $wp_info['Choice'] ); ?> />
+						<input type="radio" name="wpasoption" value="dS F Y"<?php checked( 'dS F Y' == $choice ); ?> />
 					 <?php esc_html_e( 'Day, textual month and year ( e.g 24th March 2012)', 'wp-as' ); ?>
 					<br></br>
-					    <input type="radio" name="wpasoption" value="F jS Y"<?php checked( 'F jS Y' == $wp_info['Choice'] ); ?> />
+					    <input type="radio" name="wpasoption" value="F jS Y"<?php checked( 'F jS Y' == $choice ); ?> />
 					 <?php esc_html_e( 'Textual month, day and year ( e.g March 24th, 2012)', 'wp-as' ); ?>
 					<br></br>
-					 	<input type="radio" name="wpasoption" value="d.m.Y"<?php checked( 'd.m.Y' == $wp_info['Choice'] ); ?> />
+					 	<input type="radio" name="wpasoption" value="d.m.Y"<?php checked( 'd.m.Y' == $choice ); ?> />
 					 <?php esc_html_e( 'Month, day and year ( e.g 24.03.2012)', 'wp-as' ); ?>
 					<br></br>
-					 	<input type="radio" name="wpasoption" value="y M d"<?php checked( 'y M d' == $wp_info['Choice'] ); ?> />
+					 	<input type="radio" name="wpasoption" value="y M d"<?php checked( 'y M d' == $choice ); ?> />
 					 <?php esc_html_e( 'Year, month abbreviation and day ( e.g 19 Mar 24)', 'wp-as' ); 
 				}
 				?>
 			</td>
 		</tr>
 </table>
-
 <table class="form-table">
 <tr>
 <th>
