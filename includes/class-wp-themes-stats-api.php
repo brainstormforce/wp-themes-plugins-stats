@@ -38,7 +38,7 @@ class WP_Themes_Stats_Api {
 	/**
 	 * Constructor calling W.ORG API Response.
 	 */
-	function __construct() {
+	public function __construct() {
 		add_shortcode( 'adv_stats_theme_name', array( $this, 'bsf_display_theme_name' ) );
 		add_shortcode( 'adv_stats_theme_active_install', array( $this, 'bsf_display_theme_active_installs' ) );
 		add_shortcode( 'adv_stats_theme_version', array( $this, 'bsf_display_theme_version' ) );
@@ -59,7 +59,7 @@ class WP_Themes_Stats_Api {
 	 * @param int $api_params Get attributes theme Details.
 	 * @return array $theme Get theme Details.
 	 */
-	function get_theme_activate_installs( $action, $api_params = array() ) {
+	public function get_theme_activate_installs( $action, $api_params = array() ) {
 		$theme_slug       = isset( $api_params['theme'] ) ? $api_params['theme'] : '';
 		$update_option = array( 
 			'theme_slug' => (!empty($api_params['theme']) ? $api_params['theme'] : '' ),
@@ -90,7 +90,7 @@ class WP_Themes_Stats_Api {
 				
 				$themes_list = ( is_object( $response ) && isset( $response->themes ) ) ? $response->themes : array();
 
-				// If theme list is not returned, retuen false.
+				
 				if ( ! isset( $themes_list[0] ) ) {
 					return false;
 				}
@@ -102,7 +102,7 @@ class WP_Themes_Stats_Api {
 		
 		return $activet_installs;
 	}
-    function bsf_tr_get_text( $action, $api_params = array() ) {
+    public function bsf_tr_get_text( $action, $api_params = array() ) {
     	$theme_slug = isset( $api_params['theme'] ) ? $api_params['theme'] : '';
 		$frequency  = get_option('wp_info');
 		$second = 0;
@@ -116,7 +116,7 @@ class WP_Themes_Stats_Api {
 			    'slug' => $theme_slug,
 			    'fields' => array( 'active_installs' => true,'screenshot_url'=> true,'versions'=> true,'ratings'=> true,'download_link'=> true )
 			);
-			// Make request and extract plug-in object
+		
 			$responset = wp_remote_post(
 			    'http://api.wordpress.org/themes/info/1.0/?action=theme_information&request[fields][ratings]=true',
 			    array(
@@ -145,7 +145,7 @@ class WP_Themes_Stats_Api {
 	 *
 	 * @param int $atts Get attributes theme_name and theme_author.
 	 */
-	function bsf_display_theme_name( $atts ) {
+	public function bsf_display_theme_name( $atts ) {
 		$atts = shortcode_atts(
 			array(
 				'theme'   => isset( $atts['wp_theme_slug'] ) ? $atts['wp_theme_slug'] : '',
@@ -184,7 +184,7 @@ class WP_Themes_Stats_Api {
 	 *
 	 * @param int $atts Get attributes theme_name and theme_author.
 	 */
-	function bsf_display_theme_active_installs( $atts ) {
+	public function bsf_display_theme_active_installs( $atts ) {
 
 		$atts = shortcode_atts(
 			array(
@@ -196,7 +196,7 @@ class WP_Themes_Stats_Api {
 		$wp_theme_slug   = $atts['theme'];
 
 		$wp_theme_author = $atts['theme_author'];
-		// bail early if theme name is not provided.
+		
 		if ( '' == $wp_theme_slug ) {
 			return 'Please Verify Theme Details!';
 		}
@@ -215,7 +215,7 @@ class WP_Themes_Stats_Api {
 			);
 
 			$active_installs = $this->get_theme_activate_installs( 'query_themes', $api_params );
-			// return if we get false response.
+			
 			if ( false == $active_installs ) {
 				return 'Please Verify Theme Details!';
 			}
@@ -227,7 +227,7 @@ class WP_Themes_Stats_Api {
 	 *
 	 * @param int $atts Get attributes theme_name and theme_author.
 	 */
-	function bsf_display_theme_version( $atts ) {
+	public function bsf_display_theme_version( $atts ) {
 
 		$atts = shortcode_atts(
 			array(
@@ -254,7 +254,7 @@ class WP_Themes_Stats_Api {
 				),
 			);
 			$theme = $this->bsf_tr_get_text( 'theme_information',$api_params);
-			// return if we get false response.
+			
 			if ( false == $theme ) {
 				return 'Please Verify Theme Details!';
 			}
@@ -266,7 +266,7 @@ class WP_Themes_Stats_Api {
 	 *
 	 * @param int $atts Get attributes theme_name and theme_author.
 	 */
-	function bsf_display_theme_ratings( $atts ) {
+	public function bsf_display_theme_ratings( $atts ) {
 
 		$atts = shortcode_atts(
 			array(
@@ -293,7 +293,6 @@ class WP_Themes_Stats_Api {
 				),
 			);
 			$theme = $this->bsf_tr_get_text( 'theme_information',$api_params);
-			// return if we get false response.
 			if ( false == $theme ) {
 				return 'Please Verify Theme Details!';
 			}
@@ -305,7 +304,7 @@ class WP_Themes_Stats_Api {
 	 *
 	 * @param int $atts Get attributes theme_name and theme_author.
 	 */
-	function bsf_display_theme_FiveStarRatings( $atts ) {
+	public function bsf_display_theme_FiveStarRatings( $atts ) {
 		$atts = shortcode_atts(
 			array(
 				'theme'   => isset( $atts['wp_theme_slug'] ) ? $atts['wp_theme_slug'] : '',
@@ -317,7 +316,6 @@ class WP_Themes_Stats_Api {
 		$wp_theme_slug   = $atts['theme'];
 		$wp_theme_author = $atts['theme_author'];
 	
-		// bail early if theme name is not provided.
 		if ( '' == $wp_theme_slug ) {
 			return 'Please Verify Theme Details!';
 		}
@@ -334,7 +332,7 @@ class WP_Themes_Stats_Api {
 				),
 			);
 			$theme = $this->bsf_tr_get_text( 'theme_information',$api_params);
-			// return if we get false response.
+			
 			if ( false == $theme ) {
 				return 'Please Verify Theme Details!';
 			}
@@ -346,7 +344,7 @@ class WP_Themes_Stats_Api {
 	 *
 	 * @param int $atts Get attributes theme_name and theme_author.
 	 */
-	function bsf_display_theme_AverageRatings( $atts ) {
+	public function bsf_display_theme_AverageRatings( $atts ) {
 		$atts = shortcode_atts(
 			array(
 				'theme'   => isset( $atts['wp_theme_slug'] ) ? $atts['wp_theme_slug'] : '',
@@ -358,7 +356,7 @@ class WP_Themes_Stats_Api {
 		$wp_theme_slug   = $atts['theme'];
 		$wp_theme_author = $atts['theme_author'];
 		$outof = $atts['outof'];
-		// bail early if theme name is not provided.
+		
 		if ( '' == $wp_theme_slug ) {
 			return 'Please Verify Theme Details!';
 		}
@@ -375,7 +373,7 @@ class WP_Themes_Stats_Api {
 				),
 			);
 			$theme = $this->bsf_tr_get_text( 'theme_information',$api_params);
-			// return if we get false response.
+			
 			if ( false == $theme ) {
 				return 'Please Verify Theme Details!';
 			}
@@ -396,7 +394,7 @@ class WP_Themes_Stats_Api {
 	 *
 	 * @param int $atts Get attributes theme_name and theme_author.
 	 */
-	function bsf_display_theme_totaldownloads( $atts ) {
+	public function bsf_display_theme_totaldownloads( $atts ) {
 		$atts = shortcode_atts(
 			array(
 				'theme'   => isset( $atts['wp_theme_slug'] ) ? $atts['wp_theme_slug'] : '',
@@ -406,7 +404,7 @@ class WP_Themes_Stats_Api {
 		$version = false;
 		$wp_theme_slug   = $atts['theme'];
 		$wp_theme_author = $atts['theme_author'];
-		// bail early if theme name is not provided.
+		
 		if ( '' == $wp_theme_slug ) {
 			return 'Please Verify Theme Details!';
 		}
@@ -434,7 +432,7 @@ class WP_Themes_Stats_Api {
 	 *
 	 * @param int $atts Get attributes theme_name and theme_author.
 	 */
-	function bsf_display_theme_lastupdated( $atts ) {
+	public function bsf_display_theme_lastupdated( $atts ) {
 		$dateformat  = get_option('wp_info');
 		$atts = shortcode_atts(
 			array(
@@ -461,12 +459,12 @@ class WP_Themes_Stats_Api {
 				),
 			);
 			$theme = $this->bsf_tr_get_text( 'theme_information',$api_params);
-			// return if we get false response.
+			
 			if ( false == $theme ) {
 				return 'Please Verify Theme Details!';
 			}
 		}
-		$dateformat['Choice'] = (!empty($dateformat['Choice']) ? $dateformat['Choice'] : 'Y-m-d' );
+		$dateformat['Choice'] = (!empty($dateformat['Choice']) ? sanitize_text_field($dateformat['Choice']) : 'Y-m-d' );
 		$newDate = date($dateformat['Choice'], strtotime($theme->last_updated));
 		return $newDate;
 	}
@@ -475,7 +473,7 @@ class WP_Themes_Stats_Api {
 	 *
 	 * @param int $atts Get attributes theme_name and theme_author.
 	 */
-	function bsf_display_theme_downloadlink( $atts, $label ){
+	public function bsf_display_theme_downloadlink( $atts, $label ){
 		$atts = shortcode_atts(
 			array(
 				'theme'   => isset( $atts['wp_theme_slug'] ) ? $atts['wp_theme_slug'] : '',
@@ -487,7 +485,7 @@ class WP_Themes_Stats_Api {
 		$wp_theme_slug   = $atts['theme'];
 		$wp_theme_author = $atts['theme_author'];
 		$wp_theme_label = $atts['label'];
-		// bail early if theme name is not provided.
+		
 		if ( '' == $wp_theme_slug ) {
 			return 'Please Verify Theme Details!';
 		}
@@ -521,7 +519,7 @@ class WP_Themes_Stats_Api {
 	 * @param int $api_params Get attributes theme Details.
 	 * @return array $theme Get theme Details.
 	 */
-	function bsf_get_theme_active_count( $action , $api_params=array() ){
+	public function bsf_get_theme_active_count( $action , $api_params=array() ){
 		
 		$frequency  = get_option('wp_info');
 		$second = 0;
@@ -545,14 +543,12 @@ class WP_Themes_Stats_Api {
 		    $returned_object = unserialize(wp_remote_retrieve_body($response));
 		     $themes = $returned_object->themes;
 		     	$temp = 0;
-		        	// $t = 0;
-		        	foreach ($themes as $key) 
+		         	foreach ($themes as $key) 
 		        	{
 		        		$temp = $temp + $key->active_installs;
 		        		
 		        	}
-		     // echo $api_params;
-		     // wp_die();   	
+		    	
 		    $author ='bsf_tr_themes_Active_Count_' .$api_params;
 			$themes = get_site_transient($author);
 
@@ -577,7 +573,7 @@ class WP_Themes_Stats_Api {
 	 *
 	 * @param int $atts Get attributes theme_author.
 	 */
-	function bsf_display_theme_active_count( $atts ){
+	public function bsf_display_theme_active_count( $atts ){
   		$atts = shortcode_atts(
 			array(
 				'theme_author'    => isset( $atts['author'] ) ? $atts['author'] : '',
@@ -589,8 +585,6 @@ class WP_Themes_Stats_Api {
 				'theme_author'   => $wp_theme_author,
 				'per_page' => 1,
 			);
-	// var_dump($api_params);
-	// 	wp_die();
 
 		$themes = $this->bsf_get_theme_active_count('query_themes',$api_params['theme_author']);
 		if( false === is_numeric($themes))
@@ -608,7 +602,7 @@ class WP_Themes_Stats_Api {
 	 * @param int $api_params Get attributes theme Details.
 	 * @return array $theme Get theme Details.
 	 */
-  	function bsf_get_theme_downloads_count( $action , $api_params=array() ){
+  	public function bsf_get_theme_downloads_count( $action , $api_params=array() ){
 	
 		$frequency  = get_option('wp_info');
 		$second = 0;
@@ -623,7 +617,7 @@ class WP_Themes_Stats_Api {
 		$response = wp_remote_post($url,array('body' => array('action' => 'query_themes',
 			'request' => serialize((object)$args))));
 		
-		if($api_params === ''){
+		if( '' === $api_params){
 			// Response body does not contain an object/array
 		        return "Error! missing Theme Author";
 		}
@@ -651,9 +645,7 @@ class WP_Themes_Stats_Api {
 			set_site_transient( $author , $temp ,$second );
 
 	   		}
-	   		if ( empty( $themes ) ) {
-			 	return '';
-			 }
+	   		
 			 return $themes;
 		 }	
 		}
@@ -664,7 +656,7 @@ class WP_Themes_Stats_Api {
 	 *
 	 * @param int $atts Get attributes theme_author.
 	 */
-  	function bsf_display_theme_downloaded_count( $atts ){
+  	public function bsf_display_theme_downloaded_count( $atts ){
   		$atts = shortcode_atts(
 			array(
 				'theme_author'    => isset( $atts['author'] ) ? $atts['author'] : '',
