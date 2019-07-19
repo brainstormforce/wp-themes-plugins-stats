@@ -11,7 +11,7 @@
  *
  * @since 1.0.0
  */
-//require_once(WP_THEMES_STATS_BASE_DIR.'includes/class-wp-thes-stats-api.php');
+require_once(WP_as_STATS_BASE_DIR.'includes/class-wp-plugins-stats-api.php');
 
 class WP_Themes_Stats_Api {
 	/**
@@ -99,9 +99,34 @@ class WP_Themes_Stats_Api {
 				set_transient( "bsf_active_status_$theme_slug", $activet_installs, 604800 );
 			}
 		}
+			// $x = get_option('wp_info');
+			
+			// if( 1 == $x['Hrchoice']){
+			// 	//var_dump($this->bsf_display_human_readable($activet_installs));
+			// return $this->bsf_display_human_readable($activet_installs);
+
+			// }else{
+			// 	return number_format($activet_installs);
+			// }
 		
-		return $activet_installs;
+		 return $activet_installs;
 	}
+	 function bsf_display_human_readable($n) {
+        	// first strip any formatting;
+
+        $n = (0+str_replace(",","",$n));
+        
+        // is this a number?
+        if(!is_numeric($n)) return false;
+        
+        // now filter it;
+        if($n>1000000000000) return round(($n/1000000000000),1).' trillion';
+        else if($n>1000000000) return round(($n/1000000000),1).' billion';
+        else if($n>1000000) return round(($n/1000000),1).' million';
+        else if($n>1000) return round(($n/1000),1).' thousand';
+        
+         return number_format($n);
+    }
     public function bsf_tr_get_text( $action, $api_params = array() ) {
     	$theme_slug = isset( $api_params['theme'] ) ? $api_params['theme'] : '';
 		$frequency  = get_option('wp_info');
@@ -220,7 +245,8 @@ class WP_Themes_Stats_Api {
 				return 'Please Verify Theme Details!';
 			}
 		}
-		return $active_installs;
+
+		return number_format($active_installs);
 	}
 	/**
 	 * Display Theme Version.
@@ -592,7 +618,20 @@ class WP_Themes_Stats_Api {
 			return "Author is missing!";
 		}
 		else{
-		return number_format($themes);
+			$x = get_option('wp_info');
+			//var_dump($x['Hrchoice']);
+			if( 1 == $x['Hrchoice']){
+				$num = $themes;
+			// var_dump($this->bsf_display_human_readable($num));
+			$n = $this->bsf_display_human_readable($num);
+		// return number_format($plugin->active_installs);
+			return $n;
+		// return number_format($plugins);
+			}
+			else{
+				return number_format($themes);
+			}
+		
 		}
   	}
   	/**
@@ -677,6 +716,19 @@ class WP_Themes_Stats_Api {
 			return "Author is missing!";
 		}
 		else{
+			$x = get_option('wp_info');
+			//var_dump($x['Hrchoice']);
+			if( 1 == $x['Hrchoice']){
+				$num = $themes;
+			// var_dump($this->bsf_display_human_readable($num));
+			$n = $this->bsf_display_human_readable($num);
+		// return number_format($plugin->active_installs);
+			return $n;
+		// return number_format($plugins);
+			}
+			else{
+				return number_format($themes);
+			}
 		return number_format($themes);
 		}
   	}

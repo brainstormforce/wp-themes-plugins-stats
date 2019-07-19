@@ -104,14 +104,25 @@ if ( ! class_exists( 'WP_as_Loader' ) ) {
 				return;
 			}
 			if ( !empty( $_POST['wpas-form'] ) && wp_verify_nonce( $_POST['wpas-form'], 'wpas-form-nonce' ) ) {
+				$choice = (!empty($_POST['wpasoption']) ? sanitize_text_field($_POST['wpasoption']) : '');
+				if(!empty($_POST['wpasoption']) && 'ok' == $_POST['wpasoption']){
+
+					$choice = $_POST['date_format_custom'];
+				}
 
 				  $update_option = array( 
 			'Frequency' => (!empty($_POST['frequency']) ? sanitize_text_field($_POST['frequency']) : 1 ),
-			// 'Custom'  => (!empty($_POST['wpascustomoption']) ? sanitize_text_field($_POST['wpascustomoption']) : 'd-m-y'),
-			'Choice'    => (!empty($_POST['wpasoption']) ? sanitize_text_field($_POST['wpasoption']) : ''),
+			// 'Custom'  => (!empty($_POST['custom_field']) ? sanitize_text_field($_POST['custom_field']) : 'd-m-y'),
+			// 'Option_custom' => (!empty($_POST['wpascustom']) ? sanitize_text_field($_POST['wpascustom']) : ''),
+			'Choice'    => $choice,
+			'Hrchoice'  => (!empty($_POST['wpas_hr_option']) ? $_POST['wpas_hr_option'] : ''),
+
 
 		);
+				  // var_dump($update_option['Choice']);
+				  // wp_die();
 		update_option('wp_info', $update_option);
+
 	}
 }      
 	}

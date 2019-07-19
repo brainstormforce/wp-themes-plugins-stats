@@ -9,6 +9,7 @@
 // Getting Started tab
 wp_enqueue_style('bsf_wpas_stylesheet');
 	?>
+	<div class="wp_as_global_settings">
 	<h2> <?php esc_html_e('Welcome to Advanced Stats!','wp-as'); ?></h2>
 	<p><?php esc_html_e('The Advanced Stats plugin is built to track plugins and themes information on your website. Just paste the shortcode in the desired position!','wp-as')?></p>
 	<br><label class="wpas_page_title" for="howtouse">
@@ -200,5 +201,6 @@ wp_enqueue_style('bsf_wpas_stylesheet');
 						</div>
 					</div>
 				</div>
+	</div>			
 	<?php
 ?>

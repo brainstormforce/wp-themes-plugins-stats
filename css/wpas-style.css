@@ -42,9 +42,9 @@ width: 200px;
 line-height: 1.3;
 font-weight: 600;	
 }
-.wpas-dateformat td {
+.wpas-date {
 margin-bottom: 9px;
-padding: 20px 10px 20px 0;
+padding: 19px 0px;
 line-height: 1.3;
 vertical-align: middle;
 }
@@ -58,5 +58,12 @@ font-size: 1.3em;
 margin: 1em 0;
 }
 .cd{
-	margin: 25px;
-} 
+margin: 25px;
+}
+.wp_as_global_settings {
+padding: 10px;
+}
+#date_format_custom{
+margin: 0px 42px;
+padding: 2px 3px 2px 3px;
+}

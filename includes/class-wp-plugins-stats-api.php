@@ -88,6 +88,7 @@ class WP_plugin_Stats_Api {
 		return $plugin;
 		}
 	}
+	
 	/**
 	 * shortcode.
 	 *
@@ -175,9 +176,32 @@ class WP_plugin_Stats_Api {
 					return 'Please Verify plugin Details!';
 				}
 			}
-		return $plugin->active_installs;
-
+			$x = get_option('wp_info');
+			
+			if( 1 == $x['Hrchoice']){
+			$num = $plugin->active_installs;
+		
+			$n = $this->bsf_display_human_readable($num);
+			return $n;
+			}else{
+				return number_format($plugin->active_installs);
+			}
 		}
+		 function bsf_display_human_readable($n) {
+        	// first strip any formatting;
+        $n = (0+str_replace(",","",$n));
+        
+        // is this a number?
+        if(!is_numeric($n)) return false;
+        
+        // now filter it;
+        if($n>1000000000000) return round(($n/1000000000000),1).' trillion';
+        else if($n>1000000000) return round(($n/1000000000),1).' billion';
+        else if($n>1000000) return round(($n/1000000),1).' million';
+        else if($n>1000) return round(($n/1000),1).' thousand';
+        
+         return number_format($n);
+    }
 	/**
 	 * shortcode.
 	 *
@@ -558,7 +582,19 @@ class WP_plugin_Stats_Api {
 					return 'Please Verify plugin Author!';
 		}
 		else{
-		return number_format($plugins);
+			$x = get_option('wp_info');
+			//var_dump($x['Hrchoice']);
+			if( 1 == $x['Hrchoice']){
+			$num = $plugins;
+			//var_dump($this->bsf_display_human_readable($num));
+			$n = $this->bsf_display_human_readable($num);
+		// return number_format($plugin->active_installs);
+			return $n;
+		// return number_format($plugins);
+			}else{
+				return number_format($plugins);
+			}
+
 		}
 			
   	}
@@ -632,7 +668,20 @@ class WP_plugin_Stats_Api {
 					return 'Please Verify plugin Author!';
 		}
 		else{
-		return number_format($plugins);
+			$x = get_option('wp_info');
+			//var_dump($x['Hrchoice']);
+			if( 1 == $x['Hrchoice']){
+				$num = $plugins;
+			// var_dump($this->bsf_display_human_readable($num));
+			$n = $this->bsf_display_human_readable($num);
+		// return number_format($plugin->active_installs);
+			return $n;
+		// return number_format($plugins);
+			}
+			else{
+				return number_format($plugins);
+			}
+			
 		}
   	}
 }
