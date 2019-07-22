@@ -9,7 +9,7 @@
 // Navigation.
 
 // To get the tab value from URL and store in $active_tab variable.
-echo '<h1 class="bsf_rt_main_title">';
+echo '<h1 class="bsf_wp_as_main_title">';
 esc_attr_e( 'WP Advanced Stats', 'wp-as' );
 echo '</h1>';
 $active_tab = 'wp_as_general_settings';
@@ -51,11 +51,10 @@ if ( isset( $_GET['tab'] ) ) {
 if ( isset( $_GET['tab'] ) ) {
 
 	if ( 'wp_as_general_settings' === $_GET['tab'] ) {
-	
+
 		require_once 'wpas-general-settings.php';
 
-	} 
-	elseif ( 'wp_as_user_manual' === $_GET['tab'] ) {
+	} elseif ( 'wp_as_user_manual' === $_GET['tab'] ) {
 
 		require_once 'wpas-user-manual.php';
 	}
