@@ -6,13 +6,13 @@
  * @package WP Advanced Stats/Loader
  */
 
-if ( ! class_exists( 'WP_as_loader' ) ) {
+if ( ! class_exists( 'Wp_As_Loader' ) ) {
 	/**
 	 * Responsible for setting up constants, classes and includes.
 	 *
 	 * @since 1.0
 	 */
-	final class WP_as_loader {
+	final class Wp_As_Loader {
 		/**
 		 * The unique instance of the plugin.
 		 *
@@ -34,7 +34,6 @@ if ( ! class_exists( 'WP_as_loader' ) ) {
 
 			return self::$instance;
 		}
-
 		/**
 		 * Constructor.
 		 */
@@ -44,10 +43,8 @@ if ( ! class_exists( 'WP_as_loader' ) ) {
 			$this->load_files();
 			add_action( 'admin_menu', array( $this, 'bsf_wpas_add_plugin_page' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'bsf_wpas_assets' ) );
-			//add_action( 'admin_enqueue_scripts', array( $this, 'bsf_wpas_jsfile' ) );
 			add_action( 'init', array( $this, 'bsf_wpas_process_form_general_settings' ) );
 		}
-
 		/**
 		 * Define constants.
 		 *
@@ -80,12 +77,6 @@ if ( ! class_exists( 'WP_as_loader' ) ) {
 			wp_register_style( 'bsf_wpas_stylesheet', BSF_AS_PLUGIN_URL . '/css/wpas-style.css', null, WP_AS_STATS_VERSION, false );
 			wp_register_script( 'bsf_wpas_jsfile', BSF_AS_PLUGIN_URL . '/js/wpas-human-readable.js', null, WP_AS_STATS_VERSION, false );
 		}
-		/**
-		 * Process plugin's Javascript to General setting Tab form Data(human Readable format unable).
-		 */
-		// public function bsf_wpas_jsfile() {
-		//   wp_register_script( 'bsf_wpas_jsfile', BSF_AS_PLUGIN_URL . '/js/wpas-human-readable.js', null, WP_AS_STATS_VERSION, false );
-		// }
 		/**
 		 * WP Advanced Stats Option in Setting Page.
 		 */
@@ -123,19 +114,20 @@ if ( ! class_exists( 'WP_as_loader' ) ) {
 
 					$choice = $_POST['date_format_custom'];
 				}
-
 				$update_option = array(
 					'Frequency' => ( ! empty( $_POST['frequency'] ) ? sanitize_text_field( $_POST['frequency'] ) : 1 ),
 					'Choice'    => $choice,
-					'Hrchoice'  => ( ! empty( $_POST['wpas_hr_option'] ) ? $_POST['wpas_hr_option'] : '' ),
-					'Rchoice'   => ( ! empty( $_POST['wpas_r_option'] ) ? $_POST['wpas_r_option'] : '' ),
-					'Symbol'    => ( ! empty( $_POST['wpas_number_group'] ) ? $_POST['wpas_number_group'] : '' ),
-
+					'Hrchoice'  => ( ! empty( $_POST['wpas_hr_option'] ) ? sanitize_text_field( $_POST['wpas_hr_option'] ) : '' ),
+					'Rchoice'   => ( ! empty( $_POST['wpas_r_option'] ) ? sanitize_text_field( $_POST['wpas_r_option'] ) : '' ),
+					'Field1'    => ( ! empty( $_POST['field1'] ) ? sanitize_text_field( $_POST['field1'] ) : '' ),
+					'Field2'    => ( ! empty( $_POST['field2'] ) ? sanitize_text_field( $_POST['field2'] ) : '' ),
+					'Field3'    => ( ! empty( $_POST['field3'] ) ? sanitize_text_field( $_POST['field3'] ) : '' ),
+					'Field4'    => ( ! empty( $_POST['field4'] ) ? sanitize_text_field( $_POST['field4'] ) : '' ),
+					'Symbol'    => ( ! empty( $_POST['wpas_number_group'] ) ? sanitize_text_field( $_POST['wpas_number_group'] ) : '' ),
 				);
-
 				update_option( 'wp_info', $update_option );
 			}
 		}
 	}
-	$wp_as_loader = WP_as_Loader::get_instance();
+	$wp_as_loader = Wp_As_Loader::get_instance();
 }

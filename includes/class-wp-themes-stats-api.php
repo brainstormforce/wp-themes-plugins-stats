@@ -42,7 +42,7 @@ class WP_Themes_Stats_Api {
 		add_shortcode( 'adv_stats_theme_active_install', array( $this, 'bsf_display_theme_active_installs' ) );
 		add_shortcode( 'adv_stats_theme_version', array( $this, 'bsf_display_theme_version' ) );
 		add_shortcode( 'adv_stats_theme_ratings', array( $this, 'bsf_display_theme_ratings' ) );
-		add_shortcode( 'adv_stats_theme_ratings_5star', array( $this, 'bsf_display_theme_FiveStarRatings' ) );
+		add_shortcode( 'adv_stats_theme_ratings_5star', array( $this, 'bbsf_display_theme_five_star_ratings' ) );
 		add_shortcode( 'adv_stats_theme_ratings_average', array( $this, 'bsf_display_theme_AverageRatings' ) );
 		add_shortcode( 'adv_stats_theme_downloads', array( $this, 'bsf_display_theme_totaldownloads' ) );
 		add_shortcode( 'adv_stats_theme_last_updated', array( $this, 'bsf_display_theme_lastupdated' ) );
@@ -98,28 +98,28 @@ class WP_Themes_Stats_Api {
 		}
 		 return $activet_installs;
 	}
+	/**
+	 *
+	 * @param int $n Get Count of plugin.
+	 * @return float $n Get human readable format.
+	 */
 	function bsf_display_human_readable( $n ) {
 		   // first strip any formatting;
-
 		$n = ( 0 + str_replace( ',', '', $n ) );
-
-		// is this a number?
 		if ( ! is_numeric( $n ) ) {
 			return false;
 		}
-
-		// now filter it;
-		if ( $n > 1000000000000 ) {
-			return round( ( $n / 1000000000000 ), 1 ) . ' trillion';
-		} elseif ( $n > 1000000000 ) {
-			return round( ( $n / 1000000000 ), 1 ) . ' billion';
-		} elseif ( $n > 1000000 ) {
-			return round( ( $n / 1000000 ), 1 ) . ' million';
-		} elseif ( $n > 1000 ) {
-			return round( ( $n / 1000 ), 1 ) . ' thousand';
+		$x = get_option( 'wp_info' );
+		if ( 'K' === $x['Rchoice'] ) {
+				return round( ( $n / 1000 ), 0 ) . $x['Field1'];
+		} elseif ( 'M' === $x['Rchoice'] ) {
+			return round( ( $n / 1000000 ), 2 ) . $x['Field2'];
+		} elseif ( 'B' === $x['Rchoice'] ) {
+			return round( ( $n / 1000000000 ), 4) . $x['Field3'];
+		} elseif ( 'T' === $x['Rchoice'] ) {
+			return round( ( $n / 1000000000000 ), 8 ) . $x['Field4'];
 		}
-
-		return number_format( $n );
+		return  $n;
 	}
 	public function bsf_tr_get_text( $action, $api_params = array() ) {
 		$theme_slug = isset( $api_params['theme'] ) ? $api_params['theme'] : '';
@@ -248,12 +248,12 @@ class WP_Themes_Stats_Api {
 			}
 		}
 
-	    $x = get_option('wp_info');
-		if( 1 == $x['Hrchoice']){
-		$active_installs = $this->bsf_display_human_readable($active_installs);
-		return $active_installs;
-		}else{
-		return number_format( $active_installs );
+		$x = get_option( 'wp_info' );
+		if ( 1 == $x['Hrchoice'] ) {
+			$active_installs = $this->bsf_display_human_readable( $active_installs );
+			return $active_installs;
+		} else {
+			return number_format( $active_installs, 0, '', $x['Symbol'] );
 		}
 	}
 	/**
@@ -340,7 +340,7 @@ class WP_Themes_Stats_Api {
 	 *
 	 * @param int $atts Get attributes theme_name and theme_author.
 	 */
-	public function bsf_display_theme_FiveStarRatings( $atts ) {
+	public function bbsf_display_theme_five_star_ratings( $atts ) {
 		$atts = shortcode_atts(
 			array(
 				'theme'        => isset( $atts['wp_theme_slug'] ) ? $atts['wp_theme_slug'] : '',
@@ -635,16 +635,12 @@ class WP_Themes_Stats_Api {
 			return 'Author is missing!';
 		} else {
 			$x = get_option( 'wp_info' );
-			// var_dump($x['Hrchoice']);
 			if ( 1 == $x['Hrchoice'] ) {
 				$num = $themes;
-				// var_dump($this->bsf_display_human_readable($num));
-				$n = $this->bsf_display_human_readable( $num );
-				// return number_format($plugin->active_installs);
+				$n   = $this->bsf_display_human_readable( $num );
 				return $n;
-				// return number_format($plugins);
 			} else {
-				return number_format( $themes );
+				return number_format( $themes, 0, '', $x['Symbol'] );
 			}
 		}
 	}
@@ -735,18 +731,13 @@ class WP_Themes_Stats_Api {
 			return 'Author is missing!';
 		} else {
 			$x = get_option( 'wp_info' );
-			// var_dump($x['Hrchoice']);
 			if ( 1 == $x['Hrchoice'] ) {
 				$num = $themes;
-				// var_dump($this->bsf_display_human_readable($num));
-				$n = $this->bsf_display_human_readable( $num );
-				// return number_format($plugin->active_installs);
+				$n   = $this->bsf_display_human_readable( $num );
 				return $n;
-				// return number_format($plugins);
 			} else {
-				return number_format( $themes );
+				return number_format( $themes, 0, '', $x['Symbol'] );
 			}
-			return number_format( $themes );
 		}
 	}
 }
