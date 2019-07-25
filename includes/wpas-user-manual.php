@@ -6,7 +6,8 @@
  * @author Brainstorm Force
  * @since 1.0.0
  */
-// Getting Started tab
+
+// Getting Started tab.
 wp_enqueue_style( 'bsf_wpas_stylesheet' );
 ?>
 	<div class="wp_as_global_settings">
@@ -21,8 +22,8 @@ wp_enqueue_style( 'bsf_wpas_stylesheet' );
 	<b><?php esc_attr_e( 'Step 2' ); ?></b><?php esc_attr_e( ': Set Date format if required (by default Date format is y-m-d).', 'wp-as' ); ?><br><br>
 	<b><?php esc_attr_e( 'Step 3' ); ?></b><?php esc_attr_e( ': Paste the shortcode in the desired position.', 'wp-as' ); ?><br><br>
 	<b><?php esc_attr_e( 'Step 4' ); ?></b><?php esc_attr_e( ': That' . "'" . 's it! Visit Post/Page to see results.', 'wp-as' ); ?><br><br><br>
-		<div class="wp-asresp-table">
-				   <div class="wp-asresp-table-caption"><?php esc_attr_e( 'THEME SHORTCODE TABLE', 'wp-as' ); ?></div>
+<div class="wp-asresp-table">
+				<div class="wp-asresp-table-caption"><?php esc_attr_e( 'THEME SHORTCODE TABLE', 'wp-as' ); ?></div>
 					<div class="wp-asresp-table-header">
 						<div class="wp-astable-header-cell">
 							<?php esc_attr_e( 'Theme Name', 'wp-as' ); ?> 
@@ -92,7 +93,7 @@ wp_enqueue_style( 'bsf_wpas_stylesheet' );
 								<?php esc_attr_e( 'Download', 'wp-as' ); ?>
 						</div>
 						<div class="wp-astable-body-cell">
-							 <code>[adv_stats_theme_download_link theme='theme_slug' label='label']</code>
+							<code>[adv_stats_theme_download_link theme='theme_slug' label='label']</code>
 						</div>
 					</div>
 					<div class="wp-asresp-table-header">
@@ -100,7 +101,7 @@ wp_enqueue_style( 'bsf_wpas_stylesheet' );
 								<?php esc_attr_e( 'Total Active Installation of All Themes', 'wp-as' ); ?>
 						</div>
 						<div class="wp-astable-body-cell">
-							 <code>[adv_stats_theme_active_count author='author_name']</code>
+							<code>[adv_stats_theme_active_count author='author_name']</code>
 						</div>
 					</div>
 					<div class="wp-asresp-table-header">
@@ -108,18 +109,18 @@ wp_enqueue_style( 'bsf_wpas_stylesheet' );
 								<?php esc_attr_e( 'Total Download Count of All Themes', 'wp-as' ); ?>
 						</div>
 						<div class="wp-astable-body-cell">
-							 <code>[adv_stats_theme_downloads_count author='author_name']</code>
+							<code>[adv_stats_theme_downloads_count author='author_name']</code>
 						</div>
 					</div>
 				</div>
 				<div class="wp-asresp-table">
-				   <div class="wp-asresp-table-caption"><?php esc_attr_e( 'PLUGIN SHORTCODE TABLE', 'wp-as' ); ?></div>
-					   <div class="wp-asresp-table-header">
+				<div class="wp-asresp-table-caption"><?php esc_attr_e( 'PLUGIN SHORTCODE TABLE', 'wp-as' ); ?></div>
+					<div class="wp-asresp-table-header">
 						<div class="wp-astable-header-cell">
 							<?php esc_attr_e( 'plugin Name', 'wp-as' ); ?>
 						</div>
 						<div class="wp-astable-body-cell">
-							 <code>[adv_stats_name plugin='plugin_slug']</code>
+							<code>[adv_stats_name plugin='plugin_slug']</code>
 						</div>
 					</div>
 					<div class="wp-asresp-table-header">
@@ -183,25 +184,24 @@ wp_enqueue_style( 'bsf_wpas_stylesheet' );
 								<?php esc_attr_e( 'Download', 'wp-as' ); ?>
 						</div>
 						<div class="wp-astable-body-cell">
-							  <code>[adv_stats_download_link plugin='plugin_slug' label='label']</code>
+							<code>[adv_stats_download_link plugin='plugin_slug' label='label']</code>
 						</div>
 					</div>
 					<div class="wp-asresp-table-header">
 						<div class="wp-astable-header-cell">
-								<?php esc_attr_e( 'Total Active Installation of All Plugins', 'wp-as' ); ?>
+							<?php esc_attr_e( 'Total Active Installation of All Plugins', 'wp-as' ); ?>
 						</div>
 						<div class="wp-astable-body-cell">
-							 <code>[adv_stats_total_active author='author_name']</code>
+							<code>[adv_stats_total_active author='author_name']</code>
 						</div>
 					</div>
 					<div class="wp-asresp-table-header">
 						<div class="wp-astable-header-cell">
-								<?php esc_attr_e( 'Total Download Count of All Plugins', 'wp-as' ); ?>
+							<?php esc_attr_e( 'Total Download Count of All Plugins', 'wp-as' ); ?>
 						</div>
-						<div class="wp-astable-body-cell">
-							 <code>[adv_stats_downloads_counts author='author_name']</code>
+					<div class="wp-astable-body-cell">
+							<code>[adv_stats_downloads_counts author='author_name']</code>
 						</div>
 					</div>
 				</div>
-	</div>			
-	
+	</div>

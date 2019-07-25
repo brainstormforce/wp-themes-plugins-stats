@@ -6,7 +6,6 @@
  * @author Brainstorm Force
  * @since 1.0.0
  */
-// Navigation.
 
 // To get the tab value from URL and store in $active_tab variable.
 echo '<h1 class="bsf_wp_as_main_title">';

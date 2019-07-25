@@ -63,19 +63,24 @@ margin: 25px;
 .wp_as_global_settings {
 padding: 10px;
 }
-#date_format_custom{
+/*#date_format_custom{
 margin: 0px 42px;
 padding: 2px 3px 2px 3px;
+}*/
+.wpas-hroption{
+padding: 21px 0px 13px 0px;
 }
-/*#small-text1{
-	padding: 10px;
+#small-text1{
+margin: 0px 30px;
 }
 #small-text2{
-	padding: 27px;
+margin: 0px 47px;
 }
-#small-text3{
-	padding: 31px;
+.wpas-date-time-text{
+	display: inline-block;
+    min-width: 7em;
 }
-#small-text4{
-	padding: 28px;
-}*/
+.small-text{
+width: 45px !important;
+    padding: 0px 5px !important;
+}

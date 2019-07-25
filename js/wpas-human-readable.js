@@ -1,3 +1,4 @@
+
 //display and hide human readable option.
 function bsf_hrFunction() {
   var wpas_hr_option = document.getElementById("wpas_hr_option");

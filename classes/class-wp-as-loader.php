@@ -121,8 +121,8 @@ if ( ! class_exists( 'Wp_As_Loader' ) ) {
 					'Rchoice'   => ( ! empty( $_POST['wpas_r_option'] ) ? sanitize_text_field( $_POST['wpas_r_option'] ) : '' ),
 					'Field1'    => ( ! empty( $_POST['field1'] ) ? sanitize_text_field( $_POST['field1'] ) : '' ),
 					'Field2'    => ( ! empty( $_POST['field2'] ) ? sanitize_text_field( $_POST['field2'] ) : '' ),
-					'Field3'    => ( ! empty( $_POST['field3'] ) ? sanitize_text_field( $_POST['field3'] ) : '' ),
-					'Field4'    => ( ! empty( $_POST['field4'] ) ? sanitize_text_field( $_POST['field4'] ) : '' ),
+					// 'Field3'    => ( ! empty( $_POST['field3'] ) ? sanitize_text_field( $_POST['field3'] ) : '' ),
+					// 'Field4'    => ( ! empty( $_POST['field4'] ) ? sanitize_text_field( $_POST['field4'] ) : '' ),
 					'Symbol'    => ( ! empty( $_POST['wpas_number_group'] ) ? sanitize_text_field( $_POST['wpas_number_group'] ) : '' ),
 				);
 				update_option( 'wp_info', $update_option );
