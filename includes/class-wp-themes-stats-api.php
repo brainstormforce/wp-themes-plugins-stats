@@ -154,19 +154,24 @@ class WP_Themes_Stats_Api {
 					),
 				)
 			);
-		$wp_theme      = unserialize( wp_remote_retrieve_body( $responset ) );
-		$slug          = 'bsf_tr_theme_info_' . $theme_slug;
-		$theme         = get_site_transient( $slug );
-		if ( false === $theme || empty( $theme ) ) {
 
-			$second = ( ! empty( $second ) ? $second : 60 * 60 );
-			set_site_transient( $slug, $wp_theme, $second );
-		}
+			$wp_theme      = unserialize( wp_remote_retrieve_body( $responset ) );
+			// var_dump($wp_theme);
+			// wp_die();
+			if(false===$wp_theme){
+				return 'Theme is Missing';
+			}
+			else{
+				$slug          = 'bsf_tr_theme_info_' . $theme_slug;
+				$theme         = get_site_transient( $slug );
 
-		if ( empty( $theme ) ) {
-			return '';
-		}
-		return $theme;
+				if ( false === $theme || empty( $theme ) ) {
+				$second = ( ! empty( $second ) ? $second : 60 * 60 );
+				set_site_transient( $slug, $wp_theme, $second );
+				}
+				return $theme;
+			}
+			
 	}
 	/**
 	 * Display Name of Themes.
@@ -200,9 +205,20 @@ class WP_Themes_Stats_Api {
 				),
 			);
 			$theme = get_option("_site_transient_bsf_tr_theme_info_$wp_theme_slug");
+			// var_dump($theme);
 			if(empty($theme)) {
-				$theme = $this->bsf_tr_get_text( 'theme_information', $api_params );
-				return $theme->name;
+				if( $theme->name ){
+					return "Wrong Theme Details";
+				}
+				else{
+					$theme = $this->bsf_tr_get_text( 'theme_information', $api_params );
+					if( "Theme is Missing" === $theme ){
+						return "Please Verify Theme Details!";
+					}
+					else{
+						return $theme->name;
+					}
+				}
 			}
 			else{
 				return $theme->name;
@@ -247,12 +263,17 @@ class WP_Themes_Stats_Api {
 			$theme = get_option("_site_transient_bsf_tr_theme_info_$wp_theme_slug");
 			if ( empty($theme)){
 				$theme = $this->bsf_tr_get_text( 'theme_information', $api_params );
-					$x = get_option( 'wp_info' );
-					if ( 1 == $x['Hrchoice'] ) {
-						$active_install = $this->bsf_display_human_readable( $theme->{'active_installs'} );
-						return $active_install;
-					} else {
-						return number_format( $theme->{'active_installs'} , 0, '', $x['Symbol'] );
+					if( "Theme is Missing" === $theme ){
+						return "Please Verify Theme Details!";
+					}
+					else{
+						$x = get_option( 'wp_info' );
+						if ( 1 == $x['Hrchoice'] ) {
+							$active_install = $this->bsf_display_human_readable( $theme->{'active_installs'} );
+							return $active_install;
+						} else {
+							return number_format( $theme->{'active_installs'} , 0, '', $x['Symbol'] );
+						}
 					}
 			}
 			else
@@ -294,9 +315,16 @@ class WP_Themes_Stats_Api {
 				),
 			);
 				$theme = get_option("_site_transient_bsf_tr_theme_info_$wp_theme_slug");
+
 				if ( empty($theme) ){
 					$theme = $this->bsf_tr_get_text( 'theme_information', $api_params );
-					return $theme->version;
+						// var_dump($theme);
+					if( "Theme is Missing" === $theme ){
+						return "Please Verify Theme Details!";
+					}
+					else{
+						return $theme->version;
+					}
 				}
 				else{
 					return $theme->version;		
@@ -338,7 +366,14 @@ class WP_Themes_Stats_Api {
 			$theme = get_option("_site_transient_bsf_tr_theme_info_$wp_theme_slug");
 			if ( empty($theme) ){
 				$theme      = $this->bsf_tr_get_text( 'theme_information', $api_params );
-				return $theme->num_ratings;	
+					if( "Theme is Missing" === $theme )
+					{
+							return "Please Verify Theme Details!";
+					}
+					else
+					{
+						return $theme->num_ratings;
+					}	
 			}
 			else{
 				return $theme->num_ratings;	
@@ -381,7 +416,14 @@ class WP_Themes_Stats_Api {
 			$theme = get_option("_site_transient_bsf_tr_theme_info_$wp_theme_slug");
 			if ( empty($theme)){
 				$theme      = $this->bsf_tr_get_text( 'theme_information', $api_params );
-				return $theme;	
+				if( "Theme is Missing" === $theme )
+					{
+							return "Please Verify Theme Details!";
+					}
+					else
+					{
+						return $theme->ratings[5];
+					}	
 			}
 			else{
 				return $theme->ratings[5];	
@@ -425,14 +467,22 @@ class WP_Themes_Stats_Api {
 			$theme = get_option("_site_transient_bsf_tr_theme_info_$wp_theme_slug");
 			if ( empty($theme) ){
 				$theme      = $this->bsf_tr_get_text( 'theme_information', $api_params );
-				if ( is_numeric( $outof ) || empty( $outof ) ) {
-				$outof = ( ! empty( $outof ) ? $outof : 100 );
-				$outof = ( ( $theme->rating ) / 100 ) * $outof;
-				return '' . $outof . '';
-				} 
-				else {
-					return 'Out Of Value Must Be Nummeric!';
-				}	
+				if( "Theme is Missing" === $theme )
+				{
+					return "Please Verify Theme Details!";
+				}
+				else
+				{
+					if ( is_numeric( $outof ) || empty( $outof ) ) {
+					$outof = ( ! empty( $outof ) ? $outof : 100 );
+					$outof = ( ( $theme->rating ) / 100 ) * $outof;
+					return '' . $outof . '';
+					} 
+					else {
+						return 'Out Of Value Must Be Nummeric!';
+					}	
+				}
+				
 			}
 			else{
 					if ( is_numeric( $outof ) || empty( $outof ) ) 
@@ -483,7 +533,14 @@ class WP_Themes_Stats_Api {
 			$theme = get_option("_site_transient_bsf_tr_theme_info_$wp_theme_slug");
 			if ( empty($theme) ){
 				$theme      = $this->bsf_tr_get_text( 'theme_information', $api_params );
-				return $theme->downloaded;	
+					if( "Theme is Missing" === $theme )
+					{
+							return "Please Verify Theme Details!";
+					}
+					else
+					{
+						return $theme->downloaded;
+					}
 			}
 			else
 			{
@@ -526,9 +583,16 @@ class WP_Themes_Stats_Api {
 			$theme = get_option("_site_transient_bsf_tr_theme_info_$wp_theme_slug");
 			if ( empty($theme) ){
 			    $theme      = $this->bsf_tr_get_text( 'theme_information', $api_params );
-			   	$dateformat['Choice'] = ( ! empty( $dateformat['Choice'] ) ? sanitize_text_field( $dateformat['Choice'] ) : 'Y-m-d' );
-			    $newDate = date( $dateformat['Choice'], strtotime( $theme->last_updated ) );
-			    return $newDate;	
+			    if( "Theme is Missing" === $theme )
+					{
+							return "Please Verify Theme Details!";
+					}
+					else
+					{
+						$dateformat['Choice'] = ( ! empty( $dateformat['Choice'] ) ? sanitize_text_field( $dateformat['Choice'] ) : 'Y-m-d' );
+					    $newDate = date( $dateformat['Choice'], strtotime( $theme->last_updated ) );
+					    return $newDate;
+					}	
 			}
 			else{
 				$dateformat['Choice'] = ( ! empty( $dateformat['Choice'] ) ? sanitize_text_field( $dateformat['Choice'] ) : 'Y-m-d' );
@@ -576,8 +640,15 @@ class WP_Themes_Stats_Api {
 			$theme = get_option("_site_transient_bsf_tr_theme_info_$wp_theme_slug");
 			if ( empty($theme) ){
 				$theme      = $this->bsf_tr_get_text( 'theme_information', $api_params );
-				$label = ( ! empty( $wp_theme_label ) ? esc_attr( $wp_theme_label ) : esc_url( $theme->download_link ) );
-				return '<a href="' . esc_url( $theme->download_link ) . '" target="_blank">' . $label . '</a>';	
+				if( "Theme is Missing" === $theme )
+					{
+							return "Please Verify Theme Details!";
+					}
+					else
+					{
+						$label = ( ! empty( $wp_theme_label ) ? esc_attr( $wp_theme_label ) : esc_url( $theme->download_link ) );
+						return '<a href="' . esc_url( $theme->download_link ) . '" target="_blank">' . $label . '</a>';	
+					}
 			}
 			else{
 				$label = ( ! empty( $wp_theme_label ) ? esc_attr( $wp_theme_label ) : esc_url( $theme->download_link ) );
@@ -624,6 +695,10 @@ class WP_Themes_Stats_Api {
 			if ( ! is_wp_error( $response ) ) {
 				$returned_object = unserialize( wp_remote_retrieve_body( $response ) );
 				$themes          = $returned_object->themes;
+			
+				if( empty( $themes ) ){
+					return "Theme Details is Missing";
+				}
 				$temp            = 0;
 				foreach ( $themes as $key ) {
 					$temp = $temp + $key->active_installs;
@@ -634,13 +709,8 @@ class WP_Themes_Stats_Api {
 				$themes = get_site_transient( $author );
 
 				if ( false === $themes || empty( $themes ) ) {
-
 					$second = ( ! empty( $second ) ? $second : 86400 );
 					set_site_transient( $author, $temp, $second );
-
-				}
-				if ( empty( $themes ) ) {
-					return '';
 				}
 			}
 		}
@@ -667,18 +737,22 @@ class WP_Themes_Stats_Api {
 		$themes = get_option("_site_transient_bsf_tr_themes_Active_Count_$wp_theme_author");
 		if ( empty($themes) ){
 		$themes = $this->bsf_get_theme_active_count( 'query_themes', $api_params['theme_author'] );
-		if ( false === is_numeric( $themes ) ) {
-			return 'Author is missing!';
-		} else {
-			$x = get_option( 'wp_info' );
-			if ( 1 == $x['Hrchoice'] ) {
-				$num = $themes;
-				$n   = $this->bsf_display_human_readable( $num );
-				return $n;
-			} else {
-				return number_format( $themes, 0, '', $x['Symbol'] );
-			}
-		}	
+		if('Theme Details is Missing' === $themes){
+			return 'Please Verify Author Details!';
+		}
+		else{
+				if ( false === is_numeric( $themes ) ) {
+					return 'Author is missing!';
+				} else {
+				$x = get_option( 'wp_info' );
+				if ( 1 == $x['Hrchoice'] ) {
+					$num = $themes;
+					$n   = $this->bsf_display_human_readable( $num );
+					return $n;
+				} else {
+					return number_format( $themes, 0, '', $x['Symbol'] );
+				}
+		}}
 		}
 		else{
 			if ( false === is_numeric( $themes ) ) {
@@ -736,6 +810,10 @@ class WP_Themes_Stats_Api {
 				$themes          = $returned_object->themes;
 				$temp            = 0;
 
+				if( empty( $themes ) ){
+					return "Theme Details is Missing";
+				}
+
 				foreach ( $themes as $key ) {
 					$temp = $temp + $key->downloaded;
 
@@ -775,20 +853,24 @@ class WP_Themes_Stats_Api {
 		);
 		$themes = get_option("_site_transient_bsf_tr_themes_downloaded_Count_$wp_theme_author");
 		if ( empty($themes) ){
-		
 			$themes = $this->bsf_get_theme_downloads_count( 'query_themes', $api_params ['theme_author'] );
-			if ( false === is_numeric( $themes ) ) {
-			return 'Author is missing!';
-		} else {
-			$x = get_option( 'wp_info' );
-			if ( 1 == $x['Hrchoice'] ) {
-				$num = $themes;
-				$n   = $this->bsf_display_human_readable( $num );
-				return $n;
-			} else {
-				return number_format( $themes, 0, '', $x['Symbol'] );
+			if('Theme Details is Missing' === $themes){
+				return 'Please Verify Author Details!';
 			}
-		}
+			else{
+				if ( false === is_numeric( $themes ) ) {
+				return 'Author is missing!';
+				} else {
+				$x = get_option( 'wp_info' );
+				if ( 1 == $x['Hrchoice'] ) {
+					$num = $themes;
+					$n   = $this->bsf_display_human_readable( $num );
+					return $n;
+				} else {
+					return number_format( $themes, 0, '', $x['Symbol'] );
+				}
+			}
+			}
 		}
 		else{
 			if ( false === is_numeric( $themes ) ) {

@@ -117,7 +117,7 @@ wp_enqueue_style( 'bsf_wpas_stylesheet' );
 				<div class="wp-asresp-table-caption"><?php esc_attr_e( 'PLUGIN SHORTCODE TABLE', 'wp-as' ); ?></div>
 					<div class="wp-asresp-table-header">
 						<div class="wp-astable-header-cell">
-							<?php esc_attr_e( 'plugin Name', 'wp-as' ); ?>
+							<?php esc_attr_e( 'Plugin Name', 'wp-as' ); ?>
 						</div>
 						<div class="wp-astable-body-cell">
 							<code>[adv_stats_name plugin='plugin_slug']</code>

@@ -72,7 +72,7 @@ $hrchoice_disp = ( ( $hrchoice === 0 ) ? 'style="display:none"' : '' );
 				</p>
 			</td>
 		</tr>
-			<tr class="wpas_numbergroupsymbol">
+		<tr class="wpas_numbergroupsymbol">
 			<th scope="row">
 				<label for="nubergroupsymbol"><?php esc_html_e( 'Number Grouping Symbol', 'wp-as' ); ?></label>
 			</th>
@@ -94,7 +94,7 @@ $hrchoice_disp = ( ( $hrchoice === 0 ) ? 'style="display:none"' : '' );
 		<tr>
 			<th scope="row"><label><?php esc_html_e( 'Date Format', 'wp-as' ); ?></label></th>
 				<td class="wpas-date">
-					<fieldset>
+					<fieldset class="wpas_date">
 					<?php
 						$date_formats = array_unique( apply_filters( 'date_formats', array( __( 'F j,Y' ), 'Y-m-d', 'm/d/Y', 'd/m/Y' ) ) );
 						$format       = 'd-m-y';
@@ -110,7 +110,7 @@ $hrchoice_disp = ( ( $hrchoice === 0 ) ? 'style="display:none"' : '' );
 						echo '<label><input type="radio" name="wpasoption" id="date_format_custom_radio" value="ok"';
 						checked( 'ok' == $custom );
 						echo '/> <span class="wpas-date-time-text date-time-custom-text">' . __( 'Custom' ) . '<span class="screen-reader-text"> ' . __( 'enter a custom date format in the following field' ) . '</span></span></label>' .
-							'<input type="text" name="date_format_custom" id="date_format_custom" value="' . $choice . '" class="small-text" />';
+							'<input type="text" name="wpas_date_format_custom" id="wpas_date_format_custom" value="' . $choice . '" class="small-text" />';
 					?>
 					</fieldset>
 				</td>

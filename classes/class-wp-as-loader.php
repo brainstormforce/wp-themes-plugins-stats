@@ -112,7 +112,7 @@ if ( ! class_exists( 'Wp_As_Loader' ) ) {
 				$choice = ( ! empty( $_POST['wpasoption'] ) ? sanitize_text_field( $_POST['wpasoption'] ) : '' );
 				if ( ! empty( $_POST['wpasoption'] ) && 'ok' === $_POST['wpasoption'] ) {
 
-					$choice = $_POST['date_format_custom'];
+					$choice = $_POST['wpas_date_format_custom'];
 				}
 				$update_option = array(
 					'Frequency' => ( ! empty( $_POST['frequency'] ) ? sanitize_text_field( $_POST['frequency'] ) : 1 ),
