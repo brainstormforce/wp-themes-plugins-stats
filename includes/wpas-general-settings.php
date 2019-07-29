@@ -31,7 +31,7 @@ $hrchoice_disp = ( ( $hrchoice === 0 ) ? 'style="display:none"' : '' );
 				<label for="UpdateFrequency"><?php esc_html_e( 'Frequency', 'wp-as' ); ?></label>
 			</th>
 			<td>
-					<input class="small-text" type="number" name="frequency" id="wpas-frequency" size="5" maxlength="5" style="text-align: center;" value="<?php echo $frequency; ?>">
+					<input class="small-text" type="number" name="frequency" id="wpas-frequency" pattern="[0-9]+" title="Number Only" size="5" maxlength="5" style="text-align: center;" value="<?php echo $frequency; ?>">
 					<label><?php esc_html_e( 'Days', 'wp-as' ); ?></label>
 			</td>
 		</tr>
@@ -53,13 +53,13 @@ $hrchoice_disp = ( ( $hrchoice === 0 ) ? 'style="display:none"' : '' );
 				<?php esc_html_e( 'Enable', 'wp-as' ); ?>
 				<div id="hr_option" class="hr_option" <?php echo $hrchoice_disp; ?> >
 					<br>
-					<input type="radio" name="wpas_r_option" id="thousand" value="K"  <?php checked( 'K' === $rchoice ); ?> />
+					<input type="radio" name="wpas_r_option" id="thousand" pattern='[A-Za-z\\s]*' title="Only Alphabhets"   value="K"  <?php checked( 'K' === $rchoice ); ?> />
 					<?php esc_html_e( 'Thousand', 'wp-as' ); ?>
-						<input type="text" class="small-text" id="small-text1"   name="field1"  placeholder="K" value="<?php echo $wpas_field1; ?>" />
+						<input type="text" class="small-text" id="small-text1" pattern='[A-Za-z\\s]*' title="Only Alphabhets"  name="field1"  placeholder="K" value="<?php echo $wpas_field1; ?>" />
 					<br>
-					<input type="radio" name="wpas_r_option" id="million" value="M"  <?php checked( 'M' === $rchoice ); ?>/>
+					<input type="radio" name="wpas_r_option" id="million" pattern='[A-Za-z\\s]*' title="Only Alphabhets" value="M"  <?php checked( 'M' === $rchoice ); ?>/>
 					<?php esc_html_e( 'Million', 'wp-as' ); ?>
-						<input type="text"  class="small-text" id="small-text2"  name="field2" placeholder="M" value="<?php echo $wpas_field2; ?>"  />
+						<input type="text"  class="small-text" id="small-text2" pattern='[A-Za-z\\s]*' title="Only Alphabhets" name="field2" placeholder="M" value="<?php echo $wpas_field2; ?>"  />
 				</div>
 			</td>
 		</tr>
@@ -78,7 +78,7 @@ $hrchoice_disp = ( ( $hrchoice === 0 ) ? 'style="display:none"' : '' );
 			</th>
 			<td>
 				<br>
-				<input type="input" name="wpas_number_group" size="1" maxlength="1"  class="small-text" style="text-align: center;" value="<?php echo $symbol; ?>" />
+				<input type="input" name="wpas_number_group" size="1" maxlength="1"  class="small-text" pattern="[,.]" title="Only Comma and Dot" style="text-align: center;" value="<?php echo $symbol; ?>" />
 				<br>
 			</td>
 		</tr>

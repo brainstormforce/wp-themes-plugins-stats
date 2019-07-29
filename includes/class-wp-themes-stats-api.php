@@ -105,6 +105,8 @@ class WP_Themes_Stats_Api {
 	 */
 	function bsf_display_human_readable( $n ) {
 		// first strip any formatting.
+		// var_dump($n);
+		// wp_die();
 		$n = ( 0 + str_replace( ',', '', $n ) );
 		if ( ! is_numeric( $n ) ) {
 			return false;

@@ -12,12 +12,11 @@ wp_enqueue_style( 'bsf_wpas_stylesheet' );
 ?>
 	<div class="wp_as_global_settings">
 	<h2> <?php esc_html_e( 'Welcome to Advanced Stats!', 'wp-as' ); ?></h2>
-	<p><?php esc_html_e( 'The Advanced Stats plugin is built to track plugins and themes information on your website. Just paste the shortcode in the desired position!', 'wp-as' ); ?></p>
+	<h3><?php esc_html_e( 'The Advanced Stats plugin is built to track plugins and themes information on your website. Just paste the shortcode in the desired position!', 'wp-as' ); ?></h3>
 	<br><label class="wpas_page_title" for="howtouse">
-		<?php
-		esc_attr_e( 'How to Use?' );
-		?>
-		<br></br>
+		<h2><?php
+		esc_html_e( 'How to Use?', 'wp-as' );
+		?></h2>
 	<b><?php esc_attr_e( 'Step 1' ); ?></b><?php esc_attr_e( ': Set frequency to update the API (by default Frequency is one day)', 'wp-as' ); ?>.<br><br>
 	<b><?php esc_attr_e( 'Step 2' ); ?></b><?php esc_attr_e( ': Set Date format if required (by default Date format is y-m-d).', 'wp-as' ); ?><br><br>
 	<b><?php esc_attr_e( 'Step 3' ); ?></b><?php esc_attr_e( ': Paste the shortcode in the desired position.', 'wp-as' ); ?><br><br>
@@ -26,7 +25,7 @@ wp_enqueue_style( 'bsf_wpas_stylesheet' );
 				<div class="wp-asresp-table-caption"><?php esc_attr_e( 'THEME SHORTCODE TABLE', 'wp-as' ); ?></div>
 					<div class="wp-asresp-table-header">
 						<div class="wp-astable-header-cell">
-							<?php esc_attr_e( 'Theme Name', 'wp-as' ); ?> 
+							<?php esc_attr_e( 'Theme Name', 'wp-as' ); ?>
 						</div>
 						<div class="wp-astable-body-cell">
 							<code>[adv_stats_theme_name theme='theme_slug']</code>

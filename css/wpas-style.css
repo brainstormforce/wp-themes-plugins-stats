@@ -7,7 +7,7 @@ margin: 20px;
 .wp-asresp-table-caption{
 display: table-caption;
 text-align: center;
-font-size: 1.3em;
+font-size: 1em;
 font-weight: bold;
 padding: 32px 30px 32px 30px;
 }
@@ -21,6 +21,7 @@ display: table-cell;
 padding: 10px 18px 10px 18px;
 text-align: justify;
 border: 1px solid black;
+font-size: x-small;
 }
 .wp-asresp-table-body{
 display: table-row-group;

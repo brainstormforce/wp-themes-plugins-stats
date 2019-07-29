@@ -117,13 +117,17 @@ class WP_Plugins_Stats_Api {
 				),
 			);
 			$plugin = get_option("_site_transient_bsf_tr_plugin_info_$wp_plugin_slug");
+			// var_dump($wp_plugin_slug);
+			// wp_die();
 			if( empty($plugin) ){
-				if( empty($plugin->name) ){
-					return "Wrong Plugin Information!";
-				}else{
+				// if( empty($plugin->name) ){
+				// 	return "Wrong Plugin Information!";
+				// }else{
+					// var_dump($plugin);
+					// wp_die();
 					$plugin = $this->bsf_plugin_get_text( 'plugin_information', $api_params );
 					return $plugin->name;
-			}
+			// }
 		}else{
 				return $plugin->name;
 			}
@@ -551,14 +555,14 @@ class WP_Plugins_Stats_Api {
 			);
 			$plugin = get_option("_site_transient_bsf_tr_plugin_info_$wp_plugin_slug");
 			if ( empty($plugin) ){
-				if(empty($plugin->download_link)){
-					return "Wrong Plugin Information!";
-				}
-				else{
+				// if(empty($plugin->download_link)){
+				// 	return "Wrong Plugin Information!";
+				// }
+				// else{
 				$plugin = $this->bsf_plugin_get_text( 'plugin_information', $api_params );
 				$label = ( ! empty( $wp_plugin_label ) ? esc_attr( $wp_plugin_label ) : esc_url( $plugin->download_link ) );
 				return '<a href="' . esc_url( $plugin->download_link ) . '" target="_blank">' . $label . '</a>';	
-				}
+				// }
 			}
 			else{
 				$label = ( ! empty( $wp_plugin_label ) ? esc_attr( $wp_plugin_label ) : esc_url( $plugin->download_link ) );
@@ -647,7 +651,7 @@ class WP_Plugins_Stats_Api {
 			if ( empty($plugins) ){
 				// return "2";
 					$plugins          = $this->bsf_display_plugins_active_count( 'query_plugins', $api_params['plugin_author'] );
-					var_dump($plugins);
+					// var_dump($plugins);
 				if ( false === is_numeric( $plugins ) ) {
 					return 'Please Verify plugin Author!';
 				} else {
