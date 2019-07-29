@@ -66,7 +66,7 @@ if ( ! class_exists( 'Wp_As_Loader' ) ) {
 		 * @since 1.0
 		 * @return void
 		 */
-		static private function load_files() {
+		private static function load_files() {
 			require_once WP_AS_STATS_BASE_DIR . 'includes/class-wp-themes-stats-api.php';
 			require_once WP_AS_STATS_BASE_DIR . 'includes/class-wp-plugins-stats-api.php';
 		}
@@ -121,8 +121,6 @@ if ( ! class_exists( 'Wp_As_Loader' ) ) {
 					'Rchoice'   => ( ! empty( $_POST['wpas_r_option'] ) ? sanitize_text_field( $_POST['wpas_r_option'] ) : '' ),
 					'Field1'    => ( ! empty( $_POST['field1'] ) ? sanitize_text_field( $_POST['field1'] ) : '' ),
 					'Field2'    => ( ! empty( $_POST['field2'] ) ? sanitize_text_field( $_POST['field2'] ) : '' ),
-					// 'Field3'    => ( ! empty( $_POST['field3'] ) ? sanitize_text_field( $_POST['field3'] ) : '' ),
-					// 'Field4'    => ( ! empty( $_POST['field4'] ) ? sanitize_text_field( $_POST['field4'] ) : '' ),
 					'Symbol'    => ( ! empty( $_POST['wpas_number_group'] ) ? sanitize_text_field( $_POST['wpas_number_group'] ) : '' ),
 				);
 				update_option( 'wp_info', $update_option );

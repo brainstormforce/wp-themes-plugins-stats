@@ -64,10 +64,6 @@ margin: 25px;
 .wp_as_global_settings {
 padding: 10px;
 }
-/*#date_format_custom{
-margin: 0px 42px;
-padding: 2px 3px 2px 3px;
-}*/
 .wpas-hroption{
 padding: 21px 0px 13px 0px;
 }
@@ -90,4 +86,9 @@ width: 45px !important;
 }
 .hr_option{
 	line-height: 25.1px;
+}
+.nubergroupsymbol{
+	position: absolute;
+    top: 42%;
+    left: 1%;
 }

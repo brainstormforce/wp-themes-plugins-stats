@@ -10,17 +10,16 @@
 // General setting Page.
 wp_enqueue_style( 'bsf_wpas_stylesheet' );
 wp_enqueue_script( 'bsf_wpas_jsfile' );
-$wp_info       = get_option( 'wp_info' );
-$frequency     = ( ! empty( $wp_info['Frequency'] ) ? sanitize_text_field( $wp_info['Frequency'] ) : 1 );
-$choice        = ( ! empty( $wp_info['Choice'] ) ? sanitize_text_field( $wp_info['Choice'] ) : 'd-m-y' );
-$hrchoice      = ( ! empty( $wp_info['Hrchoice'] ) ? sanitize_text_field( $wp_info['Hrchoice'] ) : 0 );
-$rchoice       = ( ! empty( $wp_info['Rchoice'] ) ? sanitize_text_field( $wp_info['Rchoice'] ) : 'K' );
-$wpas_field1   = ( ! empty( $wp_info['Field1'] ) ? sanitize_text_field( $wp_info['Field1'] ) : 'K' );
-$wpas_field2   = ( ! empty( $wp_info['Field2'] ) ? sanitize_text_field( $wp_info['Field2'] ) : 'M' );
-// $wpas_field3   = ( ! empty( $wp_info['Field3'] ) ? sanitize_text_field( $wp_info['Field3'] ) : 'B' );
-// $wpas_field4   = ( ! empty( $wp_info['Field4'] ) ? sanitize_text_field( $wp_info['Field4'] ) : 'T' );
-$symbol        = ( ! empty( $wp_info['Symbol'] ) ? sanitize_text_field( $wp_info['Symbol'] ) : ',' );
-$hrchoice_disp = ( ( $hrchoice === 0 ) ? 'style="display:none"' : '' );
+$wp_info        = get_option( 'wp_info' );
+$frequency      = ( ! empty( $wp_info['Frequency'] ) ? sanitize_text_field( $wp_info['Frequency'] ) : 1 );
+$choice         = ( ! empty( $wp_info['Choice'] ) ? sanitize_text_field( $wp_info['Choice'] ) : 'd-m-y' );
+$hrchoice       = ( ! empty( $wp_info['Hrchoice'] ) ? sanitize_text_field( $wp_info['Hrchoice'] ) : 0 );
+$rchoice        = ( ! empty( $wp_info['Rchoice'] ) ? sanitize_text_field( $wp_info['Rchoice'] ) : 'K' );
+$wpas_field1    = ( ! empty( $wp_info['Field1'] ) ? sanitize_text_field( $wp_info['Field1'] ) : 'K' );
+$wpas_field2    = ( ! empty( $wp_info['Field2'] ) ? sanitize_text_field( $wp_info['Field2'] ) : 'M' );
+$symbol         = ( ! empty( $wp_info['Symbol'] ) ? sanitize_text_field( $wp_info['Symbol'] ) : ',' );
+$hrchoice_disp  = ( ( 0 === $hrchoice ) ? 'style="display:none"' : '' );
+$numchoice_disp = ( ( 0 === $hrchoice ) ? 'style="display:block"' : 'style="display:none"' );
 ?>
 <div class="wp_as_global_settings" id="wp_as_global_settings">
 <form method="post" name="wpas_settings_form">
@@ -50,7 +49,8 @@ $hrchoice_disp = ( ( $hrchoice === 0 ) ? 'style="display:none"' : '' );
 			</th>
 			<td class="wpas-hroption">
 				<input type="checkbox" name="wpas_hr_option" id="wpas_hr_option" onchange="bsf_hrFunction(this)" value="1"<?php checked( '1' === $hrchoice ); ?> />
-				<?php esc_html_e( 'Enable', 'wp-as' ); ?>
+				<label><?php esc_html_e( 'Enable', 'wp-as' ); ?></label>
+				<br>
 				<div id="hr_option" class="hr_option" <?php echo $hrchoice_disp; ?> >
 					<br>
 					<input type="radio" name="wpas_r_option" id="thousand" pattern='[A-Za-z\\s]*' title="Only Alphabhets"   value="K"  <?php checked( 'K' === $rchoice ); ?> />
@@ -61,34 +61,22 @@ $hrchoice_disp = ( ( $hrchoice === 0 ) ? 'style="display:none"' : '' );
 					<?php esc_html_e( 'Million', 'wp-as' ); ?>
 						<input type="text"  class="small-text" id="small-text2" pattern='[A-Za-z\\s]*' title="Only Alphabhets" name="field2" placeholder="M" value="<?php echo $wpas_field2; ?>"  />
 				</div>
-			</td>
-		</tr>
-		<tr class="wpas_description">
-			<td>
-			</td>
-			<td class="wpas_description" colspan="3">
-				<p class="description wpas_description">
+				<p class="wpas_description">
 					<?php esc_html_e( 'Set human readable to display active installs, active installs counts and downloads counts i.e 247,704,360 -> 247.7 million.', 'wp-as' ); ?>
 				</p>
-			</td>
-		</tr>
-		<tr class="wpas_numbergroupsymbol">
-			<th scope="row">
-				<label for="nubergroupsymbol"><?php esc_html_e( 'Number Grouping Symbol', 'wp-as' ); ?></label>
-			</th>
-			<td>
-				<br>
-				<input type="input" name="wpas_number_group" size="1" maxlength="1"  class="small-text" pattern="[,.]" title="Only Comma and Dot" style="text-align: center;" value="<?php echo $symbol; ?>" />
-				<br>
-			</td>
-		</tr>
-		<tr class="wpas_description">
-			<td>
-			</td>
-			<td class="wpas_description" colspan="3">
-				<p class="description wpas_description">
-					<?php esc_html_e( 'Set Symbol to display number like this 123,598,370.', 'wp-as' ); ?>
-				</p>
+				<div id="num_option" class="num_option" <?php echo $numchoice_disp; ?> >
+					<br>
+						<h4><label for="nubergroupsymbol" class="nubergroupsymbol"><?php esc_html_e( 'Number Grouping Symbol', 'wp-as' ); ?></label></h4>
+								<br>
+								<input type="input" name="wpas_number_group" size="1" maxlength="1"  class="small-text" pattern="[,.]" title="Only Comma and Dot are allowed." style="text-align: center;" value="<?php echo $symbol; ?>" />
+								<br> 
+						<span>
+							<p class="description wpas_description">
+							<?php esc_html_e( 'Set Symbol to display number like this 123,598,370', 'wp-as' ); ?>
+							</p>
+						</span>
+					<br>
+				</div>
 			</td>
 		</tr>
 		<tr>
@@ -105,7 +93,7 @@ $hrchoice_disp = ( ( $hrchoice === 0 ) ? 'style="display:none"' : '' );
 							echo " checked='checked'";
 							$custom = false;
 						}
-						echo ' /> <span class="wpas-date-time-text format-i18n">' . date_i18n( $format ) . '</span><code>'.$format.'</code><br>';
+						echo ' /> <span class="wpas-date-time-text format-i18n">' . date_i18n( $format ) . '</span><code>' . $format . '</code><br>';
 					}
 						echo '<label><input type="radio" name="wpasoption" id="date_format_custom_radio" value="ok"';
 						checked( 'ok' == $custom );
@@ -125,9 +113,6 @@ $hrchoice_disp = ( ( $hrchoice === 0 ) ? 'style="display:none"' : '' );
 				</p>
 			</td>
 		</tr>
-		
-	
-	
 </table>
 <table class="form-table">
 <tr>

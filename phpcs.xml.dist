@@ -7,6 +7,7 @@
 
 	<rule ref="WordPress-Core" />
 	<rule ref="WordPress-Docs" />
+	<rule ref="WordPress-Extra" />
 
 	<!-- Check all PHP files in directory tree by default. -->
 	<arg name="extensions" value="php"/>
@@ -17,8 +18,6 @@
 
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
-	<exclude-pattern>*/admin/bsf-core/*</exclude-pattern>
-	<!-- Exclude Libraries -->
-	<exclude-pattern>*/classes/library/batch-processing/*</exclude-pattern>
-	<exclude-pattern>*/classes/library/image-processing-queue/*</exclude-pattern>
+
+	
 </ruleset>
