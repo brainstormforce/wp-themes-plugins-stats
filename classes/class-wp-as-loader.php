@@ -93,7 +93,7 @@ if ( ! class_exists( 'Wp_As_Loader' ) ) {
 		/**
 		 * Creating Admin Page.
 		 */
-		function bsf_wpas_create_admin_page() {
+		public function bsf_wpas_create_admin_page() {
 			require_once WP_AS_STATS_BASE_DIR . 'includes/wpas-frontend.php';
 		}
 		/**

@@ -30,7 +30,7 @@ $numchoice_disp = ( ( 0 === $hrchoice ) ? 'style="display:block"' : 'style="disp
 				<label for="UpdateFrequency"><?php esc_html_e( 'Frequency', 'wp-as' ); ?></label>
 			</th>
 			<td>
-					<input class="small-text" type="number" name="frequency" id="wpas-frequency" pattern="[0-9]+" title="Number Only" size="5" maxlength="5" style="text-align: center;" value="<?php echo $frequency; ?>">
+					<input class="small-text" type="number" name="frequency" id="wpas-frequency" pattern="[0-9]+" title="Number Only" size="5" maxlength="5" style="text-align: center;" value="<?php echo esc_attr( $frequency ); ?>">
 					<label><?php esc_html_e( 'Days', 'wp-as' ); ?></label>
 			</td>
 		</tr>
@@ -51,24 +51,24 @@ $numchoice_disp = ( ( 0 === $hrchoice ) ? 'style="display:block"' : 'style="disp
 				<input type="checkbox" name="wpas_hr_option" id="wpas_hr_option" onchange="bsf_hrFunction(this)" value="1"<?php checked( '1' === $hrchoice ); ?> />
 				<label><?php esc_html_e( 'Enable', 'wp-as' ); ?></label>
 				<br>
-				<div id="hr_option" class="hr_option" <?php echo $hrchoice_disp; ?> >
+				<div id="hr_option" class="hr_option" <?php echo wp_kses_post( $hrchoice_disp ); ?> >
 					<br>
-					<input type="radio" name="wpas_r_option" id="thousand" pattern='[A-Za-z\\s]*' title="Only Alphabhets"   value="K"  <?php checked( 'K' === $rchoice ); ?> />
+					<input type="radio" name="wpas_r_option" id="thousand"  value="K"  <?php checked( 'K' === $rchoice ); ?> />
 					<?php esc_html_e( 'Thousand', 'wp-as' ); ?>
-						<input type="text" class="small-text" id="small-text1" pattern='[A-Za-z\\s]*' title="Only Alphabhets"  name="field1"  placeholder="K" value="<?php echo $wpas_field1; ?>" />
+						<input type="text" class="small-text" id="small-text1"  name="field1"  placeholder="K" value="<?php echo esc_attr( $wpas_field1 ); ?>" />
 					<br>
-					<input type="radio" name="wpas_r_option" id="million" pattern='[A-Za-z\\s]*' title="Only Alphabhets" value="M"  <?php checked( 'M' === $rchoice ); ?>/>
+					<input type="radio" name="wpas_r_option" id="million"  value="M"  <?php checked( 'M' === $rchoice ); ?>/>
 					<?php esc_html_e( 'Million', 'wp-as' ); ?>
-						<input type="text"  class="small-text" id="small-text2" pattern='[A-Za-z\\s]*' title="Only Alphabhets" name="field2" placeholder="M" value="<?php echo $wpas_field2; ?>"  />
+						<input type="text"  class="small-text" id="small-text2" name="field2" placeholder="M" value="<?php echo esc_attr( $wpas_field2 ); ?>"  />
 				</div>
 				<p class="wpas_description">
 					<?php esc_html_e( 'Set human readable to display active installs, active installs counts and downloads counts i.e 247,704,360 -> 247.7 million.', 'wp-as' ); ?>
 				</p>
-				<div id="num_option" class="num_option" <?php echo $numchoice_disp; ?> >
+				<div id="num_option" class="num_option" <?php echo wp_kses_post( $numchoice_disp ); ?> >
 					<br>
 						<h4><label for="nubergroupsymbol" class="nubergroupsymbol"><?php esc_html_e( 'Number Grouping Symbol', 'wp-as' ); ?></label></h4>
 								<br>
-								<input type="input" name="wpas_number_group" size="1" maxlength="1"  class="small-text" pattern="[,.]" title="Only Comma and Dot are allowed." style="text-align: center;" value="<?php echo $symbol; ?>" />
+								<input type="input" name="wpas_number_group" size="1" maxlength="1"  class="small-text" pattern="[,.]" title="Only Comma and Dot are allowed." style="text-align: center;" value="<?php echo esc_attr( $symbol ); ?>" />
 								<br> 
 						<span>
 							<p class="description wpas_description">
@@ -93,12 +93,12 @@ $numchoice_disp = ( ( 0 === $hrchoice ) ? 'style="display:block"' : 'style="disp
 							echo " checked='checked'";
 							$custom = false;
 						}
-						echo ' /> <span class="wpas-date-time-text format-i18n">' . date_i18n( $format ) . '</span><code>' . $format . '</code><br>';
+						echo ' /> <span class="wpas-date-time-text format-i18n">' . date_i18n( $format ) . '</span><code>' . esc_attr( $format ) . '</code><br>';//PHPCS:ignore:WordPress.Security.EscapeOutput.OutputNotEscaped
 					}
 						echo '<label><input type="radio" name="wpasoption" id="date_format_custom_radio" value="ok"';
-						checked( 'ok' == $custom );
-						echo '/> <span class="wpas-date-time-text date-time-custom-text">' . __( 'Custom' ) . '<span class="screen-reader-text"> ' . __( 'enter a custom date format in the following field' ) . '</span></span></label>' .
-							'<input type="text" name="wpas_date_format_custom" id="wpas_date_format_custom" value="' . $choice . '" class="small-text" />';
+						checked( 'ok' == $custom );//PHPCS:ignore:WordPress.PHP.StrictComparisons.LooseComparison
+						echo '/> <span class="wpas-date-time-text date-time-custom-text">' . esc_attr( 'Custom' ) . '<span class="screen-reader-text"> ' . esc_attr( 'enter a custom date format in the following field' ) . '</span></span></label>' .
+							'<input type="text" name="wpas_date_format_custom" id="wpas_date_format_custom" value="' . esc_attr( $choice ) . '" class="small-text" />';
 					?>
 					</fieldset>
 				</td>

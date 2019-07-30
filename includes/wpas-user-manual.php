@@ -22,7 +22,7 @@ wp_enqueue_style( 'bsf_wpas_stylesheet' );
 	<b><?php esc_attr_e( 'Step 1' ); ?></b><?php esc_attr_e( ': Set frequency to update the API (by default Frequency is one day)', 'wp-as' ); ?>.<br><br>
 	<b><?php esc_attr_e( 'Step 2' ); ?></b><?php esc_attr_e( ': Set Date format if required (by default Date format is y-m-d).', 'wp-as' ); ?><br><br>
 	<b><?php esc_attr_e( 'Step 3' ); ?></b><?php esc_attr_e( ': Paste the shortcode in the desired position.', 'wp-as' ); ?><br><br>
-	<b><?php esc_attr_e( 'Step 4' ); ?></b><?php esc_attr_e( ': That' . "'" . 's it! Visit Post/Page to see results.', 'wp-as' ); ?><br><br><br>
+	 <b><?php esc_attr_e( 'Step 4' ); ?></b><?php esc_attr_e( ': That' . "'" . 's it! Visit Post/Page to see results.', 'wp-as' ); ?><br><br><br><?php//PHPCS:ignore:WordPress.WP.I18n.NonSingularStringLiteralText?>
 <div class="wp-asresp-table">
 				<div class="wp-asresp-table-caption"><?php esc_attr_e( 'THEME SHORTCODE TABLE', 'wp-as' ); ?></div>
 					<div class="wp-asresp-table-header">

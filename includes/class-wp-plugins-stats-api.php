@@ -81,7 +81,6 @@ class WP_Plugins_Stats_Api {
 				$second = ( ! empty( $second ) ? $second : 86400 );
 				set_site_transient( $slug, $wp_plugin, $second );
 			}
-
 			return $plugin;
 		}
 	}
@@ -531,10 +530,10 @@ class WP_Plugins_Stats_Api {
 			if ( empty( $plugin ) ) {
 				$plugin = $this->bsf_plugin_get_text( 'plugin_information', $api_params );
 				$label  = ( ! empty( $wp_plugin_label ) ? esc_attr( $wp_plugin_label ) : esc_url( $plugin->download_link ) );
-				return '<a href="' . esc_url( $plugin->download_link ) . '" target="_blank">' . $label . '</a>';
+				return '<a href="' . esc_url( $plugin->{'download_link'} ) . '" target="_blank">' . $label . '</a>';
 			} else {
 				$label = ( ! empty( $wp_plugin_label ) ? esc_attr( $wp_plugin_label ) : esc_url( $plugin->download_link ) );
-				return '<a href="' . esc_url( $plugin->download_link ) . '" target="_blank">' . $label . '</a>';
+				return '<a href="' . esc_url( $plugin->{'download_link'} ) . '" target="_blank">' . $label . '</a>';
 			}
 		}
 

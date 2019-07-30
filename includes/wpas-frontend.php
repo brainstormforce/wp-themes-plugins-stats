@@ -13,13 +13,13 @@ esc_attr_e( 'WP Advanced Stats', 'wp-as' );
 echo '</h1>';
 $active_tab = 'wp_as_general_settings';
 
-if ( isset( $_GET['tab'] ) ) {
+if ( isset( $_GET['tab'] ) ) {//PHPCS:ignore:WordPress.Security.NonceVerification.Recommended
 
-	if ( 'wp_as_general_settings' === $_GET['tab'] ) {
+	if ( 'wp_as_general_settings' === $_GET['tab'] ) {//PHPCS:ignore:WordPress.Security.NonceVerification.Recommended
 
 		$active_tab = 'wp_as_general_settings';
 
-	} elseif ( 'wp_as_user_manual' === $_GET['tab'] ) {
+	} elseif ( 'wp_as_user_manual' === $_GET['tab'] ) {//PHPCS:ignore:WordPress.Security.NonceVerification.Recommended
 
 		$active_tab = 'wp_as_user_manual';
 	}
@@ -47,13 +47,13 @@ if ( isset( $_GET['tab'] ) ) {
 
 <?php
 
-if ( isset( $_GET['tab'] ) ) {
+if ( isset( $_GET['tab'] ) ) {//PHPCS:ignore:WordPress.Security.NonceVerification.Recommended
 
-	if ( 'wp_as_general_settings' === $_GET['tab'] ) {
+	if ( 'wp_as_general_settings' === $_GET['tab'] ) {//PHPCS:ignore:WordPress.Security.NonceVerification.Recommended
 
 		require_once 'wpas-general-settings.php';
 
-	} elseif ( 'wp_as_user_manual' === $_GET['tab'] ) {
+	} elseif ( 'wp_as_user_manual' === $_GET['tab'] ) {//PHPCS:ignore:WordPress.Security.NonceVerification.Recommended
 
 		require_once 'wpas-user-manual.php';
 	}

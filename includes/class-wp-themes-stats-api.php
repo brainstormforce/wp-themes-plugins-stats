@@ -79,8 +79,8 @@ class WP_Themes_Stats_Api {
 					'request' => serialize( $args ),
 				),
 			);
-			var_dump(unserialize($http_args));
-			wp_die();
+			// var_dump(unserialize($http_args));
+			// wp_die();
 			$request = wp_remote_post( $url, $http_args );
 
 			if ( ! is_wp_error( $request ) || wp_remote_retrieve_response_code( $request ) === 200 ) {
@@ -203,18 +203,18 @@ class WP_Themes_Stats_Api {
 			);
 			$theme      = get_option( "_site_transient_bsf_tr_theme_info_$wp_theme_slug" );
 			if ( empty( $theme ) ) {
-				if ( $theme->name ) {
+				if ( $theme->{'name'} ) {
 					return 'Wrong Theme Details';
 				} else {
 					$theme = $this->bsf_tr_get_text( 'theme_information', $api_params );
 					if ( 'Theme is Missing' === $theme ) {
 						return 'Please Verify Theme Details!';
 					} else {
-						return $theme->name;
+						return $theme->{'name'};
 					}
 				}
 			} else {
-				return $theme->name;
+				return $theme->{'name'};
 			}
 		}
 	}
