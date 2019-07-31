@@ -67,7 +67,6 @@ $numchoice_disp = ( ( 0 === $hrchoice ) ? 'style="display:block"' : 'style="disp
 				<div id="num_option" class="num_option" <?php echo wp_kses_post( $numchoice_disp ); ?> >
 					<br>
 						<h4><label for="nubergroupsymbol" class="nubergroupsymbol"><?php esc_html_e( 'Number Grouping Symbol', 'wp-as' ); ?></label></h4>
-								<br>
 								<input type="input" name="wpas_number_group" size="1" maxlength="1"  class="small-text" pattern="[,.]" title="Only Comma and Dot are allowed." style="text-align: center;" value="<?php echo esc_attr( $symbol ); ?>" />
 								<br> 
 						<span>

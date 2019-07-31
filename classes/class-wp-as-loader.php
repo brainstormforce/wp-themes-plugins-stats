@@ -108,11 +108,11 @@ if ( ! class_exists( 'Wp_As_Loader' ) ) {
 			if ( 'bsf-as-setting-admin' !== $page ) {
 				return;
 			}
-			if ( ! empty( $_POST['wpas-form'] ) && wp_verify_nonce( $_POST['wpas-form'], 'wpas-form-nonce' ) ) {
+			if ( ! empty( $_POST['wpas-form'] ) && wp_verify_nonce( sanitize_text_field( $_POST['wpas-form'] ), 'wpas-form-nonce' ) ) {
 				$choice = ( ! empty( $_POST['wpasoption'] ) ? sanitize_text_field( $_POST['wpasoption'] ) : '' );
 				if ( ! empty( $_POST['wpasoption'] ) && 'ok' === $_POST['wpasoption'] ) {
 
-					$choice = $_POST['wpas_date_format_custom'];
+					$choice = ( ! empty( $_POST['wpas_date_format_custom'] ) ? sanitize_text_field( $_POST['wpas_date_format_custom'] ) : 'd-m-y' );
 				}
 				$update_option = array(
 					'Frequency' => ( ! empty( $_POST['frequency'] ) ? sanitize_text_field( $_POST['frequency'] ) : 1 ),

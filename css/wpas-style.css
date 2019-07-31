@@ -21,7 +21,6 @@ display: table-cell;
 padding: 10px 18px 10px 18px;
 text-align: justify;
 border: 1px solid black;
-font-size: x-small;
 }
 .wp-asresp-table-body{
 display: table-row-group;
@@ -87,7 +86,7 @@ width: 45px !important;
 .hr_option{
 	line-height: 25.1px;
 }
-.nubergroupsymbol{
+.num_option .nubergroupsymbol{
 	position: absolute;
     top: 42%;
     left: 1%;

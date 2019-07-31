@@ -69,12 +69,12 @@ class WP_Plugins_Stats_Api {
 				array(
 					'body' => array(
 						'action'  => 'plugin_information',
-						'request' => serialize( (object) $args ),
+						'request' => serialize( (object) $args ), //PHPCS:ignore:WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize
 					),
 				)
 			);
 		if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
-			$wp_plugin = unserialize( wp_remote_retrieve_body( $response ) );
+			$wp_plugin = unserialize( wp_remote_retrieve_body( $response ) );//PHPCS:ignore:WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize
 			$slug      = 'bsf_tr_plugin_info_' . $plugin_slug;
 			$plugin    = get_site_transient( $slug );
 			if ( false === $plugin || empty( $plugin ) ) {
@@ -162,7 +162,7 @@ class WP_Plugins_Stats_Api {
 				} else {
 					$plugin = $this->bsf_plugin_get_text( 'plugin_information', $api_params );
 					$x      = get_option( 'wp_info' );
-					if ( 1 == $x['Hrchoice'] ) {
+					if ( 1 == $x['Hrchoice'] ) {//PHPCS:ignore:WordPress.PHP.StrictComparisons.LooseComparison
 						$num = $plugin->active_installs;
 						$n   = $this->bsf_display_human_readable( $num );
 						return $n;
@@ -172,7 +172,7 @@ class WP_Plugins_Stats_Api {
 				}
 			} else {
 				$x = get_option( 'wp_info' );
-				if ( 1 == $x['Hrchoice'] ) {
+				if ( 1 == $x['Hrchoice'] ) {//PHPCS:ignore:WordPress.PHP.StrictComparisons.LooseComparison
 					$num = $plugin->active_installs;
 					$n   = $this->bsf_display_human_readable( $num );
 					return $n;
@@ -197,9 +197,9 @@ class WP_Plugins_Stats_Api {
 		}
 		$x = get_option( 'wp_info' );
 		if ( 'K' === $x['Rchoice'] ) {
-				return round( ( $n / 1000 ), 0 ) . $x['Field1'];
+				return round( ( $n / 1000 ), 2 ) . $x['Field1'];
 		} elseif ( 'M' === $x['Rchoice'] ) {
-			return round( ( $n / 1000000 ), 2 ) . $x['Field2'];
+			return round( ( $n / 1000000 ), 4 ) . $x['Field2'];
 		}
 		return number_format( $n );
 	}
@@ -564,7 +564,7 @@ class WP_Plugins_Stats_Api {
 			array(
 				'body' => array(
 					'action'  => 'query_plugins',
-					'request' => serialize( (object) $args ),
+					'request' => serialize( (object) $args ), //PHPCS:ignore:WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize
 				),
 			)
 		);
@@ -574,7 +574,7 @@ class WP_Plugins_Stats_Api {
 				return 'Error! missing Plugin Author';
 		} else {
 			if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
-				$returned_object = unserialize( wp_remote_retrieve_body( $response ) );
+				$returned_object = unserialize( wp_remote_retrieve_body( $response ) );//PHPCS:ignore:WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize
 				$plugins         = $returned_object->plugins;
 				$temp            = 0;
 				foreach ( $plugins as $key ) {
@@ -620,7 +620,7 @@ class WP_Plugins_Stats_Api {
 				return 'Please Verify plugin Author!';
 			} else {
 				$x = get_option( 'wp_info' );
-				if ( 1 == $x['Hrchoice'] ) {
+				if ( 1 == $x['Hrchoice'] ) {//PHPCS:ignore:WordPress.PHP.StrictComparisons.LooseComparison
 					$num = $plugins;
 					$n   = $this->bsf_display_human_readable( $num );
 					return $n;
@@ -633,7 +633,7 @@ class WP_Plugins_Stats_Api {
 				return 'Please Verify plugin Author!';
 			} else {
 				$x = get_option( 'wp_info' );
-				if ( 1 == $x['Hrchoice'] ) {
+				if ( 1 == $x['Hrchoice'] ) {//PHPCS:ignore:WordPress.PHP.StrictComparisons.LooseComparison
 					$num = $plugins;
 					$n   = $this->bsf_display_human_readable( $num );
 					return $n;
@@ -669,7 +669,7 @@ class WP_Plugins_Stats_Api {
 			array(
 				'body' => array(
 					'action'  => 'query_plugins',
-					'request' => serialize( (object) $args ),
+					'request' => serialize( (object) $args ), //PHPCS:ignore:WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize
 				),
 			)
 		);
@@ -678,7 +678,7 @@ class WP_Plugins_Stats_Api {
 				return 'Error! missing Plugin Author';
 		} else {
 			if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
-				$returned_object = unserialize( wp_remote_retrieve_body( $response ) );
+				$returned_object = unserialize( wp_remote_retrieve_body( $response ) );//PHPCS:ignore:WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize
 				$plugins         = $returned_object->plugins;
 				$temp            = 0;
 
@@ -729,7 +729,7 @@ class WP_Plugins_Stats_Api {
 				return 'Please Verify plugin Author!';
 			} else {
 				$x = get_option( 'wp_info' );
-				if ( 1 == $x['Hrchoice'] ) {
+				if ( 1 == $x['Hrchoice'] ) {//PHPCS:ignore:WordPress.PHP.StrictComparisons.LooseComparison
 					$num = $plugins;
 					$n   = $this->bsf_display_human_readable( $num );
 					return $n;
@@ -742,7 +742,7 @@ class WP_Plugins_Stats_Api {
 				return 'Please Verify plugin Author!';
 			} else {
 				$x = get_option( 'wp_info' );
-				if ( 1 == $x['Hrchoice'] ) {
+				if ( 1 == $x['Hrchoice'] ) {//PHPCS:ignore:WordPress.PHP.StrictComparisons.LooseComparison
 					$num = $plugins;
 					$n   = $this->bsf_display_human_readable( $num );
 					return $n;

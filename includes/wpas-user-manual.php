@@ -12,8 +12,8 @@ wp_enqueue_style( 'bsf_wpas_stylesheet' );
 ?>
 	<div class="wp_as_global_settings">
 	<h2> <?php esc_html_e( 'Welcome to Advanced Stats!', 'wp-as' ); ?></h2>
-	<h3><?php esc_html_e( 'The Advanced Stats plugin is built to track plugins and themes information on your website. Just paste the shortcode in the desired position!', 'wp-as' ); ?></h3>
-	<br><label class="wpas_page_title" for="howtouse">
+	<h4><?php esc_html_e( 'The Advanced Stats plugin is built to track plugins and themes information on your website. Just paste the shortcode in the desired position!', 'wp-as' ); ?></h4>
+	<br><label class="wpas_page_title" for="howtouse"></label>
 		<h2>
 		<?php
 		esc_html_e( 'How to Use?', 'wp-as' );
@@ -22,7 +22,7 @@ wp_enqueue_style( 'bsf_wpas_stylesheet' );
 	<b><?php esc_attr_e( 'Step 1' ); ?></b><?php esc_attr_e( ': Set frequency to update the API (by default Frequency is one day)', 'wp-as' ); ?>.<br><br>
 	<b><?php esc_attr_e( 'Step 2' ); ?></b><?php esc_attr_e( ': Set Date format if required (by default Date format is y-m-d).', 'wp-as' ); ?><br><br>
 	<b><?php esc_attr_e( 'Step 3' ); ?></b><?php esc_attr_e( ': Paste the shortcode in the desired position.', 'wp-as' ); ?><br><br>
-	 <b><?php esc_attr_e( 'Step 4' ); ?></b><?php esc_attr_e( ': That' . "'" . 's it! Visit Post/Page to see results.', 'wp-as' ); ?><br><br><br><?php//PHPCS:ignore:WordPress.WP.I18n.NonSingularStringLiteralText?>
+	<b><?php esc_attr_e( 'Step 4' ); ?></b><?php esc_attr_e( ': That' . "'" . 's it! Visit Post/Page to see results.', 'wp-as' ); //PHPCS:ignore:WordPress.WP.I18n.NonSingularStringLiteralText ?><br><br><br>
 <div class="wp-asresp-table">
 				<div class="wp-asresp-table-caption"><?php esc_attr_e( 'THEME SHORTCODE TABLE', 'wp-as' ); ?></div>
 					<div class="wp-asresp-table-header">

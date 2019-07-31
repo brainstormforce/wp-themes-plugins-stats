@@ -76,15 +76,13 @@ class WP_Themes_Stats_Api {
 				'body' => array(
 					'action'  => $action,
 					'timeout' => 15,
-					'request' => serialize( $args ),
+					'request' => serialize( $args ), //PHPCS:ignore:WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize
 				),
 			);
-			// var_dump(unserialize($http_args));
-			// wp_die();
-			$request = wp_remote_post( $url, $http_args );
+			$request   = wp_remote_post( $url, $http_args );
 
 			if ( ! is_wp_error( $request ) || wp_remote_retrieve_response_code( $request ) === 200 ) {
-				$response = maybe_unserialize( wp_remote_retrieve_body( $request ) );
+				$response = maybe_unserialize( wp_remote_retrieve_body( $request ) );//PHPCS:ignore:WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize
 
 				$themes_list = ( is_object( $response ) && isset( $response->themes ) ) ? $response->themes : array();
 
@@ -111,9 +109,9 @@ class WP_Themes_Stats_Api {
 		}
 		$x = get_option( 'wp_info' );
 		if ( 'K' === $x['Rchoice'] ) {
-				return round( ( $n / 1000 ), 0 ) . $x['Field1'];
+				return round( ( $n / 1000 ), 2 ) . $x['Field1'];
 		} elseif ( 'M' === $x['Rchoice'] ) {
-			return round( ( $n / 1000000 ), 2 ) . $x['Field2'];
+			return round( ( $n / 1000000 ), 3 ) . $x['Field2'];
 		}
 		return $n;
 	}
@@ -150,12 +148,12 @@ class WP_Themes_Stats_Api {
 				array(
 					'body' => array(
 						'action'  => 'theme_information',
-						'request' => serialize( (object) $argst ),
+						'request' => serialize( (object) $argst ), //PHPCS:ignore:WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize
 					),
 				)
 			);
 
-			$wp_theme = unserialize( wp_remote_retrieve_body( $responset ) );
+			$wp_theme = unserialize( wp_remote_retrieve_body( $responset ) );//PHPCS:ignore:WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize
 		if ( false === $wp_theme ) {
 			return 'Theme is Missing';
 		} else {
@@ -260,7 +258,7 @@ class WP_Themes_Stats_Api {
 					return 'Please Verify Theme Details!';
 				} else {
 					$x = get_option( 'wp_info' );
-					if ( 1 == $x['Hrchoice'] ) {
+					if ( 1 == $x['Hrchoice'] ) {//PHPCS:ignore:WordPress.PHP.StrictComparisons.LooseComparison
 						$active_install = $this->bsf_display_human_readable( $theme->{'active_installs'} );
 						return $active_install;
 					} else {
@@ -269,7 +267,7 @@ class WP_Themes_Stats_Api {
 				}
 			} else {
 				$x = get_option( 'wp_info' );
-				if ( 1 == $x['Hrchoice'] ) {
+				if ( 1 == $x['Hrchoice'] ) {//PHPCS:ignore:WordPress.PHP.StrictComparisons.LooseComparison
 					$active_install = $this->bsf_display_human_readable( $theme->{'active_installs'} );
 					return $active_install;
 				} else {
@@ -652,12 +650,12 @@ class WP_Themes_Stats_Api {
 				array(
 					'body' => array(
 						'action'  => 'query_themes',
-						'request' => serialize( (object) $args ),
+						'request' => serialize( (object) $args ), //PHPCS:ignore:WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize
 					),
 				)
 			);
 			if ( ! is_wp_error( $response ) ) {
-				$returned_object = unserialize( wp_remote_retrieve_body( $response ) );
+				$returned_object = unserialize( wp_remote_retrieve_body( $response ) );//PHPCS:ignore:WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize
 				$themes          = $returned_object->themes;
 
 				if ( empty( $themes ) ) {
@@ -708,7 +706,7 @@ class WP_Themes_Stats_Api {
 					return 'Author is missing!';
 				} else {
 					$x = get_option( 'wp_info' );
-					if ( 1 == $x['Hrchoice'] ) {
+					if ( 1 == $x['Hrchoice'] ) {//PHPCS:ignore:WordPress.PHP.StrictComparisons.LooseComparison
 						$num = $themes;
 						$n   = $this->bsf_display_human_readable( $num );
 						return $n;
@@ -722,7 +720,7 @@ class WP_Themes_Stats_Api {
 				return 'Author is missing!';
 			} else {
 				$x = get_option( 'wp_info' );
-				if ( 1 == $x['Hrchoice'] ) {
+				if ( 1 == $x['Hrchoice'] ) {//PHPCS:ignore:WordPress.PHP.StrictComparisons.LooseComparison
 					$num = $themes;
 					$n   = $this->bsf_display_human_readable( $num );
 					return $n;
@@ -759,7 +757,7 @@ class WP_Themes_Stats_Api {
 			array(
 				'body' => array(
 					'action'  => 'query_themes',
-					'request' => serialize( (object) $args ),
+					'request' => serialize( (object) $args ), //PHPCS:ignore:WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize
 				),
 			)
 		);
@@ -769,7 +767,7 @@ class WP_Themes_Stats_Api {
 				return 'Error! missing Theme Author';
 		} else {
 			if ( ! is_wp_error( $response ) ) {
-				$returned_object = unserialize( wp_remote_retrieve_body( $response ) );
+				$returned_object = unserialize( wp_remote_retrieve_body( $response ) );//PHPCS:ignore:WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize
 				$themes          = $returned_object->themes;
 				$temp            = 0;
 
@@ -824,7 +822,7 @@ class WP_Themes_Stats_Api {
 					return 'Author is missing!';
 				} else {
 					$x = get_option( 'wp_info' );
-					if ( 1 == $x['Hrchoice'] ) {
+					if ( 1 == $x['Hrchoice'] ) {//PHPCS:ignore:WordPress.PHP.StrictComparisons.LooseComparison
 						$num = $themes;
 						$n   = $this->bsf_display_human_readable( $num );
 						return $n;
@@ -838,7 +836,7 @@ class WP_Themes_Stats_Api {
 				return 'Author is missing!';
 			} else {
 				$x = get_option( 'wp_info' );
-				if ( 1 == $x['Hrchoice'] ) {
+				if ( 1 == $x['Hrchoice'] ) {//PHPCS:ignore:WordPress.PHP.StrictComparisons.LooseComparison
 					$num = $themes;
 					$n   = $this->bsf_display_human_readable( $num );
 					return $n;
