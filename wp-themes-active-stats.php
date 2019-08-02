@@ -1,15 +1,20 @@
 <?php
 /**
- * Plugin Name: WP Advanced Stats
- * Plugin URI: http://brainstormforce.com/
- * Author: Brainstorm Force
- * Author URI: https://www.brainstormforce.com
- * Contributors: brainstormforce, Anil
- * Version: 1.0.0
- * Description: This plugin is geared towards developers with Themes in the WordPress.org repository and anyone else that wants to  easily display information about a Themes that is in the repository.
- * Text Domain: wp-as
+ * Plugin Name: WP Advanced Stats.
+ * Description:  This plugin is geared towards developers with Themes in the WordPress.org repository and anyone else that wants to  easily display information about a Themes and Plugins that is in the repository.
+ * Version:     1.0.0
+ * Author:      Brainstorm Force
+ * Author URI:  https://brainstormforce.com
+ * Text Domain: wp-as.
+ * Main
  *
- * @package WP-Advanced-Stats
+ * PHP version 7
+ *
+ * @category PHP
+ * @package  BSF WP Advanced Stats.
+ * @author   Display Name <username@brainstormforce.com>
+ * @license  https://brainstormforce.com
+ * @link     https://brainstormforce.com
  */
 
 define( 'BSF_AS_PLUGIN_URL', untrailingslashit( plugins_url( '', __FILE__ ) ) );

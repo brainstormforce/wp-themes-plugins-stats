@@ -74,8 +74,8 @@ if ( ! class_exists( 'Wp_As_Loader' ) ) {
 		 * Process plugin's Stylesheet to General setting Tab form Data.
 		 */
 		public function bsf_wpas_assets() {
-			wp_register_style( 'bsf_wpas_stylesheet', BSF_AS_PLUGIN_URL . '/css/wpas-style.css', null, WP_AS_STATS_VERSION, false );
-			wp_register_script( 'bsf_wpas_jsfile', BSF_AS_PLUGIN_URL . '/js/wpas-human-readable.js', null, WP_AS_STATS_VERSION, false );
+			wp_register_style( 'bsf_wpas_stylesheet', BSF_AS_PLUGIN_URL . '/assets/css/wpas-style.css', null, WP_AS_STATS_VERSION, false );
+			wp_register_script( 'bsf_wpas_jsfile', BSF_AS_PLUGIN_URL . '/assets/js/wpas-human-readable.js', null, WP_AS_STATS_VERSION, false );
 		}
 		/**
 		 * WP Advanced Stats Option in Setting Page.

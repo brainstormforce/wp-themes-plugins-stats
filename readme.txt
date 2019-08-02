@@ -49,7 +49,7 @@ Step 2 : Set Date format if required (by default Date format is d/m/y).
 
 Step 3 : Paste the shortcode form table in the desired position.
 
-Step 4 : That's it! Visit Post/Page to see results. 
+Step 4 : That's it! Visit Post/Page to see results.
 
 == Version 1.0.0 ==
 * Initial release
