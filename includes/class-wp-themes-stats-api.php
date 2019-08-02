@@ -107,7 +107,7 @@ class WP_Themes_Stats_Api {
 					$expiration        = $wp_info['Frequency'];
 					$update_theme_info = get_option( 'wp_theme_info' );
 					$slug              = 'bsf_tr_theme_info_' . $wp_theme_slug;
-					$wp_theme          = $update_theme_info['theme'];
+					$wp_theme          = isset( $update_theme_info['theme'] ) ? $update_theme_info['theme'] : '';
 					$second            = 0;
 					$day               = 0;
 
@@ -670,7 +670,7 @@ class WP_Themes_Stats_Api {
 					$expiration        = $wp_info['Frequency'];
 					$update_theme_info = get_option( 'wp_theme_info' );
 					$slug              = 'bsf_tr_themes_Active_Count_' . $wp_theme_author;
-					$wp_theme          = $update_theme_info['theme'];
+					$wp_theme          = isset( $update_theme_info['theme'] ) ? $update_theme_info['theme'] : '';
 					$second            = 0;
 					$day               = 0;
 		if ( ! empty( $expiration ) ) {
@@ -809,7 +809,7 @@ class WP_Themes_Stats_Api {
 					$expiration        = $wp_info['Frequency'];
 					$update_theme_info = get_option( 'wp_theme_info' );
 					$slug              = 'bsf_tr_themes_downloaded_Count_' . $wp_theme_author;
-					$wp_theme          = $update_theme_info['theme'];
+					$wp_theme          = isset( $update_theme_info['theme'] ) ? $update_theme_info['theme'] : '';
 					$second            = 0;
 					$day               = 0;
 		if ( ! empty( $expiration ) ) {
