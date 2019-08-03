@@ -107,7 +107,7 @@ class WP_Themes_Stats_Api {
 					$expiration        = $wp_info['Frequency'];
 					$update_theme_info = get_option( 'wp_theme_info' );
 					$slug              = 'bsf_tr_theme_info_' . $wp_theme_slug;
-					$wp_theme          = isset( $update_theme_info['theme'] ) ? $update_theme_info['theme'] : '';
+					$wp_theme          = ( ! empty( $update_theme_info['theme'] ) ? $update_theme_info['theme'] : '' );
 					$second            = 0;
 					$day               = 0;
 
@@ -123,9 +123,13 @@ class WP_Themes_Stats_Api {
 			delete_transient( $slug );
 			set_site_transient( $slug, $theme, $expiration );
 			$theme = get_option( "_site_transient_$slug" );
-
+			if( empty($theme) )
+			{
+				return "Please Verify Theme Details!";
+			}
 			return $theme;
 		}
+		return $theme;
 	}
 	/**
 	 * Convert number into particular format.
@@ -395,6 +399,7 @@ class WP_Themes_Stats_Api {
 				),
 			);
 			$theme      = get_option( "_site_transient_bsf_tr_theme_info_$wp_theme_slug" );
+
 			if ( empty( $theme ) ) {
 				$theme = $this->bsf_tr_get_text( 'theme_information', $api_params );
 				if ( 'Theme is Missing' === $theme ) {
@@ -670,9 +675,10 @@ class WP_Themes_Stats_Api {
 					$expiration        = $wp_info['Frequency'];
 					$update_theme_info = get_option( 'wp_theme_info' );
 					$slug              = 'bsf_tr_themes_Active_Count_' . $wp_theme_author;
-					$wp_theme          = isset( $update_theme_info['theme'] ) ? $update_theme_info['theme'] : '';
+					$wp_theme          = ( ! empty( $update_theme_info['theme'] ) ? $update_theme_info['theme'] : '' );
 					$second            = 0;
 					$day               = 0;
+					
 		if ( ! empty( $expiration ) ) {
 			$day        = ( ( $expiration * 24 ) * 60 ) * 60;
 			$expiration = ( $second + $day );
@@ -684,6 +690,7 @@ class WP_Themes_Stats_Api {
 			$theme = get_option( "_site_transient_$slug" );
 			return $theme;
 		}
+		return $theme;
 	}
 	/**
 	 * Get the theme Details.
@@ -809,9 +816,10 @@ class WP_Themes_Stats_Api {
 					$expiration        = $wp_info['Frequency'];
 					$update_theme_info = get_option( 'wp_theme_info' );
 					$slug              = 'bsf_tr_themes_downloaded_Count_' . $wp_theme_author;
-					$wp_theme          = isset( $update_theme_info['theme'] ) ? $update_theme_info['theme'] : '';
+					$wp_theme          = ( ! empty( $update_theme_info['theme'] ) ? $update_theme_info['theme'] : '' );
 					$second            = 0;
 					$day               = 0;
+					
 		if ( ! empty( $expiration ) ) {
 			$day        = ( ( $expiration * 24 ) * 60 ) * 60;
 			$expiration = ( $second + $day );
@@ -823,6 +831,7 @@ class WP_Themes_Stats_Api {
 			$theme = get_option( "_site_transient_$slug" );
 			return $theme;
 		}
+		return $theme;
 	}
 	/**
 	 * Get the theme Details.
