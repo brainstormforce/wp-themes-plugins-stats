@@ -1,6 +1,6 @@
-=== WP Themes Active Stats ===
+=== WP Advanced Stats ===
 Contributors: brainstormforce 
-Tags: wpthemes-count, active-install, stats, themes-stats    
+Tags: wpthemes-count, active-install, stats, themes-stats, plugin-stats, total download & active install count of plugin and theme by author.    
 Requires at least: 3.0  
 Tested up to: 5.1    
 Stable tag: 1.0.0  
@@ -9,9 +9,7 @@ Stable tag: 1.0.0
 
 This plugin is geared towards developers with Themes and Plugins in the WordPress.org repository and anyone else that wants to easily display information about a Themes and Plugins that is in the repository.
 
-Here is a shortcodes available in the WP Themes Active Stats plugin.
-
-`[wp_theme_active_install wp_theme_slug='astra' theme_author='brainstormforce']`
+Here is a shortcodes available in the WP Themes Active Stats.
 
 1.`theme = "astra"`
 
@@ -31,7 +29,7 @@ Here is a shortcodes available in the WP Themes Active Stats plugin.
 
 5.`author = "brainstormforce"`
 	
-	Name of the Author from w.org that you want get details.	
+	Name of the Author from w.org that you want get details.
 
 == Installation ==
 

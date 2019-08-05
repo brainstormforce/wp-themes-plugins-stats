@@ -242,7 +242,7 @@ class WP_Plugins_Stats_Api {
 	 * @return float $n Get human readable format.
 	 */
 	public function bsf_display_human_readable( $n ) {
-		// first strip any formatting.
+		
 		$n = ( 0 + str_replace( ',', '', $n ) );
 		if ( ! is_numeric( $n ) ) {
 			return false;
@@ -652,7 +652,6 @@ class WP_Plugins_Stats_Api {
 		);
 
 		if ( '' === $api_params ) {
-			// Response body does not contain an object/array.
 				return 'Error! missing Plugin Author';
 		} else {
 			if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
@@ -787,7 +786,6 @@ class WP_Plugins_Stats_Api {
 			)
 		);
 		if ( '' === $api_params ) {
-			// Response body does not contain an object/array.
 				return 'Error! missing Plugin Author';
 		} else {
 			if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {

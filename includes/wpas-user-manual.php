@@ -10,7 +10,7 @@
 // Getting Started tab.
 wp_enqueue_style( 'bsf_wpas_stylesheet' );
 ?>
-	<div class="wp_as_global_settings">
+	<div class="wp-as-global-settings">
 	<h2> <?php esc_html_e( 'Welcome to Advanced Stats!', 'wp-as' ); ?></h2>
 	<h4><?php esc_html_e( 'The Advanced Stats plugin is built to track plugins and themes information on your website. Just paste the shortcode in the desired position!', 'wp-as' ); ?></h4>
 	<br><label class="wp-as-page-title" for="howtouse"></label>

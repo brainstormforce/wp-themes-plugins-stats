@@ -709,7 +709,6 @@ class WP_Themes_Stats_Api {
 		}
 
 		if ( '' === $api_params ) {
-			// Response body does not contain an object/array.
 				return 'Error! missing Theme Author';
 		} else {
 			$args = array(
@@ -865,7 +864,6 @@ class WP_Themes_Stats_Api {
 		);
 
 		if ( '' === $api_params ) {
-			// Response body does not contain an object/array.
 				return 'Error! missing Theme Author';
 		} else {
 			if ( ! is_wp_error( $response ) ) {

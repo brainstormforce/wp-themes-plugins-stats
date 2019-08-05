@@ -53,13 +53,17 @@ $numchoice_disp = ( ( 0 === $hrchoice ) ? 'style="display:block"' : 'style="disp
 				<br>
 				<div id="hr_option" class="wp-as-hr-option" <?php echo wp_kses_post( $hrchoice_disp ); ?> >
 					<br>
+					<label>
 					<input type="radio" name="wpas_r_option" id="thousand"  value="K"  <?php checked( 'K' === $rchoice ); ?> />
 					<?php esc_html_e( 'Thousand', 'wp-as' ); ?>
 						<input type="text" class="small-text wp-as-small-text1"  name="field1"  placeholder="K" value="<?php echo esc_attr( $wpas_field1 ); ?>" />
+					</label>
 					<br>
+					<label>
 					<input type="radio" name="wpas_r_option" id="million"  value="M"  <?php checked( 'M' === $rchoice ); ?>/>
 					<?php esc_html_e( 'Million', 'wp-as' ); ?>
 						<input type="text"  class="small-text wp-as-small-text2"  name="field2" placeholder="M" value="<?php echo esc_attr( $wpas_field2 ); ?>"  />
+					</label>
 				</div>
 				<p class="description wp-as-description">
 					<?php esc_html_e( 'Set human readable to display active installs, active installs counts and downloads counts i.e 247,704,360 -> 247.7 million.', 'wp-as' ); ?>
@@ -81,7 +85,7 @@ $numchoice_disp = ( ( 0 === $hrchoice ) ? 'style="display:block"' : 'style="disp
 		<tr>
 			<th scope="row"><label><?php esc_html_e( 'Date Format', 'wp-as' ); ?></label></th>
 				<td class="wp-as-date">
-					<fieldset class="wpas_date">
+					<fieldset class="wp-as-date">
 					<?php
 						$date_formats = array_unique( apply_filters( 'date_formats', array( __( 'F j,Y' ), 'Y-m-d', 'm/d/Y', 'd/m/Y' ) ) );
 						$format       = 'd-m-y';
@@ -92,13 +96,13 @@ $numchoice_disp = ( ( 0 === $hrchoice ) ? 'style="display:block"' : 'style="disp
 							echo " checked='checked'";
 							$custom = false;
 						}
-						echo ' /> <span class="wp-as-date-time-text format-i18n">' . date_i18n( $format ) . '</span><code>' . esc_attr( $format ) . '</code><br>';//PHPCS:ignore:WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo ' /> <span class="wp-as-date-time-text format-i18n">' . date_i18n( $format ) . '</span><code>' . esc_attr( $format ) . '</code><br></label>';//PHPCS:ignore:WordPress.Security.EscapeOutput.OutputNotEscaped
 					}
 						echo '<label><input type="radio" name="wpasoption" id="date_format_custom_radio" value="ok"';
 						checked( 'ok' == $custom );//PHPCS:ignore:WordPress.PHP.StrictComparisons.LooseComparison
 						echo '/> <span class="wp-as-date-time-text date-time-custom-text">' . esc_attr( 'Custom' ) . '<span class="screen-reader-text"> ' . esc_attr( 'enter a custom date format in the following field' ) . '</span></span></label>' .
 							'<input type="text" name="wpas_date_format_custom" id="wpas_date_format_custom" value="' . esc_attr( $choice ) . '" class="small-text" />';
-						echo '<span  class="description wp-as-description">' . esc_html_e( '  (Please Note that before checking the custom, please change the format in the custom field).', 'wp-as' ) . '</span>';
+						echo '<p class="wp-as-shortdescription">'. esc_attr_e('  (Please Note that before checking the custom, please change the format in the custom field).', 'wp-as' ) .'</p>';
 					?>
 					</fieldset>
 				</td>
