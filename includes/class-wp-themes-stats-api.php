@@ -118,14 +118,13 @@ class WP_Themes_Stats_Api {
 					$theme      = get_site_transient( $slug );
 					$name       = $wp_theme_slug;
 					$theme_slug = $theme->slug;
-		if ( ! empty( $theme ) && $name === $theme_slug ) {
+		if ( ! empty( $theme ) || $name === $theme_slug ) {
 
 			delete_transient( $slug );
 			set_site_transient( $slug, $theme, $expiration );
 			$theme = get_option( "_site_transient_$slug" );
-			if( empty($theme) )
-			{
-				return "Please Verify Theme Details!";
+			if ( empty( $theme ) ) {
+				return 'Please Verify Theme Details!';
 			}
 			return $theme;
 		}
@@ -678,7 +677,7 @@ class WP_Themes_Stats_Api {
 					$wp_theme          = ( ! empty( $update_theme_info['theme'] ) ? $update_theme_info['theme'] : '' );
 					$second            = 0;
 					$day               = 0;
-					
+
 		if ( ! empty( $expiration ) ) {
 			$day        = ( ( $expiration * 24 ) * 60 ) * 60;
 			$expiration = ( $second + $day );
@@ -819,7 +818,7 @@ class WP_Themes_Stats_Api {
 					$wp_theme          = ( ! empty( $update_theme_info['theme'] ) ? $update_theme_info['theme'] : '' );
 					$second            = 0;
 					$day               = 0;
-					
+
 		if ( ! empty( $expiration ) ) {
 			$day        = ( ( $expiration * 24 ) * 60 ) * 60;
 			$expiration = ( $second + $day );
