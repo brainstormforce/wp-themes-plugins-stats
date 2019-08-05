@@ -707,7 +707,7 @@ class WP_Plugins_Stats_Api {
 		if ( empty( $plugins ) || false === $plugins ) {
 
 				$plugins = $this->bsf_display_plugins_active_count( 'query_plugins', $api_params['plugin_author'] );
-			if ( 'Please Verify Author Details!' === $plugins ) {
+			if ( 'Please Verify Author Details!' === $plugins || 'Error! missing Plugin Author' === $plugins ) {
 				return 'Please Verify Author Details!';
 			}
 				$x = get_option( 'wp_info' );
@@ -845,7 +845,7 @@ class WP_Plugins_Stats_Api {
 
 			$plugins = $this->bsf_display_total_plugin_download_count( 'query_plugins', $api_params['plugin_author'] );
 
-			if ( 'Please Verify Author Details!' === $plugins ) {
+			if ( 'Please Verify Author Details!' === $plugins || 'Error! missing Plugin Author' === $plugins ) {
 					return 'Please Verify Author Details!';
 			}
 				$x = get_option( 'wp_info' );
