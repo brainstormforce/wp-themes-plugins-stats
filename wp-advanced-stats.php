@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: WP Advanced Stats.
+ * Plugin Name: WP Advanced Stats
  * Description:  This plugin is geared towards developers with Themes in the WordPress.org repository and anyone else that wants to  easily display information about a Themes and Plugins that is in the repository.
  * Version:     1.0.0
  * Author:      Brainstorm Force

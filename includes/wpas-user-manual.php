@@ -19,10 +19,11 @@ wp_enqueue_style( 'bsf_wpas_stylesheet' );
 		esc_html_e( 'How to Use?', 'wp-as' );
 		?>
 		</h2>
-	<b><?php esc_attr_e( 'Step 1' ); ?></b><?php esc_attr_e( ': Set frequency to update the API (by default Frequency is one day)', 'wp-as' ); ?>.<br><br>
-	<b><?php esc_attr_e( 'Step 2' ); ?></b><?php esc_attr_e( ': Set Date format if required (by default Date format is d-m-y).', 'wp-as' ); ?><br><br>
-	<b><?php esc_attr_e( 'Step 3' ); ?></b><?php esc_attr_e( ': Paste the shortcode in the desired position.', 'wp-as' ); ?><br><br>
-	<b><?php esc_attr_e( 'Step 4' ); ?></b><?php esc_attr_e( ': That' . "'" . 's it! Visit Post/Page to see results.', 'wp-as' ); //PHPCS:ignore:WordPress.WP.I18n.NonSingularStringLiteralText ?><br><br><br>
+	<b><?php esc_attr_e( 'Step 1' ); ?></b><?php esc_attr_e( ': Set Frequency to update the API (by default Frequency is one day)', 'wp-as' ); ?>.<br><br>
+	<b><?php esc_attr_e( 'Step 2' ); ?></b><?php esc_attr_e( ': Set Human Readable format if required (if unchecked then set Number symbol ).', 'wp-as' ); ?><br><br>
+	<b><?php esc_attr_e( 'Step 3' ); ?></b><?php esc_attr_e( ': Set Date format if required (by default Date format is d-m-y).', 'wp-as' ); ?><br><br>
+	<b><?php esc_attr_e( 'Step 4' ); ?></b><?php esc_attr_e( ': Paste the shortcode in the desired position.', 'wp-as' ); ?><br><br>
+	<b><?php esc_attr_e( 'Step 5' ); ?></b><?php esc_attr_e( ': That' . "'" . 's it! Visit Post/Page to see results.', 'wp-as' ); //PHPCS:ignore:WordPress.WP.I18n.NonSingularStringLiteralText ?><br><br><br>
 <div class="wp-as-resp-table">
 				<div class="wp-as-resp-table-caption"><?php esc_attr_e( 'THEME SHORTCODE TABLE', 'wp-as' ); ?></div>
 					<div class="wp-as-resp-table-header">

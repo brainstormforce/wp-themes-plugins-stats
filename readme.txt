@@ -7,29 +7,29 @@ Stable tag: 1.0.0
 
 == Description ==
 
-This plugin is geared towards developers with Themes and Plugins in the WordPress.org repository and anyone else that wants to easily display information about a Themes and Plugins that is in the repository.
+This plugin is geared towards developers with Themes and Plugins in the WordPress.org repository and anyone else that wants to easily display information about Themes and Plugins that are in the repository.
 
-Here is a shortcodes available in the WP Themes Active Stats.
+Here is a shortcode available in the WP Themes Active Stats.
 
 1.`theme = "astra"`
 
-	Slug of the Theme from w.org that you want get details.
+    A slug of the Theme from w.org that you want to get details.
 
 2.`plugin = "astra-hooks"`
 
-	Slug of the Plugin from w.org that you want get details.
+    A slug of the plugin from w.org that you want to get details.
 
 3.`outof = "5"`
-	
-	Outof Value from you want to calculate.	
+    
+    Out of Value from you want to calculate.    
 
 4.`label = "label_name"`
-	
-	Label name should be as per user want to display on link.
+    
+    Label name should be as per user want to display on a link.
 
 5.`author = "brainstormforce"`
-	
-	Name of the Author from w.org that you want get details.
+    
+    Name of the Author from w.org that you want to get details.
 
 == Installation ==
 
@@ -41,13 +41,15 @@ Here is a shortcodes available in the WP Themes Active Stats.
 
 How to Use? 
 
-Step 1 : Set frequency to update the API (by default Frequency is one day).
+Step 1: Set frequency to update the API (by default Frequency is one day).
 
-Step 2 : Set Date format if required (by default Date format is d/m/y).
+Step 2: Set a Human Readable format if required (if unchecked then set Number symbol).
 
-Step 3 : Paste the shortcode form table in the desired position.
+Step 3: Set Date format if required (by default Date format is d-m-y).
 
-Step 4 : That's it! Visit Post/Page to see results.
+Step 4: Paste the shortcode form table in the desired position.
+
+Step 5: That's it! Visit Post/Page to see results.
 
 == Version 1.0.0 ==
 * Initial release
