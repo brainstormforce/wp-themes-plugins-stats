@@ -242,7 +242,6 @@ class WP_Plugins_Stats_Api {
 	 * @return float $n Get human readable format.
 	 */
 	public function bsf_display_human_readable( $n ) {
-		
 		$n = ( 0 + str_replace( ',', '', $n ) );
 		if ( ! is_numeric( $n ) ) {
 			return false;

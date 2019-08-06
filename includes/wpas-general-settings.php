@@ -17,7 +17,7 @@ $hrchoice       = ( ! empty( $wp_info['Hrchoice'] ) ? sanitize_text_field( $wp_i
 $rchoice        = ( ! empty( $wp_info['Rchoice'] ) ? sanitize_text_field( $wp_info['Rchoice'] ) : 'K' );
 $wpas_field1    = ( ! empty( $wp_info['Field1'] ) ? sanitize_text_field( $wp_info['Field1'] ) : 'K' );
 $wpas_field2    = ( ! empty( $wp_info['Field2'] ) ? sanitize_text_field( $wp_info['Field2'] ) : 'M' );
-$symbol         = ( ! empty( $wp_info['Symbol'] ) ? sanitize_text_field( $wp_info['Symbol'] ) : ',' );
+$symbol         = ( ! empty( $wp_info['Symbol'] ) ? sanitize_text_field( $wp_info['Symbol'] ) : '' );
 $hrchoice_disp  = ( ( 0 === $hrchoice ) ? 'style="display:none"' : '' );
 $numchoice_disp = ( ( 0 === $hrchoice ) ? 'style="display:block"' : 'style="display:none"' );
 ?>
@@ -30,7 +30,7 @@ $numchoice_disp = ( ( 0 === $hrchoice ) ? 'style="display:block"' : 'style="disp
 				<label for="UpdateFrequency"><?php esc_html_e( 'Frequency', 'wp-as' ); ?></label>
 			</th>
 			<td>
-					<input class="small-text" type="number" name="frequency" id="wpas-frequency" pattern="[0-9]+" title="Number Only" size="5" maxlength="5" style="text-align: center;" value="<?php echo esc_attr( $frequency ); ?>">
+					<input class="small-text" type="number" name="frequency" id="wpas-frequency" pattern="[1-9]+" title="Number Only" min="1" size="5" maxlength="5" style="text-align: center;" value="<?php echo esc_attr( $frequency ); ?>">
 					<label><?php esc_html_e( 'Days', 'wp-as' ); ?></label>
 			</td>
 		</tr>
@@ -102,7 +102,7 @@ $numchoice_disp = ( ( 0 === $hrchoice ) ? 'style="display:block"' : 'style="disp
 						checked( 'ok' == $custom );//PHPCS:ignore:WordPress.PHP.StrictComparisons.LooseComparison
 						echo '/> <span class="wp-as-date-time-text date-time-custom-text">' . esc_attr( 'Custom' ) . '<span class="screen-reader-text"> ' . esc_attr( 'enter a custom date format in the following field' ) . '</span></span></label>' .
 							'<input type="text" name="wpas_date_format_custom" id="wpas_date_format_custom" value="' . esc_attr( $choice ) . '" class="small-text" />';
-						echo '<p class="wp-as-shortdescription">'. esc_attr_e('  (Please Note that before checking the custom, please change the format in the custom field).', 'wp-as' ) .'</p>';
+						echo '<p class="wp-as-shortdescription">' . esc_attr_e( '  (Please Note that before checking the custom, please change the format in the custom field).', 'wp-as' ) . '</p>';
 					?>
 					</fieldset>
 				</td>
