@@ -6,13 +6,13 @@
  * @package WP Advanced Stats/Loader
  */
 
-if ( ! class_exists( 'Wp_As_Loader' ) ) {
+if ( ! class_exists( 'Wpas_Loader' ) ) {
 	/**
 	 * Responsible for setting up constants, classes and includes.
 	 *
 	 * @since 1.0
 	 */
-	final class Wp_As_Loader {
+	final class Wpas_Loader {
 		/**
 		 * The unique instance of the plugin.
 		 *
@@ -54,11 +54,11 @@ if ( ! class_exists( 'Wp_As_Loader' ) ) {
 		private function define_constants() {
 
 			$file = dirname( dirname( __FILE__ ) );
-			define( 'WP_AS_STATS_VERSION', '1.0.0' );
-			define( 'WP_AS_STATS_BASE_DIR_NAME', plugin_basename( $file ) );
-			define( 'WP_AS_STATS_BASE_FILE', trailingslashit( $file ) . WP_AS_STATS_BASE_DIR_NAME . '.php' );
-			define( 'WP_AS_STATS_BASE_DIR', plugin_dir_path( WP_AS_STATS_BASE_FILE ) );
-			define( 'WP_AS_STATS_BASE_URL', plugins_url( '/', WP_AS_STATS_BASE_FILE ) );
+			define( 'WPAS_STATS_VERSION', '1.0.0' );
+			define( 'WPAS_STATS_BASE_DIR_NAME', plugin_basename( $file ) );
+			define( 'WPAS_STATS_BASE_FILE', trailingslashit( $file ) . WPAS_STATS_BASE_DIR_NAME . '.php' );
+			define( 'WPAS_STATS_BASE_DIR', plugin_dir_path( WPAS_STATS_BASE_FILE ) );
+			define( 'WPAS_STATS_BASE_URL', plugins_url( '/', WPAS_STATS_BASE_FILE ) );
 		}
 		/**
 		 * Loads classes and includes.
@@ -67,15 +67,15 @@ if ( ! class_exists( 'Wp_As_Loader' ) ) {
 		 * @return void
 		 */
 		private static function load_files() {
-			require_once WP_AS_STATS_BASE_DIR . 'includes/class-wp-themes-stats-api.php';
-			require_once WP_AS_STATS_BASE_DIR . 'includes/class-wp-plugins-stats-api.php';
+			require_once WPAS_STATS_BASE_DIR . 'includes/class-wpas-themes-stats-api.php';
+			require_once WPAS_STATS_BASE_DIR . 'includes/class-wpas-plugins-stats-api.php';
 		}
 		/**
 		 * Process plugin's Stylesheet to General setting Tab form Data.
 		 */
 		public function bsf_wpas_assets() {
-			wp_register_style( 'bsf_wpas_stylesheet', BSF_AS_PLUGIN_URL . '/assets/css/wpas-style.css', null, WP_AS_STATS_VERSION, false );
-			wp_register_script( 'bsf_wpas_jsfile', BSF_AS_PLUGIN_URL . '/assets/js/wpas-human-readable.js', null, WP_AS_STATS_VERSION, false );
+			wp_register_style( 'bsf_wpas_stylesheet', WPAS_PLUGIN_URL . '/assets/css/wpas-style.css', null, WPAS_STATS_VERSION, false );
+			wp_register_script( 'bsf_wpas_jsfile', WPAS_PLUGIN_URL . '/assets/js/wpas-human-readable.js', null, WPAS_STATS_VERSION, false );
 		}
 		/**
 		 * WP Advanced Stats Option in Setting Page.
@@ -94,7 +94,7 @@ if ( ! class_exists( 'Wp_As_Loader' ) ) {
 		 * Creating Admin Page.
 		 */
 		public function bsf_wpas_create_admin_page() {
-			require_once WP_AS_STATS_BASE_DIR . 'includes/wpas-frontend.php';
+			require_once WPAS_STATS_BASE_DIR . 'includes/wpas-frontend.php';
 		}
 		/**
 		 * Process plugin's General setting Tab form Data.
@@ -127,5 +127,5 @@ if ( ! class_exists( 'Wp_As_Loader' ) ) {
 			}
 		}
 	}
-	$wp_as_loader = Wp_As_Loader::get_instance();
+	$wpas_loader = Wpas_Loader::get_instance();
 }

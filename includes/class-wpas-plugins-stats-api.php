@@ -11,7 +11,7 @@
  *
  * @since 1.0.0
  */
-class WP_Plugins_Stats_Api {
+class WPAS_Plugins_Stats_Api {
 	/**
 	 * The unique instance of the plugin.
 	 *
@@ -66,7 +66,7 @@ class WP_Plugins_Stats_Api {
 				'fields' => array( 'active_installs' => true ),
 			);
 			$response = wp_remote_post(
-				'https://api.wordpress.org/plugins/info/1.0/',
+				'http://api.wordpress.org/plugins/info/1.0/',
 				array(
 					'body' => array(
 						'action'  => 'plugin_information',
@@ -638,7 +638,7 @@ class WP_Plugins_Stats_Api {
 			'author' => $api_params,
 			'fields' => array( 'active_installs' => true ),
 		);
-		$url  = 'https://api.wordpress.org/plugins/info/1.0/';
+		$url  = 'http://api.wordpress.org/plugins/info/1.0/';
 
 		$response = wp_remote_post(
 			$url,
@@ -773,7 +773,7 @@ class WP_Plugins_Stats_Api {
 			'author' => $api_params,
 			'fields' => array( 'active_installs' => true ),
 		);
-		$url  = 'https://api.wordpress.org/plugins/info/1.0/';
+		$url  = 'http://api.wordpress.org/plugins/info/1.0/';
 
 		$response = wp_remote_post(
 			$url,
@@ -866,5 +866,5 @@ class WP_Plugins_Stats_Api {
 		}
 	}
 }
-new WP_Plugins_Stats_Api();
-$wp_plugins_stats_api = WP_Plugins_Stats_Api::get_instance();
+new WPAS_Plugins_Stats_Api();
+$wpas_plugins_stats_api = WPAS_Plugins_Stats_Api::get_instance();

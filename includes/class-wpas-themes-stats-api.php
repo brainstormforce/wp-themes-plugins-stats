@@ -11,7 +11,7 @@
  *
  * @since 1.0.0
  */
-class WP_Themes_Stats_Api {
+class WPAS_Themes_Stats_Api {
 	/**
 	 * The unique instance of the plugin.
 	 *
@@ -178,7 +178,7 @@ class WP_Themes_Stats_Api {
 		);
 
 			$responset = wp_remote_post(
-				'https://api.wordpress.org/themes/info/1.0/?action=theme_information&request[fields][ratings]=true',
+				'http://api.wordpress.org/themes/info/1.0/?action=theme_information&request[fields][ratings]=true',
 				array(
 					'body' => array(
 						'action'  => 'theme_information',
@@ -954,5 +954,5 @@ class WP_Themes_Stats_Api {
 	}
 }
 
-new WP_Themes_Stats_Api();
-$wp_themes_stats_api = WP_Themes_Stats_Api::get_instance();
+new WPAS_Themes_Stats_Api();
+$wpas_themes_stats_api = WPAS_Themes_Stats_Api::get_instance();
