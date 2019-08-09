@@ -66,7 +66,7 @@ class WP_Plugins_Stats_Api {
 				'fields' => array( 'active_installs' => true ),
 			);
 			$response = wp_remote_post(
-				'http://api.wordpress.org/plugins/info/1.0/',
+				'https://api.wordpress.org/plugins/info/1.0/',
 				array(
 					'body' => array(
 						'action'  => 'plugin_information',
@@ -638,7 +638,7 @@ class WP_Plugins_Stats_Api {
 			'author' => $api_params,
 			'fields' => array( 'active_installs' => true ),
 		);
-		$url  = 'http://api.wordpress.org/plugins/info/1.0/';
+		$url  = 'https://api.wordpress.org/plugins/info/1.0/';
 
 		$response = wp_remote_post(
 			$url,
@@ -773,7 +773,7 @@ class WP_Plugins_Stats_Api {
 			'author' => $api_params,
 			'fields' => array( 'active_installs' => true ),
 		);
-		$url  = 'http://api.wordpress.org/plugins/info/1.0/';
+		$url  = 'https://api.wordpress.org/plugins/info/1.0/';
 
 		$response = wp_remote_post(
 			$url,
