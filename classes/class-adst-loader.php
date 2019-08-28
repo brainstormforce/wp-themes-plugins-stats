@@ -6,13 +6,13 @@
  * @package WP Advanced Stats/Loader
  */
 
-if ( ! class_exists( 'Wp_As_Loader' ) ) {
+if ( ! class_exists( 'ADST_Loader' ) ) {
 	/**
 	 * Responsible for setting up constants, classes and includes.
 	 *
 	 * @since 1.0
 	 */
-	final class Wp_As_Loader {
+	final class ADST_Loader {
 		/**
 		 * The unique instance of the plugin.
 		 *
@@ -27,7 +27,6 @@ if ( ! class_exists( 'Wp_As_Loader' ) ) {
 		 * Gets an instance of our plugin.
 		 */
 		public static function get_instance() {
-
 			if ( null === self::$instance ) {
 				self::$instance = new self();
 			}
@@ -38,7 +37,6 @@ if ( ! class_exists( 'Wp_As_Loader' ) ) {
 		 * Constructor.
 		 */
 		private function __construct() {
-
 			$this->define_constants();
 			$this->load_files();
 			add_action( 'admin_menu', array( $this, 'bsf_wpas_add_plugin_page' ) );
@@ -52,13 +50,12 @@ if ( ! class_exists( 'Wp_As_Loader' ) ) {
 		 * @return void
 		 */
 		private function define_constants() {
-
 			$file = dirname( dirname( __FILE__ ) );
-			define( 'WP_AS_STATS_VERSION', '1.0.0' );
-			define( 'WP_AS_STATS_BASE_DIR_NAME', plugin_basename( $file ) );
-			define( 'WP_AS_STATS_BASE_FILE', trailingslashit( $file ) . WP_AS_STATS_BASE_DIR_NAME . '.php' );
-			define( 'WP_AS_STATS_BASE_DIR', plugin_dir_path( WP_AS_STATS_BASE_FILE ) );
-			define( 'WP_AS_STATS_BASE_URL', plugins_url( '/', WP_AS_STATS_BASE_FILE ) );
+			define( 'ADST_STATS_VERSION', '1.0.0' );
+			define( 'ADST_STATS_BASE_DIR_NAME', plugin_basename( $file ) );
+			define( 'ADST_STATS_BASE_FILE', trailingslashit( $file ) . ADST_STATS_BASE_DIR_NAME . '.php' );
+			define( 'ADST_STATS_BASE_DIR', plugin_dir_path( ADST_STATS_BASE_FILE ) );
+			define( 'ADST_STATS_BASE_URL', plugins_url( '/', ADST_STATS_BASE_FILE ) );
 		}
 		/**
 		 * Loads classes and includes.
@@ -67,15 +64,15 @@ if ( ! class_exists( 'Wp_As_Loader' ) ) {
 		 * @return void
 		 */
 		private static function load_files() {
-			require_once WP_AS_STATS_BASE_DIR . 'includes/class-wp-themes-stats-api.php';
-			require_once WP_AS_STATS_BASE_DIR . 'includes/class-wp-plugins-stats-api.php';
+			require_once ADST_STATS_BASE_DIR . 'includes/class-adst-themes-stats-api.php';
+			require_once ADST_STATS_BASE_DIR . 'includes/class-adst-plugins-stats-api.php';
 		}
 		/**
 		 * Process plugin's Stylesheet to General setting Tab form Data.
 		 */
 		public function bsf_wpas_assets() {
-			wp_register_style( 'bsf_wpas_stylesheet', BSF_AS_PLUGIN_URL . '/assets/css/wpas-style.css', null, WP_AS_STATS_VERSION, false );
-			wp_register_script( 'bsf_wpas_jsfile', BSF_AS_PLUGIN_URL . '/assets/js/wpas-human-readable.js', null, WP_AS_STATS_VERSION, false );
+			wp_register_style( 'bsf_wpas_stylesheet', ADST_PLUGIN_URL . '/assets/css/adst-style.css', null, ADST_STATS_VERSION, false );
+			wp_register_script( 'bsf_wpas_jsfile', ADST_PLUGIN_URL . '/assets/js/adst-human-readable.js', null, ADST_STATS_VERSION, false );
 		}
 		/**
 		 * WP Advanced Stats Option in Setting Page.
@@ -94,7 +91,7 @@ if ( ! class_exists( 'Wp_As_Loader' ) ) {
 		 * Creating Admin Page.
 		 */
 		public function bsf_wpas_create_admin_page() {
-			require_once WP_AS_STATS_BASE_DIR . 'includes/wpas-frontend.php';
+			require_once ADST_STATS_BASE_DIR . 'includes/adst-frontend.php';
 		}
 		/**
 		 * Process plugin's General setting Tab form Data.
@@ -102,7 +99,6 @@ if ( ! class_exists( 'Wp_As_Loader' ) ) {
 		 * @return Void.
 		 */
 		public function bsf_wpas_process_form_general_settings() {
-
 			$page = ! empty( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : null;
 
 			if ( 'bsf-as-setting-admin' !== $page ) {
@@ -111,21 +107,19 @@ if ( ! class_exists( 'Wp_As_Loader' ) ) {
 			if ( ! empty( $_POST['wpas-form'] ) && wp_verify_nonce( sanitize_text_field( $_POST['wpas-form'] ), 'wpas-form-nonce' ) ) {
 				$choice = ( ! empty( $_POST['wpasoption'] ) ? sanitize_text_field( $_POST['wpasoption'] ) : '' );
 				if ( ! empty( $_POST['wpasoption'] ) && 'ok' === $_POST['wpasoption'] ) {
-
 					$choice = ( ! empty( $_POST['wpas_date_format_custom'] ) ? sanitize_text_field( $_POST['wpas_date_format_custom'] ) : 'd-m-y' );
 				}
 				$update_option = array(
 					'Frequency' => ( ! empty( $_POST['frequency'] ) ? sanitize_text_field( $_POST['frequency'] ) : 1 ),
 					'Choice'    => $choice,
-					'Hrchoice'  => ( ! empty( $_POST['wpas_hr_option'] ) ? sanitize_text_field( $_POST['wpas_hr_option'] ) : '' ),
-					'Rchoice'   => ( ! empty( $_POST['wpas_r_option'] ) ? sanitize_text_field( $_POST['wpas_r_option'] ) : '' ),
+					'Rchoice'   => ( ! empty( $_POST['adst_r_option'] ) ? sanitize_text_field( $_POST['adst_r_option'] ) : '' ),
 					'Field1'    => ( ! empty( $_POST['field1'] ) ? sanitize_text_field( $_POST['field1'] ) : 'K' ),
 					'Field2'    => ( ! empty( $_POST['field2'] ) ? sanitize_text_field( $_POST['field2'] ) : 'M' ),
 					'Symbol'    => ( ! empty( $_POST['wpas_number_group'] ) ? sanitize_text_field( $_POST['wpas_number_group'] ) : '' ),
 				);
-				update_option( 'wp_info', $update_option );
+				update_option( 'adst_info', $update_option );
 			}
 		}
 	}
-	$wp_as_loader = Wp_As_Loader::get_instance();
+	$adst_loader = ADST_Loader::get_instance();
 }

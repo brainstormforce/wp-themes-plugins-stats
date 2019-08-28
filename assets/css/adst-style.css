@@ -1,0 +1,76 @@
+.adst-form-table th {
+vertical-align: top;
+text-align: left;
+padding: 6px 46px 4px 0;
+width: 250px;
+line-height: 1.6em;
+font-weight: 600;	
+}
+td.adst-number-group-symbol {
+padding-top: 9px;
+padding-bottom: 21px;
+}
+.adst-resp-table-caption{
+text-align: center;
+font-size: 1em;
+font-weight: bold;
+}
+.adst-table{
+width: 76%;
+margin: 20px 20px 20px 130px;
+text-align: justify;
+border-collapse: collapse;
+border-spacing: 0px;
+}
+.adst-table .adst-table-header-cell{
+padding: 10px;
+border: 1px solid black;
+}
+.adst-date {
+line-height: 3.3em;
+vertical-align: middle;
+}
+.adst-description{
+padding: 0px 0px 5px 0px;
+}
+.adst-page-title{
+font-size: 1.3em;
+color: #23282d;
+font-size: 1.3em;
+margin: 1em 0;
+}
+.adst-global-settings {
+padding: 10px;
+}
+.adst-hroption{
+padding: 8px 0px 13px 0px;
+}
+.adst-small-text1{
+margin: 0px 13px;
+}
+.adst-num-option{
+padding: 0px;
+}
+.adst-small-text2{
+margin: 0px 47px;
+}
+.adst-date-time-text{
+display: inline-block;
+min-width: 10em;
+}
+.adst-hr-option{
+margin: -10px 0px 0px 0px;
+line-height: 3.3em;
+padding: 0px 0px 0px 0px;
+}
+.adst-num-option .adst-number-group-symbol{
+position: absolute;
+left: 1%;
+}
+.adst-shortdescription{
+margin: 2px 0 5px;
+color: #666;
+}
+.adst-frequency-input{
+padding: 13px 3px 6px 0px;
+}

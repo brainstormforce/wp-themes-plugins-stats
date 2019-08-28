@@ -7,49 +7,69 @@ Stable tag: 1.0.0
 
 == Description ==
 
-This plugin is geared towards developers with Themes and Plugins in the WordPress.org repository and anyone else that wants to easily display information about Themes and Plugins that are in the repository.
+The WP Advanced Stats plugin automatically fetch theme and plugin stats ( name, active installs, 5-star ratings, etc. ) from the WordPress.org repository and store it. These stats can be shown anywhere on the website using shortcodes. 
 
-Here is a shortcode available in the WP Themes Active Stats.
+Displaying real numbers build trust for visitors! 
 
-1.`theme = "astra"`
+Let's say you compared two WordPress themes along with some statistical parameters like - Active Installs, 5 Star Ratings, Total Downloads, etc. As these values keep changing everyday it was a manual work to copy& paste values from the WordPress.org repository. But not anymore! 
 
-    A slug of the Theme from w.org that you want to get details.
+The WP Advanced Stats plugin provides an easy and simple way to display stats with shortcodes. You just need to add shortcode once and the plugin will automatically update the values from as per WordPress.org repository. 
+Display Stats Using Shortcodes
 
-2.`plugin = "astra-hooks"`
+Different shortcodes are available to display the following values - for both - Theme and Plugins from WordPress.org repository.
 
-    A slug of the plugin from w.org that you want to get details.
+>> Theme/Plugin Name 
+>> Total Active Installs
+>> Last Updated       
+>> Theme/Plugin Version       
+>> Theme/Plugin Ratings       
+>> 5 Star Ratings    
+>> Average Ratings
+>> Total Downloads
+>> Download   
+>> Total Active Installation of All Themes/Plugins [For authors]
+>> Total Download Count of All Themes/Plugins [For authors]
+>> Manage Stats Number Format 
 
-3.`outof = "5"`
-    
-    Out of Value from you want to calculate.    
+The plugin provides global settings under the “General ” tab. You can format the stat value/ number.
 
-4.`label = "label_name"`
-    
-    Label name should be as per user want to display on a link.
+1. Set an interval to check and update stats values 
 
-5.`author = "brainstormforce"`
-    
-    Name of the Author from w.org that you want to get details.
+As mentioned earlier stats keep changing every day. You can choose a number of days for updations. The plugin will fetch the latest stats after this interval and update values on the website automatically. 
 
-== Installation ==
+2. Choose the stat value format to make it easily readable
+ 
+Usually, installation & download count is a big number. So it is quite hard to count and read the actual value. Simplifying this large number with notations make it more readable like - a number 1,000,000 can be displayed as 1M/1 Million or 1000K/ 1000 Thousand. 
 
-1. Unzip the downloaded zip file
-2. Upload the included folder to '/wp-content/plugins' directory of your WordPress installation
-3. Activate the plugin via the WordPress Plugins page
+Moreover, you can select a format to group numbers, like -  1,000,000 (comma) or 1.000.000 (dot)
 
-== Frequently Asked Questions ==
+3. Set a date format as per convenience 
 
-How to Use? 
+WordPress default date formats are available for customizations. 
 
-Step 1: Set frequency to update the API (by default Frequency is one day).
+Connect to theme/plugins on WordPress.org repository
 
-Step 2: Set a Human Readable format if required (if unchecked then set Number symbol).
+Choosing a theme/plugin to fetch stats from is very simple. 
 
-Step 3: Set Date format if required (by default Date format is d-m-y).
+1. Visit theme/plugin on WordPress.org repository
+2. Copy the slug
+3. Add it in a shortcode 
 
-Step 4: Paste the shortcode form table in the desired position.
+The plugin will fetch stats vis slug. 
 
-Step 5: That's it! Visit Post/Page to see results.
+How does this work?
+
+Once this plugin is installed, you can customize it under Settings > WP Advanced Stats.
+
+Step 1: Under the General tab, manage the global stats number format. Set the required parameters, like update interval, count format, date format. 
+Step 2: From the shortcodes tab, choose and copy the required code.
+Step 3: Paste it on a required page/post.  
+Step 4: Add a slug/author name for theme/plugin. 
+
+That's it! Visit Post/Page to see results.
+
+These shortcodes can be added in any page builder including, Elementor, Beaver Builder, etc.
+You can use the shortcode multiple times on a page. 
 
 == Version 1.0.0 ==
 * Initial release
