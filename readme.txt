@@ -1,9 +1,13 @@
 === WP Advanced Stats ===
 Contributors: brainstormforce 
-Tags: wpthemes-count, active-install, stats, themes-stats, plugin-stats, total download & active install count of plugin and theme by author.    
-Requires at least: 3.0  
-Tested up to: 5.1    
-Stable tag: 1.0.0  
+Donate link: https://www.paypal.me/BrainstormForce
+Tags: active-install, stats, themes-stats, plugin-stats, total download & active install count of plugin and theme by author.    
+Requires at least: 4.2
+Requires PHP: 5.2
+Tested up to: 5.2
+Stable tag: 1.0.0
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html 
 
 == Description ==
 
@@ -16,40 +20,35 @@ Let's say you compared two WordPress themes along with some statistical paramete
 The WP Advanced Stats plugin provides an easy and simple way to display stats with shortcodes. You just need to add shortcode once and the plugin will automatically update the values from as per WordPress.org repository. 
 Display Stats Using Shortcodes
 
-Different shortcodes are available to display the following values - for both - Theme and Plugins from WordPress.org repository.
+**Different shortcodes are available to display the following values - for both - Theme and Plugins from WordPress.org repository.**
 
->> Theme/Plugin Name 
->> Total Active Installs
->> Last Updated       
->> Theme/Plugin Version       
->> Theme/Plugin Ratings       
->> 5 Star Ratings    
->> Average Ratings
->> Total Downloads
->> Download   
->> Total Active Installation of All Themes/Plugins [For authors]
->> Total Download Count of All Themes/Plugins [For authors]
->> Manage Stats Number Format 
++ Theme/Plugin Name 
++ Total Active Installs
++ Last Updated       
++ Theme/Plugin Version       
++ Theme/Plugin Ratings       
++ 5 Star Ratings    
++ Average Ratings
++ Total Downloads
++ Download   
++ Total Active Installation of All Themes/Plugins [For authors]
++ Total Download Count of All Themes/Plugins [For authors]
 
-The plugin provides global settings under the “General ” tab. You can format the stat value/ number.
+**The plugin provides global settings under the “General ” tab. You can format the stat value/ number.**
 
 1. Set an interval to check and update stats values 
-
-As mentioned earlier stats keep changing every day. You can choose a number of days for updations. The plugin will fetch the latest stats after this interval and update values on the website automatically. 
+As mentioned earlier stats keep changing every day. You can choose a number of days for updations. The plugin will fetch the latest stats after this interval and update values on the website automatically.  
 
 2. Choose the stat value format to make it easily readable
- 
-Usually, installation & download count is a big number. So it is quite hard to count and read the actual value. Simplifying this large number with notations make it more readable like - a number 1,000,000 can be displayed as 1M/1 Million or 1000K/ 1000 Thousand. 
-
+ Usually, installation & download count is a big number. So it is quite hard to count and read the actual value. Simplifying this large number with notations make it more readable like - a number 1,000,000 can be displayed as 1M/1 Million or 1000K/ 1000 Thousand. 
 Moreover, you can select a format to group numbers, like -  1,000,000 (comma) or 1.000.000 (dot)
 
 3. Set a date format as per convenience 
-
 WordPress default date formats are available for customizations. 
 
 Connect to theme/plugins on WordPress.org repository
 
-Choosing a theme/plugin to fetch stats from is very simple. 
+**Choosing a theme/plugin to fetch stats from is very simple.** 
 
 1. Visit theme/plugin on WordPress.org repository
 2. Copy the slug
@@ -57,7 +56,7 @@ Choosing a theme/plugin to fetch stats from is very simple.
 
 The plugin will fetch stats vis slug. 
 
-How does this work?
+**How To Use This Plugin?**
 
 Once this plugin is installed, you can customize it under Settings > WP Advanced Stats.
 
@@ -70,6 +69,16 @@ That's it! Visit Post/Page to see results.
 
 These shortcodes can be added in any page builder including, Elementor, Beaver Builder, etc.
 You can use the shortcode multiple times on a page. 
+
+== Screenshots ==
+1. Global settings under 'General' tab
+2. Getting Started help under 'Shortcodes' tab
+3. All available shortcodes are listed under 'Shortcodes' tab
+4. List of shortcodes and their outputs for theme
+5. List of shortcodes and their outputs for plugin
+6. See how to get theme/plugin slug/author name and use it with shortcode
+
+== Changelog ==
 
 == Version 1.0.0 ==
 * Initial release
