@@ -7,21 +7,20 @@
  * @since 1.0.0
  */
 
-// To get the tab value from URL and store in $active_tab variable.
+// To get the tab value from URL and store in $adst_active_tab variable.
 echo '<h1 class="bsf_wp_as_main_title">';
-esc_attr_e( 'WP Advanced Stats', 'wp-as' );
+esc_attr_e( 'WP Advanced Stats', 'advanced-stats' );
 echo '</h1>';
-$active_tab = 'wp_as_general_settings';
+$adst_active_tab = 'wp_as_general_settings';
 
 if ( isset( $_GET['tab'] ) ) {//PHPCS:ignore:WordPress.Security.NonceVerification.Recommended
 
 	if ( 'wp_as_general_settings' === $_GET['tab'] ) {//PHPCS:ignore:WordPress.Security.NonceVerification.Recommended
 
-		$active_tab = 'wp_as_general_settings';
-
+		$adst_active_tab = 'wp_as_general_settings';
 	} elseif ( 'wp_as_user_manual' === $_GET['tab'] ) {//PHPCS:ignore:WordPress.Security.NonceVerification.Recommended
 
-		$active_tab = 'wp_as_user_manual';
+		$adst_active_tab = 'wp_as_user_manual';
 	}
 }
 
@@ -31,18 +30,18 @@ if ( isset( $_GET['tab'] ) ) {//PHPCS:ignore:WordPress.Security.NonceVerificatio
 <h2 class="nav-tab-wrapper">
 <a href="?page=bsf-as-setting-admin&tab=wp_as_general_settings" class="nav-tab tb 
 	<?php
-	if ( 'wp_as_general_settings' === $active_tab ) {
+	if ( 'wp_as_general_settings' === $adst_active_tab ) {
 					echo 'nav-tab-active';
 	}
 	?>
-	"><?php esc_attr_e( 'General Settings', 'wp-as' ); ?></a>
+	"><?php esc_attr_e( 'General', 'advanced-stats' ); ?></a>
 		<a href="?page=bsf-as-setting-admin&tab=wp_as_user_manual" class="nav-tab tb 
 		<?php
-		if ( 'wp_as_user_manual' === $active_tab ) {
+		if ( 'wp_as_user_manual' === $adst_active_tab ) {
 						echo 'nav-tab-active';
 		}
 		?>
-		"><?php esc_attr_e( 'Getting Started', 'wp-as' ); ?></a>
+		"><?php esc_attr_e( 'Shortcodes', 'advanced-stats' ); ?></a>
 </h2>
 
 <?php
@@ -51,14 +50,12 @@ if ( isset( $_GET['tab'] ) ) {//PHPCS:ignore:WordPress.Security.NonceVerificatio
 
 	if ( 'wp_as_general_settings' === $_GET['tab'] ) {//PHPCS:ignore:WordPress.Security.NonceVerification.Recommended
 
-		require_once 'wpas-general-settings.php';
-
+		require_once 'adst-general-settings.php';
 	} elseif ( 'wp_as_user_manual' === $_GET['tab'] ) {//PHPCS:ignore:WordPress.Security.NonceVerification.Recommended
 
-		require_once 'wpas-user-manual.php';
+		require_once 'adst-user-manual.php';
 	}
 } else {
-
-	require_once 'wpas-general-settings.php';
+	require_once 'adst-general-settings.php';
 }
 ?>

@@ -1,0 +1,28 @@
+{
+  "name": "advanced-stats",
+  "version": "1.0.0",
+  "description": "This plugin is geared towards developers with Themes & Plugins in the WordPress.org repository and anyone else that wants to easily display information about Themes and Plugins that are in the repository.",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.brainstormforce.com:wp-sharks/advanced-stats.git"
+  },
+  "author": "Brainstorm Force",
+  "license": "ISC",
+  "dependencies": {
+    "compress": "^0.99.0",
+    "zip": "^1.2.0"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.4",
+    "grunt-contrib-clean": "^2.0.0",
+    "grunt-contrib-compress": "^1.5.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-wp-i18n": "^1.0.3",
+    "grunt-wp-readme-to-markdown": "^2.0.1",
+    "grunt-zip": "^0.18.2"
+  }
+}
