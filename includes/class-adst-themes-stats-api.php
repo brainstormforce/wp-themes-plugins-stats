@@ -208,7 +208,6 @@ class ADST_Themes_Stats_Api {
 					delete_option( '_site_transient_' . $slug );
 				}
 					delete_transient( '_site_transient_' . $slug );
-				//return 'Theme is Missing';
 			}
 			return $theme;
 		}
@@ -722,9 +721,6 @@ class ADST_Themes_Stats_Api {
 				$returned_object = unserialize( wp_remote_retrieve_body( $response ) );//PHPCS:ignore:WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize
 				$themes          = $returned_object->themes;
 
-				// if ( empty( $themes ) ) {
-				// 	return 'Theme Details is Missing';
-				// }
 				$temp = 0;
 				foreach ( $themes as $key ) {
 					$temp = $temp + $key->active_installs;
@@ -740,7 +736,6 @@ class ADST_Themes_Stats_Api {
 				}
 				return $themes;
 			}
-			
 		}
 	}
 	/**
@@ -869,7 +864,7 @@ class ADST_Themes_Stats_Api {
 
 				$author = 'bsf_tr_themes_downloaded_Count_' . $api_params;
 				$themes = get_site_transient( $author );
-		
+
 				if ( false === $themes || empty( $themes ) ) {
 					$second = ( ! empty( $second ) ? $second : 86400 );
 					set_site_transient( $author, $temp, $second );
@@ -877,7 +872,6 @@ class ADST_Themes_Stats_Api {
 				}
 				return $themes;
 			}
-			
 		}
 	}
 	/**
