@@ -16,8 +16,9 @@ font-size: 1em;
 font-weight: bold;
 }
 .adst-table{
-width: 76%;
-margin: 20px 20px 20px 130px;
+width: 100%;
+max-width: 900px;
+margin: 20px 0px;
 text-align: justify;
 border-collapse: collapse;
 border-spacing: 0px;

@@ -93,7 +93,7 @@ class ADST_Plugins_Stats_Api {
 					delete_option( '_site_transient_' . $slug );
 				}
 					delete_transient( '_site_transient_' . $slug );
-				return 'Please Verify plugin Details!';
+				//return 'Please Verify plugin Details!';
 			}
 
 				return $plugin;
@@ -662,7 +662,7 @@ class ADST_Plugins_Stats_Api {
 						delete_option( '_site_transient_' . $author );
 					}
 					delete_transient( '_site_transient_' . $author );
-					return 'Please Verify Author Details!';
+					//return 'Please Verify Author Details!';
 				}
 				return $plugins;
 			}
@@ -785,7 +785,7 @@ class ADST_Plugins_Stats_Api {
 						delete_option( '_site_transient_' . $author );
 					}
 					delete_transient( '_site_transient_' . $author );
-					return 'Please Verify Author Details!';
+					//return 'Please Verify Author Details!';
 				}
 				return $plugins;
 			}

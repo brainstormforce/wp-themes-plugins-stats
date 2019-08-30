@@ -24,9 +24,9 @@ wp_enqueue_style( 'bsf_wpas_stylesheet' );
 	<b><?php esc_attr_e( 'Step 3', 'advanced-stats' ); ?></b><?php esc_attr_e( ': Paste it on a required page/post.', 'advanced-stats' ); ?><br><br>
 	<b><?php esc_attr_e( 'Step 4', 'advanced-stats' ); ?></b><?php esc_attr_e( ': Add a slug/author name for theme/plugin.', 'advanced-stats' ); ?><br><br>
 	<b></b><?php esc_attr_e( ' That' . "'" . 's it! Visit Post/Page to see results.', 'advanced-stats' ); //PHPCS:ignore:WordPress.WP.I18n.NonSingularStringLiteralText ?><br><br><br>
-<div class="adst-resp-table-caption">
-	<?php esc_attr_e( 'THEME SHORTCODE TABLE', 'advanced-stats' ); ?>
-</div>
+<h2>
+	<?php esc_attr_e( 'Shortcodes for Theme Stats', 'advanced-stats' ); ?>
+</h2>
 <table class="adst-table">
 <tbody>
 	<tr class="adst-table-header">
@@ -120,9 +120,9 @@ wp_enqueue_style( 'bsf_wpas_stylesheet' );
 </tbody>
 </table>
 <br>
-<div class="adst-resp-table-caption">
-	<?php esc_attr_e( 'PLUGIN SHORTCODE TABLE', 'advanced-stats' ); ?>
-</div>
+<h2>
+	<?php esc_attr_e( 'Shortcodes for Plugin Stats', 'advanced-stats' ); ?>
+</h2>
 <table class="adst-table">
 <tbody>
 	<tr>

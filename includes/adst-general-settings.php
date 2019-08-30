@@ -36,7 +36,7 @@ $adst_numchoice_disp = ( ( 'normal' === $adst_rchoice ) ? 'style="display:table-
 			<th scope="row"></th>
 			<td class="adst-description" colspan="3">
 				<p class="description adst-description">
-					<?php esc_html_e( 'This will check and update stats after selected day(s).', 'advanced-stats' ); ?>
+					<?php esc_html_e( 'Set how frequently you want to update the stats data from WordPress API. This setting is helpful to reduce API calls.', 'advanced-stats' ); ?>
 				</p>
 			</td>
 		</tr>
