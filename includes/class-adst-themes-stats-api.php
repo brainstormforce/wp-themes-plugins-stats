@@ -248,9 +248,10 @@ class ADST_Themes_Stats_Api {
 			if ( empty( $theme ) ) {
 					$theme = $this->bsf_tr_get_text( 'theme_information', $api_params );
 				if ( 'Theme is Missing' === $theme ) {
-					return 'Please Verify Theme Details!';
+						return 'Please Verify Theme Details!';
+				} else {
+					return $theme->name;
 				}
-						return $theme->name;
 			} else {
 				$theme = $this->bsf_delete_transient( $wp_theme_slug );
 				if ( ! empty( $theme ) ) {
