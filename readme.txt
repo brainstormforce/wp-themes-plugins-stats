@@ -18,7 +18,7 @@ Displaying real numbers build trust for visitors!
 Let's say you compared two WordPress themes along with some statistical parameters like - Active Installs, 5 Star Ratings, Total Downloads, etc. As these values keep changing every day it was a manual work to copy & paste values from the WordPress.org repository. But not anymore! 
 
 The WP Themes & Plugins Stats plugin provides an easy and simple way to display stats with shortcodes. You just need to add shortcode once and the plugin will automatically update the values with WordPress.org API.
- 
+
 Display Stats Using Shortcodes
 
 == Different shortcodes are available to display the following counts - for both - Theme and Plugins from WordPress.org repository. ==
@@ -55,7 +55,7 @@ Connect to theme/plugins with WordPress.org API
 2. Copy the slug
 3. Add it in a shortcode 
 
-The plugin will fetch stats vis slug. 
+The plugin will fetch stats via slug. 
 
 == How To Use This Plugin? ==
 
