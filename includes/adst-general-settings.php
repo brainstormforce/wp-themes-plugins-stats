@@ -1,6 +1,6 @@
 <?php
 /**
- * The WP Advance Stats general Settings tab
+ * The WP Themes & Plugins Stats general Settings tab
  *
  * @since      1.0.0
  * @package    BSF

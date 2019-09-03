@@ -2,7 +2,7 @@
 /**
  * Calling W.ORG API Response.
  *
- * @package WP Advanced Stats
+ * @package WP Themes & Plugins Stats
  * @author Brainstorm Force
  */
 

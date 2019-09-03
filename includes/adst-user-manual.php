@@ -2,7 +2,7 @@
 /**
  * Getting Started Tab on Setting Page.
  *
- * @package WP Advanced Stats
+ * @package WP Themes & Plugins Stats
  * @author Brainstorm Force
  * @since 1.0.0
  */

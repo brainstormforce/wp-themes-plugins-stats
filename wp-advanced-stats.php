@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name: WP Advanced Stats
- * Description:  The plugin automatically fetch information about Themes and Plugins stats from WordPress.org repository. Shortcodes make it easy to display those stats anywhere on the website.
+ * Plugin Name: WP Themes & Plugins Stats
+ * Description:  The plugin automatically fetch information about Themes and Plugins stats with the help of WordPress.org  API. Shortcodes make it easy to display those stats anywhere on the website.
  * Version:     1.0.0
  * Author:      Brainstorm Force
  * Author URI:  https://brainstormforce.com
@@ -11,7 +11,7 @@
  * PHP version 7
  *
  * @category PHP
- * @package  BSF WP Advanced Stats.
+ * @package  BSF WP Themes & Plugins Stats.
  * @author   Display Name <username@brainstormforce.com>
  * @license  https://brainstormforce.com
  * @link     https://brainstormforce.com

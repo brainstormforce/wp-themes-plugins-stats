@@ -3,7 +3,7 @@
  * Responsible for setting up constants, classes and includes.
  *
  * @author BrainstormForce
- * @package WP Advanced Stats/Loader
+ * @package WP Themes & Plugins Stats/Loader
  */
 
 if ( ! class_exists( 'ADST_Loader' ) ) {
@@ -81,7 +81,7 @@ if ( ! class_exists( 'ADST_Loader' ) ) {
 			// This page will be under "Settings".
 			add_options_page(
 				'Settings Admin',
-				'WP Advanced Stats',
+				'WP Themes & Plugins Stats',
 				'manage_options',
 				'bsf-as-setting-admin',
 				array( $this, 'bsf_wpas_create_admin_page' )
