@@ -103,7 +103,7 @@ class ADST_Themes_Stats_Api {
 	public function bsf_delete_transient( $wp_theme_slug ) {
 					$adst_info         = get_option( 'adst_info' );
 					$expiration        = $adst_info['Frequency'];
-					$update_theme_info = get_option( 'wp_theme_info' );
+					$update_theme_info = get_option( 'adst_theme_info' );
 					$slug              = 'bsf_tr_theme_info_' . $wp_theme_slug;
 					$wp_theme          = ( ! empty( $update_theme_info['theme'] ) ? $update_theme_info['theme'] : '' );
 					$second            = 0;
@@ -195,17 +195,17 @@ class ADST_Themes_Stats_Api {
 				'slug'  => ( ! empty( $slug ) ? sanitize_text_field( $slug ) : '' ),
 				'theme' => ( ! empty( $wp_theme ) ? $wp_theme : '' ),
 			);
-			update_option( 'wp_theme_info', $update_option );
+			update_option( 'adst_theme_info', $update_option );
 			$theme = get_site_transient( $slug );
 
 			if ( false === $theme || empty( $theme ) ) {
-				$second = ( ! empty( $second ) ? $second : 60 * 60 );
+				$second = ( ! empty( $second ) ? $second : 86400 );
 				set_site_transient( $slug, $wp_theme, $second );
 			}
 			if ( empty( $theme ) ) {
 				$theme = get_option( '_site_transient_' . $slug );
 				if ( empty( $theme ) ) {
-					delete_option( '_site_transient_' . $slug );
+					delete_transient( '_site_transient_' . $slug );
 				}
 					delete_transient( '_site_transient_' . $slug );
 			}
@@ -665,7 +665,7 @@ class ADST_Themes_Stats_Api {
 	public function bsf_delete_active_count_transient( $wp_theme_author ) {
 					$adst_info         = get_option( 'adst_info' );
 					$expiration        = $adst_info['Frequency'];
-					$update_theme_info = get_option( 'wp_theme_info' );
+					$update_theme_info = get_option( 'adst_theme_info' );
 					$slug              = 'bsf_tr_themes_Active_Count_' . $wp_theme_author;
 					$wp_theme          = ( ! empty( $update_theme_info['theme'] ) ? $update_theme_info['theme'] : '' );
 					$second            = 0;
@@ -791,7 +791,7 @@ class ADST_Themes_Stats_Api {
 	public function bsf_delete_download_count_transient( $wp_theme_author ) {
 		$adst_info                     = get_option( 'adst_info' );
 					$expiration        = $adst_info['Frequency'];
-					$update_theme_info = get_option( 'wp_theme_info' );
+					$update_theme_info = get_option( 'adst_theme_info' );
 					$slug              = 'bsf_tr_themes_downloaded_Count_' . $wp_theme_author;
 					$wp_theme          = ( ! empty( $update_theme_info['theme'] ) ? $update_theme_info['theme'] : '' );
 					$second            = 0;
@@ -857,7 +857,7 @@ class ADST_Themes_Stats_Api {
 					'slug'   => ( ! empty( $api_params ) ? sanitize_text_field( $api_params ) : '' ),
 					'themes' => ( ! empty( $themes ) ? $themes : '' ),
 				);
-				update_option( 'wp_theme_info', $update_option );
+				update_option( 'adst_theme_info', $update_option );
 
 				foreach ( $themes as $key ) {
 					$temp = $temp + $key->downloaded;

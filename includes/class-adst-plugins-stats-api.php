@@ -81,7 +81,7 @@ class ADST_Plugins_Stats_Api {
 				'slug'   => ( ! empty( $slug ) ? sanitize_text_field( $slug ) : '' ),
 				'plugin' => ( ! empty( $wp_plugin ) ? $wp_plugin : '' ),
 			);
-			update_option( 'wp_plugin_info', $update_option );
+			update_option( 'adst_plugin_info', $update_option );
 			$plugin = get_site_transient( $slug );
 			if ( false === $plugin || empty( $plugin ) ) {
 				$second = ( ! empty( $second ) ? $second : 86400 );
@@ -90,7 +90,7 @@ class ADST_Plugins_Stats_Api {
 			if ( empty( $plugin ) ) {
 				$plugin = get_option( '_site_transient_' . $slug );
 				if ( empty( $plugin ) ) {
-					delete_option( '_site_transient_' . $slug );
+					delete_transient( '_site_transient_' . $slug );
 				}
 					delete_transient( '_site_transient_' . $slug );
 			}
@@ -201,11 +201,12 @@ class ADST_Plugins_Stats_Api {
 	public function bsf_delete_transient( $wp_plugin_slug ) {
 		$adst_info                      = get_option( 'adst_info' );
 					$expiration         = $adst_info['Frequency'];
-					$update_plugin_info = get_option( 'wp_plugin_info' );
+					$update_plugin_info = get_option( 'adst_plugin_info' );
 					$slug               = 'bsf_tr_plugin_info_' . $wp_plugin_slug;
 					$wp_plugin          = $update_plugin_info['plugin'];
 					$second             = 0;
 					$day                = 0;
+
 		if ( ! empty( $expiration ) ) {
 			$day        = ( ( $expiration * 24 ) * 60 ) * 60;
 			$expiration = ( $second + $day );
@@ -589,7 +590,7 @@ class ADST_Plugins_Stats_Api {
 	public function bsf_delete_active_count_transient( $wp_plugin_slug ) {
 		$adst_info                      = get_option( 'adst_info' );
 					$expiration         = $adst_info['Frequency'];
-					$update_plugin_info = get_option( 'wp_plugin_info' );
+					$update_plugin_info = get_option( 'adst_plugin_info' );
 					$slug               = 'bsf_tr_plugin_Active_Count_' . $wp_plugin_slug;
 					$wp_plugin          = $update_plugin_info['plugin'];
 					$second             = 0;
@@ -658,7 +659,7 @@ class ADST_Plugins_Stats_Api {
 				if ( empty( $plugins ) ) {
 					$plugins = get_option( '_site_transient_' . $author );
 					if ( empty( $plugins ) ) {
-						delete_option( '_site_transient_' . $author );
+						delete_transient( '_site_transient_' . $author );
 					}
 					delete_transient( '_site_transient_' . $author );
 				}
@@ -711,7 +712,7 @@ class ADST_Plugins_Stats_Api {
 	public function bsf_delete_download_count_transient( $wp_plugin_slug ) {
 		$adst_info                      = get_option( 'adst_info' );
 					$expiration         = $adst_info['Frequency'];
-					$update_plugin_info = get_option( 'wp_plugin_info' );
+					$update_plugin_info = get_option( 'adst_plugin_info' );
 					$slug               = 'bsf_tr_plugin_downloads_Count_' . $wp_plugin_slug;
 					$wp_plugin          = $update_plugin_info['plugin'];
 					$second             = 0;
@@ -780,7 +781,7 @@ class ADST_Plugins_Stats_Api {
 				if ( empty( $plugins ) ) {
 					$plugins = get_option( '_site_transient_' . $author );
 					if ( empty( $plugins ) ) {
-						delete_option( '_site_transient_' . $author );
+						delete_transient( '_site_transient_' . $author );
 					}
 					delete_transient( '_site_transient_' . $author );
 				}
