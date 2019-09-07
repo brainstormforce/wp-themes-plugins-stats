@@ -229,7 +229,7 @@ class ADST_Themes_Stats_Api {
 		$wp_theme_slug   = $atts['theme'];
 		$wp_theme_author = $atts['theme_author'];
 		if ( '' === $wp_theme_slug ) {
-			return 'Please erify heme slug.';
+			return 'Please verify theme slug.';
 		}
 		if ( '' !== $wp_theme_slug ) {
 			$api_params = array(
