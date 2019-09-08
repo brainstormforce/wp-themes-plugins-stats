@@ -1,4 +1,4 @@
-=== WP Themes & Plugins Stats ===
+﻿=== WP Themes & Plugins Stats ===
 Contributors: brainstormforce 
 Donate link: https://www.paypal.me/BrainstormForce
 Tags: active-install, stats, themes-stats, plugin-stats, total download & active install count of plugin and theme by author.    
@@ -77,7 +77,6 @@ You can use the shortcode multiple times on a page.
 3. All available shortcodes are listed under 'Shortcodes' tab
 4. List of shortcodes and their outputs for theme
 5. List of shortcodes and their outputs for plugin
-6. See how to get theme/plugin slug/author name and use it with shortcode
 
 == Changelog ==
 
