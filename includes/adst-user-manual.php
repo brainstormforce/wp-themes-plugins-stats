@@ -7,13 +7,20 @@
  * @since 1.0.0
  */
 
+/**
+ * Exit if accessed directly.
+ */
+if ( ! defined( 'ABSPATH' ) ) {
+	exit();
+}
+
 // Getting Started tab.
-wp_enqueue_style( 'bsf_wpas_stylesheet' );
+
 ?>
 	<div class="adst-global-settings">
 	<h2> <?php esc_html_e( 'Getting Started!', 'advanced-stats' ); ?></h2>
 	<?php esc_html_e( 'This plugin automatically tracks theme and plugin information from the WordPress repository, store it  and display it on your website.', 'advanced-stats' ); ?><br></br><?php esc_html_e( 'The plugin uses shortcodes to display stats. You would just need to add theme/plugin slug/author name and paste the shortcode in the required location.', 'advanced-stats' ); ?>
-	<br><br><label class="adst-page-title" for="howtouse"></label>
+	<label class="adst-page-title" for="howtouse"></label>
 		<h2>
 		<?php
 		esc_html_e( 'How to Use?', 'advanced-stats' );

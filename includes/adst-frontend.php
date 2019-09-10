@@ -7,6 +7,13 @@
  * @since 1.0.0
  */
 
+/**
+ * Exit if accessed directly.
+ */
+if ( ! defined( 'ABSPATH' ) ) {
+	exit();
+}
+
 // To get the tab value from URL and store in $adst_active_tab variable.
 echo '<h1 class="bsf_wp_as_main_title">';
 esc_attr_e( 'WP Themes & Plugins Stats', 'advanced-stats' );

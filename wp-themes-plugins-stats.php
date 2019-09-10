@@ -17,6 +17,13 @@
  * @link     https://brainstormforce.com
  */
 
+/**
+ * Exit if accessed directly.
+ */
+if ( ! defined( 'ABSPATH' ) ) {
+	exit();
+}
+
 define( 'ADST_PLUGIN_URL', untrailingslashit( plugins_url( '', __FILE__ ) ) );
 // Including class doc loader.
 require_once 'classes/class-adst-loader.php';

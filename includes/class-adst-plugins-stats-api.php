@@ -7,6 +7,13 @@
  */
 
 /**
+ * Exit if accessed directly.
+ */
+if ( ! defined( 'ABSPATH' ) ) {
+	exit();
+}
+
+/**
  * Helper class for the ActiveCampaign API.
  *
  * @since 1.0.0
@@ -60,7 +67,7 @@ class ADST_Plugins_Stats_Api {
 			$day    = ( ( $adst_frequency['Frequency'] * 24 ) * 60 ) * 60;
 			$second = ( $second + $day );
 		}
-			$args     = (object) array(
+			$args     = array(
 				'slug'   => $plugin_slug,
 				'fields' => array( 'active_installs' => true ),
 			);
@@ -77,7 +84,7 @@ class ADST_Plugins_Stats_Api {
 		if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
 			$wp_plugin = unserialize( wp_remote_retrieve_body( $response ) );//PHPCS:ignore:WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize
 			if ( false === $wp_plugin ) {
-				return 'Please verify plugin slug.';
+				return __( 'Please verify plugin slug.', 'advanced-stats' );
 			} else {
 				$slug          = 'bsf_tr_plugin_info_' . $plugin_slug;
 				$update_option = array(
@@ -94,11 +101,8 @@ class ADST_Plugins_Stats_Api {
 				}
 
 				if ( empty( $plugin ) ) {
-					$plugin = get_option( '_site_transient_' . $slug );
-					if ( empty( $plugin ) ) {
-						delete_transient( '_site_transient_' . $slug );
-					}
 					delete_transient( '_site_transient_' . $slug );
+					return __( 'Please verify plugin slug.', 'advanced-stats' );
 				}
 
 				return $plugin;
@@ -120,7 +124,7 @@ class ADST_Plugins_Stats_Api {
 		);
 		$wp_plugin_slug = $atts['plugin'];
 		if ( '' === $wp_plugin_slug ) {
-			return 'Please verify plugin slug.';
+			return __( 'Please verify plugin slug.', 'advanced-stats' );
 		}
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
@@ -134,14 +138,14 @@ class ADST_Plugins_Stats_Api {
 				),
 			);
 
-			$plugin = get_option( "_site_transient_bsf_tr_plugin_info_$wp_plugin_slug" );
+			$plugin = get_option( '_site_transient_bsf_tr_plugin_info_' . $wp_plugin_slug );
 			if ( '' === $plugin ) {
-				return 'Please verify plugin slug.';
+				return __( 'Please verify plugin slug.', 'advanced-stats' );
 			} else {
 				if ( empty( $plugin ) || false === $plugin || '' === $plugin ) {
 					$plugin = $this->bsf_plugin_get_text( 'plugin_information', $api_params );
 					if ( 'Please verify plugin slug.' === $plugin ) {
-						return 'Please verify plugin slug.';
+						return __( 'Please verify plugin slug.', 'advanced-stats' );
 					}
 					return $plugin->name;
 				} else {
@@ -168,7 +172,7 @@ class ADST_Plugins_Stats_Api {
 		$wp_plugin_slug   = $atts['plugin'];
 		$wp_plugin_author = $atts['plugin_author'];
 		if ( '' === $wp_plugin_slug ) {
-			return 'Please verify plugin slug.';
+			return __( 'Please verify plugin slug.', 'advanced-stats' );
 		}
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
@@ -182,15 +186,15 @@ class ADST_Plugins_Stats_Api {
 					'active_installs' => true,
 				),
 			);
-			$plugin     = get_option( "_site_transient_bsf_tr_plugin_info_$wp_plugin_slug" );
+			$plugin     = get_option( '_site_transient_bsf_tr_plugin_info_' . $wp_plugin_slug );
 
 			if ( '' === $plugin ) {
-				return 'Please verify plugin slug.';
+				return __( 'Please verify plugin slug.', 'advanced-stats' );
 			} else {
 				if ( empty( $plugin ) ) {
 					$plugin = $this->bsf_plugin_get_text( 'plugin_information', $api_params );
 					if ( 'Please verify plugin slug.' === $plugin ) {
-						return 'Please verify plugin slug.';
+						return __( 'Please verify plugin slug.', 'advanced-stats' );
 					}
 					$num = $plugin->active_installs;
 					$n   = $this->bsf_display_human_readable( $num );
@@ -271,7 +275,7 @@ class ADST_Plugins_Stats_Api {
 		$wp_plugin_slug   = $atts['plugin'];
 		$wp_plugin_author = $atts['plugin_author'];
 		if ( '' === $wp_plugin_slug ) {
-			return 'Please verify plugin slug.';
+			return __( 'Please verify plugin slug.', 'advanced-stats' );
 		}
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
@@ -285,14 +289,14 @@ class ADST_Plugins_Stats_Api {
 					'active_installs' => true,
 				),
 			);
-			$plugin     = get_option( "_site_transient_bsf_tr_plugin_info_$wp_plugin_slug" );
+			$plugin     = get_option( '_site_transient_bsf_tr_plugin_info_' . $wp_plugin_slug );
 			if ( '' === $plugin ) {
-				return 'Please verify plugin slug.';
+				return __( 'Please verify plugin slug.', 'advanced-stats' );
 			} else {
 				if ( empty( $plugin ) ) {
 					$plugin = $this->bsf_plugin_get_text( 'plugin_information', $api_params );
 					if ( 'Please verify plugin slug.' === $plugin ) {
-						return 'Please verify plugin slug.';
+						return __( 'Please verify plugin slug.', 'advanced-stats' );
 					}
 					return $plugin->version;
 				} else {
@@ -319,7 +323,7 @@ class ADST_Plugins_Stats_Api {
 		$wp_plugin_slug   = $atts['plugin'];
 		$wp_plugin_author = $atts['plugin_author'];
 		if ( '' === $wp_plugin_slug ) {
-			return 'Please verify plugin slug.';
+			return __( 'Please verify plugin slug.', 'advanced-stats' );
 		}
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
@@ -333,14 +337,14 @@ class ADST_Plugins_Stats_Api {
 					'num_ratings'    => true,
 				),
 			);
-			$plugin     = get_option( "_site_transient_bsf_tr_plugin_info_$wp_plugin_slug" );
+			$plugin     = get_option( '_site_transient_bsf_tr_plugin_info_' . $wp_plugin_slug );
 			if ( '' === $plugin ) {
-				return 'Please verify plugin slug.';
+				return __( 'Please verify plugin slug.', 'advanced-stats' );
 			} else {
 				if ( empty( $plugin ) ) {
 					$plugin = $this->bsf_plugin_get_text( 'plugin_information', $api_params );
 					if ( 'Please verify plugin slug.' === $plugin ) {
-						return 'Please verify plugin slug.';
+						return __( 'Please verify plugin slug.', 'advanced-stats' );
 					}
 					return $plugin->num_ratings;
 				} else {
@@ -367,7 +371,7 @@ class ADST_Plugins_Stats_Api {
 		$wp_plugin_slug   = $atts['plugin'];
 		$wp_plugin_author = $atts['plugin_author'];
 		if ( '' === $wp_plugin_slug ) {
-			return 'Please verify plugin slug.';
+			return __( 'Please verify plugin slug.', 'advanced-stats' );
 		}
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
@@ -381,14 +385,14 @@ class ADST_Plugins_Stats_Api {
 					'ratings'        => true,
 				),
 			);
-			$plugin     = get_option( "_site_transient_bsf_tr_plugin_info_$wp_plugin_slug" );
+			$plugin     = get_option( '_site_transient_bsf_tr_plugin_info_' . $wp_plugin_slug );
 			if ( '' === $plugin ) {
-				return 'Please verify plugin slug.';
+				return __( 'Please verify plugin slug.', 'advanced-stats' );
 			} else {
 				if ( empty( $plugin ) ) {
 					$plugin = $this->bsf_plugin_get_text( 'plugin_information', $api_params );
 					if ( 'Please verify plugin slug.' === $plugin ) {
-						return 'Please verify plugin slug.';
+						return __( 'Please verify plugin slug.', 'advanced-stats' );
 					}
 					return $plugin->ratings[5];
 				} else {
@@ -417,7 +421,7 @@ class ADST_Plugins_Stats_Api {
 		$wp_plugin_author = $atts['plugin_author'];
 		$outof            = $atts['outof'];
 		if ( '' === $wp_plugin_slug ) {
-			return 'Please verify plugin slug.';
+			return __( 'Please verify plugin slug.', 'advanced-stats' );
 		}
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
@@ -431,14 +435,14 @@ class ADST_Plugins_Stats_Api {
 					'rating'         => true,
 				),
 			);
-			$plugin     = get_option( "_site_transient_bsf_tr_plugin_info_$wp_plugin_slug" );
+			$plugin     = get_option( '_site_transient_bsf_tr_plugin_info_' . $wp_plugin_slug );
 			if ( '' === $plugin ) {
-				return 'Please verify plugin slug.';
+				return __( 'Please verify plugin slug.', 'advanced-stats' );
 			} else {
 				if ( empty( $plugin ) ) {
 					$plugin = $this->bsf_plugin_get_text( 'plugin_information', $api_params );
 					if ( 'Please verify plugin slug.' === $plugin ) {
-						return 'Please verify plugin slug.';
+						return __( 'Please verify plugin slug.', 'advanced-stats' );
 					}
 					if ( is_numeric( $outof ) || empty( $outof ) ) {
 						$outof = ( ! empty( $outof ) ? $outof : 100 );
@@ -477,7 +481,7 @@ class ADST_Plugins_Stats_Api {
 		$wp_plugin_slug   = $atts['plugin'];
 		$wp_plugin_author = $atts['plugin_author'];
 		if ( '' === $wp_plugin_slug ) {
-			return 'Please verify plugin slug.';
+			return __( 'Please verify plugin slug.', 'advanced-stats' );
 		}
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
@@ -492,14 +496,14 @@ class ADST_Plugins_Stats_Api {
 				),
 			);
 
-			$plugin = get_option( "_site_transient_bsf_tr_plugin_info_$wp_plugin_slug" );
+			$plugin = get_option( '_site_transient_bsf_tr_plugin_info_' . $wp_plugin_slug );
 			if ( '' === $plugin ) {
-				return 'Please verify plugin slug.';
+				return __( 'Please verify plugin slug.', 'advanced-stats' );
 			} else {
 				if ( empty( $plugin ) ) {
 					$plugin = $this->bsf_plugin_get_text( 'plugin_information', $api_params );
 					if ( 'Please verify plugin slug.' === $plugin ) {
-						return 'Please verify plugin slug.';
+						return __( 'Please verify plugin slug.', 'advanced-stats' );
 					}
 					$num = $plugin->downloaded;
 					$n   = $this->bsf_display_human_readable( $num );
@@ -531,7 +535,7 @@ class ADST_Plugins_Stats_Api {
 		$wp_plugin_slug   = $atts['plugin'];
 		$wp_plugin_author = $atts['plugin_author'];
 		if ( '' === $wp_plugin_slug ) {
-			return 'Please verify plugin slug.';
+			return __( 'Please verify plugin slug.', 'advanced-stats' );
 		}
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
@@ -546,14 +550,14 @@ class ADST_Plugins_Stats_Api {
 				),
 			);
 
-			$plugin = get_option( "_site_transient_bsf_tr_plugin_info_$wp_plugin_slug" );
+			$plugin = get_option( '_site_transient_bsf_tr_plugin_info_' . $wp_plugin_slug );
 			if ( '' === $plugin ) {
-				return 'Please verify plugin slug.';
+				return __( 'Please verify plugin slug.', 'advanced-stats' );
 			} else {
 				if ( empty( $plugin ) || false === $plugin ) {
 					$plugin = $this->bsf_plugin_get_text( 'plugin_information', $api_params );
 					if ( 'Please verify plugin slug.' === $plugin ) {
-						return 'Please verify plugin slug.';
+						return __( 'Please verify plugin slug.', 'advanced-stats' );
 					}
 					$dateformat['Choice'] = ( ! empty( $dateformat['Choice'] ) ? $dateformat['Choice'] : 'Y-m-d' );
 					$new_date             = date( $dateformat['Choice'], strtotime( $plugin->last_updated ) );
@@ -588,7 +592,7 @@ class ADST_Plugins_Stats_Api {
 		$wp_plugin_label  = $atts['label'];
 
 		if ( '' === $wp_plugin_slug ) {
-			return 'Please verify plugin slug.';
+			return __( 'Please verify plugin slug.', 'advanced-stats' );
 		}
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
@@ -602,14 +606,14 @@ class ADST_Plugins_Stats_Api {
 					'rating'         => true,
 				),
 			);
-			$plugin     = get_option( "_site_transient_bsf_tr_plugin_info_$wp_plugin_slug" );
+			$plugin     = get_option( '_site_transient_bsf_tr_plugin_info_' . $wp_plugin_slug );
 			if ( '' === $plugin ) {
-				return 'Please verify plugin slug.';
+				return __( 'Please verify plugin slug.', 'advanced-stats' );
 			} else {
 				if ( empty( $plugin ) ) {
 					$plugin = $this->bsf_plugin_get_text( 'plugin_information', $api_params );
 					if ( 'Please verify plugin slug.' === $plugin ) {
-						return 'Please verify plugin slug.';
+						return __( 'Please verify plugin slug.', 'advanced-stats' );
 					}
 					$label = ( ! empty( $wp_plugin_label ) ? esc_attr( $wp_plugin_label ) : esc_url( $plugin->download_link ) );
 					return '<a href="' . esc_url( $plugin->{'download_link'} ) . '" target="_blank">' . $label . '</a>';
@@ -679,7 +683,7 @@ class ADST_Plugins_Stats_Api {
 		);
 
 		if ( '' === $api_params ) {
-				return 'Please verify author slug.';
+				return __( 'Please verify author slug.', 'advanced-stats' );
 		} else {
 			if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
 				$returned_object = unserialize( wp_remote_retrieve_body( $response ) );//PHPCS:ignore:WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize
@@ -729,12 +733,12 @@ class ADST_Plugins_Stats_Api {
 		$plugins          = get_option( "_site_transient_bsf_tr_plugin_Active_Count_$wp_plugin_author" );
 
 		if ( '0' === $plugins ) {
-				return 'Please verify author slug.';
+				return __( 'Please verify author slug.', 'advanced-stats' );
 		} else {
 			if ( empty( $plugins ) || false === $plugins ) {
 					$plugins = $this->bsf_display_plugins_active_count( 'query_plugins', $api_params['plugin_author'] );
 				if ( 'Please verify author slug.' === $plugins || 'Please verify author slug.' === $plugins ) {
-					return 'Please verify author slug.';
+					return __( 'Please verify author slug.', 'advanced-stats' );
 				}
 					$num = $plugins;
 					$n   = $this->bsf_display_human_readable( $num );
@@ -804,7 +808,7 @@ class ADST_Plugins_Stats_Api {
 			)
 		);
 		if ( '' === $api_params ) {
-				return 'Please verify author slug.';
+				return __( 'Please verify author slug.', 'advanced-stats' );
 		} else {
 			if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
 				$returned_object = unserialize( wp_remote_retrieve_body( $response ) );//PHPCS:ignore:WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize
@@ -854,13 +858,13 @@ class ADST_Plugins_Stats_Api {
 		);
 		$plugins          = get_option( "_site_transient_bsf_tr_plugin_downloads_Count_$wp_plugin_author" );
 		if ( '0' === $plugins ) {
-				return 'Please verify author slug.';
+				return __( 'Please verify author slug.', 'advanced-stats' );
 		} else {
 			if ( empty( $plugins ) || false === $plugins ) {
 					$plugins = $this->bsf_display_total_plugin_download_count( 'query_plugins', $api_params['plugin_author'] );
 
 				if ( 'Please verify author slug.' === $plugins || 'Please verify author slug.' === $plugins ) {
-						return 'Please verify author slug.';
+						return __( 'Please verify author slug.', 'advanced-stats' );
 				}
 					$num = $plugins;
 					$n   = $this->bsf_display_human_readable( $num );

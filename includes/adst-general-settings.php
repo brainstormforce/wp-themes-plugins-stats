@@ -7,9 +7,15 @@
  * @author     Brainstorm Force.
  */
 
+/**
+ * Exit if accessed directly.
+ */
+if ( ! defined( 'ABSPATH' ) ) {
+	exit();
+}
+
 // General setting Page.
-wp_enqueue_style( 'bsf_wpas_stylesheet' );
-wp_enqueue_script( 'bsf_wpas_jsfile' );
+
 $adst_info           = get_option( 'adst_info' );
 $adst_frequency      = ( ! empty( $adst_info['Frequency'] ) ? sanitize_text_field( $adst_info['Frequency'] ) : 1 );
 $adst_choice         = ( ! empty( $adst_info['Choice'] ) ? sanitize_text_field( $adst_info['Choice'] ) : 'd-m-y' );
@@ -18,7 +24,9 @@ $adst_field1         = ( ! empty( $adst_info['Field1'] ) ? sanitize_text_field( 
 $adst_field2         = ( ! empty( $adst_info['Field2'] ) ? sanitize_text_field( $adst_info['Field2'] ) : 'M' );
 $adst_symbol         = ( ! empty( $adst_info['Symbol'] ) ? sanitize_text_field( $adst_info['Symbol'] ) : '' );
 $adst_numchoice_disp = ( ( 'normal' === $adst_rchoice ) ? 'style="display:table-row"' : 'style="display:none"' );
+
 ?>
+
 <div class="adst-global-settings" id="adst-global-settings">
 <form method="post" name="adst-settings-form">
 <table class="adst-form-table" >
@@ -97,7 +105,7 @@ $adst_numchoice_disp = ( ( 'normal' === $adst_rchoice ) ? 'style="display:table-
 				<td class="adst-date">
 					<fieldset class="adst-date">
 					<?php
-						$adst_date_formats = array_unique( apply_filters( 'adst_date_formats', array( __( 'F j, Y' ), 'Y-m-d', 'm/d/Y', 'd/m/Y' ) ) );//PHPCS:ignore:WordPress.WP.I18n.MissingArgDomain
+						$adst_date_formats = array_unique( apply_filters( 'adst_date_formats', array( __( 'F j, Y', 'advanced-stats' ), 'Y-m-d', 'm/d/Y', 'd/m/Y' ) ) );//PHPCS:ignore:WordPress.WP.I18n.MissingArgDomain
 						$adst_format       = 'd-m-y';
 						$adst_custom       = true;
 					foreach ( $adst_date_formats as $adst_format ) {
