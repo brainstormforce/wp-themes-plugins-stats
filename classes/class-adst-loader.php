@@ -45,9 +45,9 @@ class ADST_Loader {
 	private function __construct() {
 		$this->define_constants();
 		$this->load_files();
-		add_action( 'admin_menu', array( $this, 'adst_add_plugin_page' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'adst_assets' ) );
-		add_action( 'init', array( $this, 'adst_process_form_general_settings' ) );
+		add_action( 'admin_menu', array( $this, 'add_plugin_page' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'assets' ) );
+		add_action( 'init', array( $this, 'process_form_general_settings' ) );
 	}
 	/**
 	 * Define constants.
@@ -76,14 +76,14 @@ class ADST_Loader {
 	/**
 	 * Process plugin's Stylesheet to General setting Tab form Data.
 	 */
-	public function adst_assets() {
+	public function assets() {
 		wp_register_style( 'adst_stylesheet', ADST_PLUGIN_URL . '/assets/css/adst-style.css', null, ADST_STATS_VERSION, false );
 		wp_register_script( 'adst_jsfile', ADST_PLUGIN_URL . '/assets/js/adst-human-readable.js', null, ADST_STATS_VERSION, false );
 	}
 	/**
 	 * WP Advanced Stats Option in Setting Page.
 	 */
-	public function adst_add_plugin_page() {
+	public function add_plugin_page() {
 		// This page will be under "Settings".
 		add_options_page(
 			'Settings Admin',
@@ -106,7 +106,7 @@ class ADST_Loader {
 	 *
 	 * @return Void.
 	 */
-	public function adst_process_form_general_settings() {
+	public function process_form_general_settings() {
 		$page = ! empty( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : null;
 
 		if ( 'bsf-as-setting-admin' !== $page ) {
