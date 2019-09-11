@@ -225,16 +225,14 @@ class ADST_Themes_Stats_Api {
 	 * @return string.
 	 */
 	public function get_theme_shortcode_slug( $atts ) {
-		$atts            = shortcode_atts(
+		$atts          = shortcode_atts(
 			array(
-				'theme'        => isset( $atts['wp_theme_slug'] ) ? $atts['wp_theme_slug'] : '',
-				'theme_author' => isset( $atts['theme_author'] ) ? $atts['theme_author'] : '',
+				'theme' => isset( $atts['wp_theme_slug'] ) ? $atts['wp_theme_slug'] : '',
 			),
 			$atts
 		);
-		$version         = false;
-		$wp_theme_slug   = $atts['theme'];
-		$wp_theme_author = $atts['theme_author'];
+		$version       = false;
+		$wp_theme_slug = $atts['theme'];
 
 		if ( '' === $wp_theme_slug ) {
 			return __( 'Please verify theme slug.', 'advanced-stats' );
@@ -384,6 +382,9 @@ class ADST_Themes_Stats_Api {
 				),
 			);
 			$theme      = get_option( '_site_transient_bsf_tr_theme_info_' . $wp_theme_slug );
+			if ( '' === $theme ) {
+				return __( 'Please verify theme slug.', 'advanced-stats' );
+			}
 
 			if ( empty( $theme ) ) {
 				$theme = $this->bsf_tr_get_text( 'theme_information', $api_params );
