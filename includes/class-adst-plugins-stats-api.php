@@ -39,17 +39,17 @@ class ADST_Plugins_Stats_Api {
 	 * Constructor calling W.ORG API Response.
 	 */
 	public function __construct() {
-		add_shortcode( 'adv_stats_name', array( $this, 'bsf_display_plugin_name' ) );
-		add_shortcode( 'adv_stats_active_install', array( $this, 'bsf_display_plugin_active_installs' ) );
-		add_shortcode( 'adv_stats_version', array( $this, 'bsf_display_plugin__version' ) );
-		add_shortcode( 'adv_stats_ratings', array( $this, 'bsf_display_plugin__ratings' ) );
-		add_shortcode( 'adv_stats_ratings_5star', array( $this, 'bsf_display_plugin__five_star_ratings' ) );
-		add_shortcode( 'adv_stats_ratings_average', array( $this, 'bsf_display_plugin__average_ratings' ) );
-		add_shortcode( 'adv_stats_downloads', array( $this, 'bsf_display_plugin__totaldownloads' ) );
-		add_shortcode( 'adv_stats_last_updated', array( $this, 'bsf_display_plugin__lastupdated' ) );
-		add_shortcode( 'adv_stats_download_link', array( $this, 'bsf_display_plugin__downloadlink' ) );
-		add_shortcode( 'adv_stats_downloads_counts', array( $this, 'bsf_display_download_count' ) );
-		add_shortcode( 'adv_stats_total_active', array( $this, 'bsf_display_active_installs' ) );
+		add_shortcode( 'adv_stats_name', array( $this, 'display_plugin_name' ) );
+		add_shortcode( 'adv_stats_active_install', array( $this, 'display_plugin_active_installs' ) );
+		add_shortcode( 'adv_stats_version', array( $this, 'display_plugin__version' ) );
+		add_shortcode( 'adv_stats_ratings', array( $this, 'display_plugin__ratings' ) );
+		add_shortcode( 'adv_stats_ratings_5star', array( $this, 'display_plugin__five_star_ratings' ) );
+		add_shortcode( 'adv_stats_ratings_average', array( $this, 'display_plugin__average_ratings' ) );
+		add_shortcode( 'adv_stats_downloads', array( $this, 'display_plugin__totaldownloads' ) );
+		add_shortcode( 'adv_stats_last_updated', array( $this, 'display_plugin__lastupdated' ) );
+		add_shortcode( 'adv_stats_download_link', array( $this, 'display_plugin__downloadlink' ) );
+		add_shortcode( 'adv_stats_downloads_counts', array( $this, 'display_download_count' ) );
+		add_shortcode( 'adv_stats_total_active', array( $this, 'display_active_installs' ) );
 	}
 	/**
 	 * Get the plugin Details.
@@ -110,12 +110,12 @@ class ADST_Plugins_Stats_Api {
 		}
 	}
 	/**
-	 * Shortcode
+	 * Get slug of Plugins.
 	 *
-	 * @param int $atts Get attributes plugin Slug.
-	 * @return array $plugin Get plugin Details.
+	 * @param string $atts Get attributes plugin_slug.
+	 * @return string.
 	 */
-	public function bsf_display_plugin_name( $atts ) {
+	public function get_plugin_shortcode_slug( $atts ) {
 		$atts           = shortcode_atts(
 			array(
 				'plugin' => isset( $atts['wp_plugin_slug'] ) ? $atts['wp_plugin_slug'] : '',
@@ -125,7 +125,18 @@ class ADST_Plugins_Stats_Api {
 		$wp_plugin_slug = $atts['plugin'];
 		if ( '' === $wp_plugin_slug ) {
 			return __( 'Please verify plugin slug.', 'advanced-stats' );
+		} else {
+			return $wp_plugin_slug;
 		}
+	}
+	/**
+	 * Shortcode
+	 *
+	 * @param int $atts Get attributes plugin Slug.
+	 * @return array $plugin Get plugin Details.
+	 */
+	public function display_plugin_name( $atts ) {
+		$wp_plugin_slug = $this->get_plugin_shortcode_slug( $atts );
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
 				'plugin'   => $wp_plugin_slug,
@@ -150,6 +161,9 @@ class ADST_Plugins_Stats_Api {
 					return $plugin->name;
 				} else {
 					$plugin = $this->bsf_delete_transient( $wp_plugin_slug );
+					if ( null === $plugin ) {
+						return __( 'Please verify plugin slug.', 'advanced-stats' );
+					}
 					return $plugin->name;
 				}
 			}
@@ -161,23 +175,11 @@ class ADST_Plugins_Stats_Api {
 	 * @param int $atts Get attributes plugin Slug.
 	 * @return array $plugin Get plugin Details.
 	 */
-	public function bsf_display_plugin_active_installs( $atts ) {
-		$atts             = shortcode_atts(
-			array(
-				'plugin'        => isset( $atts['wp_plugin_slug'] ) ? $atts['wp_plugin_slug'] : '',
-				'plugin_author' => isset( $atts['plugin_author'] ) ? $atts['plugin_author'] : '',
-			),
-			$atts
-		);
-		$wp_plugin_slug   = $atts['plugin'];
-		$wp_plugin_author = $atts['plugin_author'];
-		if ( '' === $wp_plugin_slug ) {
-			return __( 'Please verify plugin slug.', 'advanced-stats' );
-		}
+	public function display_plugin_active_installs( $atts ) {
+		$wp_plugin_slug = $this->get_plugin_shortcode_slug( $atts );
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
 				'plugin'   => $wp_plugin_slug,
-				'author'   => $wp_plugin_author,
 				'per_page' => 1,
 				'fields'   => array(
 					'homepage'        => false,
@@ -187,7 +189,6 @@ class ADST_Plugins_Stats_Api {
 				),
 			);
 			$plugin     = get_option( '_site_transient_bsf_tr_plugin_info_' . $wp_plugin_slug );
-
 			if ( '' === $plugin ) {
 				return __( 'Please verify plugin slug.', 'advanced-stats' );
 			} else {
@@ -201,8 +202,11 @@ class ADST_Plugins_Stats_Api {
 					return $n;
 				} else {
 					$plugin = $this->bsf_delete_transient( $wp_plugin_slug );
-					$num    = $plugin->active_installs;
-					$n      = $this->bsf_display_human_readable( $num );
+					if ( null === $plugin ) {
+						return __( 'Please verify plugin slug.', 'advanced-stats' );
+					}
+					$num = $plugin->active_installs;
+					$n   = $this->bsf_display_human_readable( $num );
 					return $n;
 				}
 			}
@@ -264,23 +268,11 @@ class ADST_Plugins_Stats_Api {
 	 * @param int $atts Get attributes plugin Slug.
 	 * @return array $plugin Get plugin Details.
 	 */
-	public function bsf_display_plugin__version( $atts ) {
-		$atts             = shortcode_atts(
-			array(
-				'plugin'        => isset( $atts['wp_plugin_slug'] ) ? $atts['wp_plugin_slug'] : '',
-				'plugin_author' => isset( $atts['plugin_author'] ) ? $atts['plugin_author'] : '',
-			),
-			$atts
-		);
-		$wp_plugin_slug   = $atts['plugin'];
-		$wp_plugin_author = $atts['plugin_author'];
-		if ( '' === $wp_plugin_slug ) {
-			return __( 'Please verify plugin slug.', 'advanced-stats' );
-		}
+	public function display_plugin__version( $atts ) {
+		$wp_plugin_slug = $this->get_plugin_shortcode_slug( $atts );
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
 				'plugin'   => $wp_plugin_slug,
-				'author'   => $wp_plugin_author,
 				'per_page' => 1,
 				'fields'   => array(
 					'homepage'        => false,
@@ -301,6 +293,9 @@ class ADST_Plugins_Stats_Api {
 					return $plugin->version;
 				} else {
 					$plugin = $this->bsf_delete_transient( $wp_plugin_slug );
+					if ( null === $plugin ) {
+						return __( 'Please verify plugin slug.', 'advanced-stats' );
+					}
 					return $plugin->version;
 				}
 			}
@@ -312,23 +307,11 @@ class ADST_Plugins_Stats_Api {
 	 * @param int $atts Get attributes plugin Slug.
 	 * @return array $plugin Get plugin Details.
 	 */
-	public function bsf_display_plugin__ratings( $atts ) {
-		$atts             = shortcode_atts(
-			array(
-				'plugin'        => isset( $atts['wp_plugin_slug'] ) ? $atts['wp_plugin_slug'] : '',
-				'plugin_author' => isset( $atts['plugin_author'] ) ? $atts['plugin_author'] : '',
-			),
-			$atts
-		);
-		$wp_plugin_slug   = $atts['plugin'];
-		$wp_plugin_author = $atts['plugin_author'];
-		if ( '' === $wp_plugin_slug ) {
-			return __( 'Please verify plugin slug.', 'advanced-stats' );
-		}
+	public function display_plugin__ratings( $atts ) {
+		$wp_plugin_slug = $this->get_plugin_shortcode_slug( $atts );
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
 				'plugin'   => $wp_plugin_slug,
-				'author'   => $wp_plugin_author,
 				'per_page' => 1,
 				'fields'   => array(
 					'homepage'       => false,
@@ -349,6 +332,9 @@ class ADST_Plugins_Stats_Api {
 					return $plugin->num_ratings;
 				} else {
 					$plugin = $this->bsf_delete_transient( $wp_plugin_slug );
+					if ( null === $plugin ) {
+						return __( 'Please verify plugin slug.', 'advanced-stats' );
+					}
 					return $plugin->num_ratings;
 				}
 			}
@@ -360,23 +346,11 @@ class ADST_Plugins_Stats_Api {
 	 * @param int $atts Get attributes plugin Slug.
 	 * @return array $plugin Get plugin Details.
 	 */
-	public function bsf_display_plugin__five_star_ratings( $atts ) {
-		$atts             = shortcode_atts(
-			array(
-				'plugin'        => isset( $atts['wp_plugin_slug'] ) ? $atts['wp_plugin_slug'] : '',
-				'plugin_author' => isset( $atts['plugin_author'] ) ? $atts['plugin_author'] : '',
-			),
-			$atts
-		);
-		$wp_plugin_slug   = $atts['plugin'];
-		$wp_plugin_author = $atts['plugin_author'];
-		if ( '' === $wp_plugin_slug ) {
-			return __( 'Please verify plugin slug.', 'advanced-stats' );
-		}
+	public function display_plugin__five_star_ratings( $atts ) {
+		$wp_plugin_slug = $this->get_plugin_shortcode_slug( $atts );
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
 				'plugin'   => $wp_plugin_slug,
-				'author'   => $wp_plugin_author,
 				'per_page' => 1,
 				'fields'   => array(
 					'homepage'       => false,
@@ -397,6 +371,9 @@ class ADST_Plugins_Stats_Api {
 					return $plugin->ratings[5];
 				} else {
 					$plugin = $this->bsf_delete_transient( $wp_plugin_slug );
+					if ( null === $plugin ) {
+						return __( 'Please verify plugin slug.', 'advanced-stats' );
+					}
 					return $plugin->ratings[5];
 				}
 			}
@@ -408,25 +385,22 @@ class ADST_Plugins_Stats_Api {
 	 * @param int $atts Get attributes plugin Slug.
 	 * @return array $plugin Get plugin Details.
 	 */
-	public function bsf_display_plugin__average_ratings( $atts ) {
-		$atts             = shortcode_atts(
+	public function display_plugin__average_ratings( $atts ) {
+		$atts           = shortcode_atts(
 			array(
-				'plugin'        => isset( $atts['wp_plugin_slug'] ) ? $atts['wp_plugin_slug'] : '',
-				'plugin_author' => isset( $atts['plugin_author'] ) ? $atts['plugin_author'] : '',
-				'outof'         => isset( $atts['outof'] ) ? $atts['outof'] : '',
+				'plugin' => isset( $atts['wp_plugin_slug'] ) ? $atts['wp_plugin_slug'] : '',
+				'outof'  => isset( $atts['outof'] ) ? $atts['outof'] : '',
 			),
 			$atts
 		);
-		$wp_plugin_slug   = $atts['plugin'];
-		$wp_plugin_author = $atts['plugin_author'];
-		$outof            = $atts['outof'];
+		$wp_plugin_slug = $atts['plugin'];
+		$outof          = $atts['outof'];
 		if ( '' === $wp_plugin_slug ) {
 			return __( 'Please verify plugin slug.', 'advanced-stats' );
 		}
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
 				'plugin'   => $wp_plugin_slug,
-				'author'   => $wp_plugin_author,
 				'per_page' => 1,
 				'fields'   => array(
 					'homepage'       => false,
@@ -453,6 +427,9 @@ class ADST_Plugins_Stats_Api {
 					}
 				} else {
 					$plugin = $this->bsf_delete_transient( $wp_plugin_slug );
+					if ( null === $plugin ) {
+						return __( 'Please verify plugin slug.', 'advanced-stats' );
+					}
 					if ( is_numeric( $outof ) || empty( $outof ) ) {
 						$outof = ( ! empty( $outof ) ? $outof : 100 );
 						$outof = ( ( $plugin->rating ) / 100 ) * $outof;
@@ -470,23 +447,11 @@ class ADST_Plugins_Stats_Api {
 	 * @param int $atts Get attributes plugin Slug.
 	 * @return array $plugin Get plugin Details.
 	 */
-	public function bsf_display_plugin__totaldownloads( $atts ) {
-		$atts             = shortcode_atts(
-			array(
-				'plugin'        => isset( $atts['wp_plugin_slug'] ) ? $atts['wp_plugin_slug'] : '',
-				'plugin_author' => isset( $atts['plugin_author'] ) ? $atts['plugin_author'] : '',
-			),
-			$atts
-		);
-		$wp_plugin_slug   = $atts['plugin'];
-		$wp_plugin_author = $atts['plugin_author'];
-		if ( '' === $wp_plugin_slug ) {
-			return __( 'Please verify plugin slug.', 'advanced-stats' );
-		}
+	public function display_plugin__totaldownloads( $atts ) {
+		$wp_plugin_slug = $this->get_plugin_shortcode_slug( $atts );
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
 				'plugin'   => $wp_plugin_slug,
-				'author'   => $wp_plugin_author,
 				'per_page' => 1,
 				'fields'   => array(
 					'homepage'       => false,
@@ -510,8 +475,11 @@ class ADST_Plugins_Stats_Api {
 					return $n;
 				} else {
 					$plugin = $this->bsf_delete_transient( $wp_plugin_slug );
-					$num    = $plugin->downloaded;
-					$n      = $this->bsf_display_human_readable( $num );
+					if ( null === $plugin ) {
+						return __( 'Please verify plugin slug.', 'advanced-stats' );
+					}
+					$num = $plugin->downloaded;
+					$n   = $this->bsf_display_human_readable( $num );
 					return $n;
 				}
 			}
@@ -523,24 +491,12 @@ class ADST_Plugins_Stats_Api {
 	 * @param int $atts Get attributes plugin Slug.
 	 * @return array $plugin Get plugin Details.
 	 */
-	public function bsf_display_plugin__lastupdated( $atts ) {
-		$dateformat       = get_option( 'adst_info' );
-		$atts             = shortcode_atts(
-			array(
-				'plugin'        => isset( $atts['wp_plugin_slug'] ) ? $atts['wp_plugin_slug'] : '',
-				'plugin_author' => isset( $atts['plugin_author'] ) ? $atts['plugin_author'] : '',
-			),
-			$atts
-		);
-		$wp_plugin_slug   = $atts['plugin'];
-		$wp_plugin_author = $atts['plugin_author'];
-		if ( '' === $wp_plugin_slug ) {
-			return __( 'Please verify plugin slug.', 'advanced-stats' );
-		}
+	public function display_plugin__lastupdated( $atts ) {
+		$dateformat     = get_option( 'adst_info' );
+		$wp_plugin_slug = $this->get_plugin_shortcode_slug( $atts );
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
 				'plugin'   => $wp_plugin_slug,
-				'author'   => $wp_plugin_author,
 				'per_page' => 1,
 				'fields'   => array(
 					'homepage'       => false,
@@ -563,7 +519,10 @@ class ADST_Plugins_Stats_Api {
 					$new_date             = date( $dateformat['Choice'], strtotime( $plugin->last_updated ) );
 					return $new_date;
 				} else {
-					$plugin               = $this->bsf_delete_transient( $wp_plugin_slug );
+					$plugin = $this->bsf_delete_transient( $wp_plugin_slug );
+					if ( null === $plugin ) {
+						return __( 'Please verify plugin slug.', 'advanced-stats' );
+					}
 					$dateformat['Choice'] = ( ! empty( $dateformat['Choice'] ) ? $dateformat['Choice'] : 'Y-m-d' );
 					$new_date             = date( $dateformat['Choice'], strtotime( $plugin->last_updated ) );
 					return $new_date;
@@ -578,18 +537,16 @@ class ADST_Plugins_Stats_Api {
 	 * @param string $label Get label as per user.
 	 * @return array $plugin Get plugin Details.
 	 */
-	public function bsf_display_plugin__downloadlink( $atts, $label ) {
-		$atts             = shortcode_atts(
+	public function display_plugin__downloadlink( $atts, $label ) {
+		$atts            = shortcode_atts(
 			array(
-				'plugin'        => isset( $atts['wp_plugin_slug'] ) ? $atts['wp_plugin_slug'] : '',
-				'plugin_author' => isset( $atts['plugin_author'] ) ? $atts['plugin_author'] : '',
-				'label'         => isset( $atts['label'] ) ? $atts['label'] : '',
+				'plugin' => isset( $atts['wp_plugin_slug'] ) ? $atts['wp_plugin_slug'] : '',
+				'label'  => isset( $atts['label'] ) ? $atts['label'] : '',
 			),
 			$atts
 		);
-		$wp_plugin_slug   = $atts['plugin'];
-		$wp_plugin_author = $atts['plugin_author'];
-		$wp_plugin_label  = $atts['label'];
+		$wp_plugin_slug  = $atts['plugin'];
+		$wp_plugin_label = $atts['label'];
 
 		if ( '' === $wp_plugin_slug ) {
 			return __( 'Please verify plugin slug.', 'advanced-stats' );
@@ -597,7 +554,6 @@ class ADST_Plugins_Stats_Api {
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
 				'plugin'   => $wp_plugin_slug,
-				'author'   => $wp_plugin_author,
 				'per_page' => 1,
 				'fields'   => array(
 					'homepage'       => false,
@@ -619,7 +575,10 @@ class ADST_Plugins_Stats_Api {
 					return '<a href="' . esc_url( $plugin->{'download_link'} ) . '" target="_blank">' . $label . '</a>';
 				} else {
 					$plugin = $this->bsf_delete_transient( $wp_plugin_slug );
-					$label  = ( ! empty( $wp_plugin_label ) ? esc_attr( $wp_plugin_label ) : esc_url( $plugin->download_link ) );
+					if ( null === $plugin ) {
+						return __( 'Please verify plugin slug.', 'advanced-stats' );
+					}
+					$label = ( ! empty( $wp_plugin_label ) ? esc_attr( $wp_plugin_label ) : esc_url( $plugin->download_link ) );
 					return '<a href="' . esc_url( $plugin->{'download_link'} ) . '" target="_blank">' . $label . '</a>';
 				}
 			}
@@ -702,10 +661,8 @@ class ADST_Plugins_Stats_Api {
 				}
 				if ( empty( $plugins ) ) {
 					$plugins = get_option( '_site_transient_' . $author );
-					if ( empty( $plugins ) ) {
-						delete_transient( '_site_transient_' . $author );
-					}
 					delete_transient( '_site_transient_' . $author );
+					return __( 'Please verify author slug.', 'advanced-stats' );
 				}
 				return $plugins;
 			}
@@ -717,7 +674,7 @@ class ADST_Plugins_Stats_Api {
 	 * @param int $atts Get attributes plugin Slug.
 	 * @return array $plugin Get plugin Details.
 	 */
-	public function bsf_display_active_installs( $atts ) {
+	public function display_active_installs( $atts ) {
 		$atts             = shortcode_atts(
 			array(
 				'plugin_author' => isset( $atts['author'] ) ? $atts['author'] : '',
@@ -745,8 +702,11 @@ class ADST_Plugins_Stats_Api {
 					return $n;
 			} else {
 					$plugins = $this->bsf_delete_active_count_transient( $wp_plugin_author );
-					$num     = $plugins;
-					$n       = $this->bsf_display_human_readable( $num );
+				if ( null === $plugins ) {
+					return __( 'Please verify author slug.', 'advanced-stats' );
+				}
+					$num = $plugins;
+					$n   = $this->bsf_display_human_readable( $num );
 					return $n;
 			}
 		}
@@ -828,10 +788,8 @@ class ADST_Plugins_Stats_Api {
 				}
 				if ( empty( $plugins ) ) {
 					$plugins = get_option( '_site_transient_' . $author );
-					if ( empty( $plugins ) ) {
-						delete_transient( '_site_transient_' . $author );
-					}
 					delete_transient( '_site_transient_' . $author );
+					return __( 'Please verify author slug.', 'advanced-stats' );
 				}
 				return $plugins;
 			}
@@ -843,7 +801,7 @@ class ADST_Plugins_Stats_Api {
 	 * @param int $atts Get attributes plugin Slug.
 	 * @return array $plugin Get plugin Details.
 	 */
-	public function bsf_display_download_count( $atts ) {
+	public function display_download_count( $atts ) {
 		$atts             = shortcode_atts(
 			array(
 				'plugin_author' => isset( $atts['author'] ) ? $atts['author'] : '',
@@ -871,8 +829,11 @@ class ADST_Plugins_Stats_Api {
 					return $n;
 			} else {
 					$plugins = $this->bsf_delete_download_count_transient( $wp_plugin_author );
-					$num     = $plugins;
-					$n       = $this->bsf_display_human_readable( $num );
+				if ( null === $plugins ) {
+					return __( 'Please verify author slug.', 'advanced-stats' );
+				}
+					$num = $plugins;
+					$n   = $this->bsf_display_human_readable( $num );
 					return $n;
 			}
 		}
