@@ -136,4 +136,3 @@ $adst_numchoice_disp = ( ( 'normal' === $adst_rchoice ) ? 'style="display:table-
 </table>
 </form>
 </div>
-<?php

@@ -891,5 +891,4 @@ class ADST_Themes_Stats_Api {
 	}
 }
 
-new ADST_Themes_Stats_Api();
 $adst_themes_stats_api = ADST_Themes_Stats_Api::get_instance();

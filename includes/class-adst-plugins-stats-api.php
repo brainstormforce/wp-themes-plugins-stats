@@ -839,5 +839,5 @@ class ADST_Plugins_Stats_Api {
 		}
 	}
 }
-new ADST_Plugins_Stats_Api();
+
 $adst_plugins_stats_api = ADST_Plugins_Stats_Api::get_instance();
