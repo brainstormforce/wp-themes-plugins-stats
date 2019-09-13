@@ -49,19 +49,19 @@ module.exports = function( grunt ) {
                   '!package-lock.json',
                   '!phpcs.xml.dist',
               ],
-              dest: 'advanced-stats/'
+              dest: 'wp-themes-plugins-stats/'
           }
       },
       compress: {
           main: {
               options: {
-                  archive: 'advanced-stats.zip',
+                  archive: 'wp-themes-plugins-stats.zip',
                   mode: 'zip'
               },
               files: [
                   {
                       src: [
-                          './advanced-stats/**'
+                          './wp-themes-plugins-stats/**'
                       ]
 
                   }
@@ -70,8 +70,8 @@ module.exports = function( grunt ) {
       },
 
       clean: {
-          main: ['advanced-stats'],
-          zip: ['advanced-stats.zip'],
+          main: ['wp-themes-plugins-stats'],
+          zip: ['wp-themes-plugins-stats.zip'],
       },
 
       makepot: {
