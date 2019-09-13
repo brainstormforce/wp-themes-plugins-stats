@@ -1,5 +1,5 @@
 {
-  "name": "advanced-stats",
+  "name": "wp-themes-plugins-stats",
   "version": "1.0.0",
   "description": "This plugin is geared towards developers with Themes & Plugins in the WordPress.org repository and anyone else that wants to easily display information about Themes and Plugins that are in the repository.",
   "main": "Gruntfile.js",
