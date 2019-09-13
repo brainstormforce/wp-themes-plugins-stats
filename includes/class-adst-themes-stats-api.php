@@ -25,6 +25,12 @@ class ADST_Themes_Stats_Api {
 	 * @var Instance variable
 	 */
 	private static $instance;
+	/**
+	 * The unique per_page of the plugin.
+	 *
+	 * @var Per_page variable
+	 */
+	private static $per_page = 1;
 
 		/**
 		 * Gets an instance of our plugin.
@@ -56,51 +62,6 @@ class ADST_Themes_Stats_Api {
 		add_shortcode( 'adv_stats_theme_downloads_count', array( $this, 'display_theme_downloaded_count' ) );
 	}
 
-	/**
-	 * Get the theme Details.
-	 *
-	 * @param int $action Get attributes theme Details.
-	 * @param int $api_params Get attributes theme Details.
-	 * @return array $theme Get theme Details.
-	 */
-	public function get_theme_activate_installs( $action, $api_params = array() ) {
-		$theme_slug    = isset( $api_params['theme'] ) ? $api_params['theme'] : '';
-		$update_option = array(
-			'theme_slug' => ( ! empty( $api_params['theme'] ) ? $api_params['theme'] : '' ),
-		);
-		update_option( 'theme_info', $update_option );
-		$activet_installs = get_transient( "bsf_active_status_$theme_slug" );
-		if ( false === $activet_installs ) {
-			$url = 'https://api.wordpress.org/themes/info/1.0/';
-			if ( wp_http_supports( array( 'ssl' ) ) ) {
-				$url = set_url_scheme( $url, 'https' );
-			}
-
-			$args      = $api_params;
-			$http_args = array(
-				'body' => array(
-					'action'  => $action,
-					'timeout' => 15,
-					'request' => serialize( (object) $args ), //PHPCS:ignore:WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize
-				),
-			);
-			$request   = wp_remote_post( $url, $http_args );
-
-			if ( ! is_wp_error( $request ) || wp_remote_retrieve_response_code( $request ) === 200 ) {
-				$response = maybe_unserialize( wp_remote_retrieve_body( $request ) );//PHPCS:ignore:WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize
-
-				$themes_list = ( is_object( $response ) && isset( $response->themes ) ) ? $response->themes : array();
-
-				if ( ! isset( $themes_list[0] ) ) {
-					return false;
-				}
-
-				$activet_installs = $themes_list[0]->active_installs;
-				set_transient( "bsf_active_status_$theme_slug", $activet_installs, 604800 );
-			}
-		}
-		return $activet_installs;
-	}
 	/**
 	 * Delete Transient
 	 *
@@ -250,7 +211,7 @@ class ADST_Themes_Stats_Api {
 		if ( '' !== $wp_theme_slug ) {
 			$api_params = array(
 				'theme'    => $wp_theme_slug,
-				'per_page' => 1,
+				'per_page' => self::$per_page,
 				'fields'   => array(
 					'homepage'       => false,
 					'description'    => false,
@@ -304,7 +265,7 @@ class ADST_Themes_Stats_Api {
 			$api_params = array(
 				'theme'    => $wp_theme_slug,
 				'author'   => $wp_theme_author,
-				'per_page' => 1,
+				'per_page' => self::$per_page,
 				'fields'   => array(
 					'homepage'        => false,
 					'description'     => false,
@@ -340,7 +301,7 @@ class ADST_Themes_Stats_Api {
 		if ( '' !== $wp_theme_slug ) {
 			$api_params = array(
 				'theme'    => $wp_theme_slug,
-				'per_page' => 1,
+				'per_page' => self::$per_page,
 				'fields'   => array(
 					'homepage'        => false,
 					'description'     => false,
@@ -373,7 +334,7 @@ class ADST_Themes_Stats_Api {
 		if ( '' !== $wp_theme_slug ) {
 			$api_params = array(
 				'theme'    => $wp_theme_slug,
-				'per_page' => 1,
+				'per_page' => self::$per_page,
 				'fields'   => array(
 					'homepage'       => false,
 					'description'    => false,
@@ -408,7 +369,7 @@ class ADST_Themes_Stats_Api {
 		if ( '' !== $wp_theme_slug ) {
 			$api_params = array(
 				'theme'    => $wp_theme_slug,
-				'per_page' => 1,
+				'per_page' => self::$per_page,
 				'fields'   => array(
 					'homepage'       => false,
 					'description'    => false,
@@ -453,7 +414,7 @@ class ADST_Themes_Stats_Api {
 		if ( '' !== $wp_theme_slug ) {
 			$api_params = array(
 				'theme'    => $wp_theme_slug,
-				'per_page' => 1,
+				'per_page' => self::$per_page,
 				'fields'   => array(
 					'homepage'       => false,
 					'description'    => false,
@@ -498,7 +459,7 @@ class ADST_Themes_Stats_Api {
 			$api_params = array(
 				'theme'    => $wp_theme_slug,
 
-				'per_page' => 1,
+				'per_page' => self::$per_page,
 				'fields'   => array(
 					'homepage'       => false,
 					'description'    => false,
@@ -535,7 +496,7 @@ class ADST_Themes_Stats_Api {
 		if ( '' !== $wp_theme_slug ) {
 			$api_params = array(
 				'theme'    => $wp_theme_slug,
-				'per_page' => 1,
+				'per_page' => self::$per_page,
 				'fields'   => array(
 					'homepage'       => false,
 					'description'    => false,
@@ -587,7 +548,7 @@ class ADST_Themes_Stats_Api {
 			$api_params = array(
 				'theme'    => $wp_theme_slug,
 
-				'per_page' => 1,
+				'per_page' => self::$per_page,
 				'fields'   => array(
 					'homepage'       => false,
 					'description'    => false,
@@ -711,7 +672,7 @@ class ADST_Themes_Stats_Api {
 
 		$api_params = array(
 			'theme_author' => $wp_theme_author,
-			'per_page'     => 1,
+			'per_page'     => self::$per_page,
 		);
 		$themes     = get_option( "_site_transient_bsf_tr_themes_Active_Count_$wp_theme_author" );
 		if ( '0' === $themes ) {
@@ -855,7 +816,7 @@ class ADST_Themes_Stats_Api {
 		$api_params = array(
 
 			'theme_author' => $wp_theme_author,
-			'per_page'     => 1,
+			'per_page'     => self::$per_page,
 		);
 		$themes     = get_option( "_site_transient_bsf_tr_themes_downloaded_Count_$wp_theme_author" );
 		if ( '' === $themes ) {

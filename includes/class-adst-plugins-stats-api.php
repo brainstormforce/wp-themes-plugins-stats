@@ -26,6 +26,12 @@ class ADST_Plugins_Stats_Api {
 	 */
 	private static $instance;
 	/**
+	 * The unique per_page of the plugin.
+	 *
+	 * @var Per_page variable
+	 */
+	private static $per_page = 1;
+	/**
 	 * Gets an instance of our plugin.
 	 */
 	public static function get_instance() {
@@ -140,7 +146,7 @@ class ADST_Plugins_Stats_Api {
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
 				'plugin'   => $wp_plugin_slug,
-				'per_page' => 1,
+				'per_page' => self::$per_page,
 				'fields'   => array(
 					'homepage'       => false,
 					'description'    => false,
@@ -180,7 +186,7 @@ class ADST_Plugins_Stats_Api {
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
 				'plugin'   => $wp_plugin_slug,
-				'per_page' => 1,
+				'per_page' => self::$per_page,
 				'fields'   => array(
 					'homepage'        => false,
 					'description'     => false,
@@ -273,7 +279,7 @@ class ADST_Plugins_Stats_Api {
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
 				'plugin'   => $wp_plugin_slug,
-				'per_page' => 1,
+				'per_page' => self::$per_page,
 				'fields'   => array(
 					'homepage'        => false,
 					'description'     => false,
@@ -312,7 +318,7 @@ class ADST_Plugins_Stats_Api {
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
 				'plugin'   => $wp_plugin_slug,
-				'per_page' => 1,
+				'per_page' => self::$per_page,
 				'fields'   => array(
 					'homepage'       => false,
 					'description'    => false,
@@ -351,7 +357,7 @@ class ADST_Plugins_Stats_Api {
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
 				'plugin'   => $wp_plugin_slug,
-				'per_page' => 1,
+				'per_page' => self::$per_page,
 				'fields'   => array(
 					'homepage'       => false,
 					'description'    => false,
@@ -401,7 +407,7 @@ class ADST_Plugins_Stats_Api {
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
 				'plugin'   => $wp_plugin_slug,
-				'per_page' => 1,
+				'per_page' => self::$per_page,
 				'fields'   => array(
 					'homepage'       => false,
 					'description'    => false,
@@ -452,7 +458,7 @@ class ADST_Plugins_Stats_Api {
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
 				'plugin'   => $wp_plugin_slug,
-				'per_page' => 1,
+				'per_page' => self::$per_page,
 				'fields'   => array(
 					'homepage'       => false,
 					'description'    => false,
@@ -497,7 +503,7 @@ class ADST_Plugins_Stats_Api {
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
 				'plugin'   => $wp_plugin_slug,
-				'per_page' => 1,
+				'per_page' => self::$per_page,
 				'fields'   => array(
 					'homepage'       => false,
 					'description'    => false,
@@ -554,7 +560,7 @@ class ADST_Plugins_Stats_Api {
 		if ( '' !== $wp_plugin_slug ) {
 			$api_params = array(
 				'plugin'   => $wp_plugin_slug,
-				'per_page' => 1,
+				'per_page' => self::$per_page,
 				'fields'   => array(
 					'homepage'       => false,
 					'description'    => false,
