@@ -78,8 +78,8 @@ module.exports = function( grunt ) {
           target: {
               options: {
                   domainPath: '/',
-                  mainFile: 'wp-advanced-stats.php',
-                  potFilename: 'languages/advanced-stats.pot',
+                  mainFile: 'wp-wp-themes-plugins-stats.php',
+                  potFilename: 'languages/wp-themes-plugins-stats.pot',
                   potHeaders: {
                       poedit: true,
                       'x-poedit-keywordslist': true
@@ -92,7 +92,7 @@ module.exports = function( grunt ) {
       
       addtextdomain: {
           options: {
-              textdomain: 'advanced-stats',
+              textdomain: 'wp-themes-plugins-stats',
           },
           target: {
               files: {

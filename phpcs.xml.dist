@@ -29,7 +29,7 @@
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<!-- Value: replace the text domain used. -->
-			<property name="text_domain" type="array" value="advanced-stats"/>
+			<property name="text_domain" type="array" value="wp-themes-plugins-stats"/>
 		</properties>
 	</rule>
 	<rule ref="WordPress.WhiteSpace.ControlStructureSpacing">

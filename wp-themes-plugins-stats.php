@@ -5,7 +5,7 @@
  * Version:     1.0.0
  * Author:      Brainstorm Force
  * Author URI:  https://brainstormforce.com
- * Text Domain: advanced-stats.
+ * Text Domain: wp-themes-plugins-stats.
  * Main
  *
  * PHP version 7
