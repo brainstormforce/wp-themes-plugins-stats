@@ -5,7 +5,7 @@
  * Version:     1.0.0
  * Author:      Brainstorm Force
  * Author URI:  https://brainstormforce.com
- * Text Domain: advanced-stats.
+ * Text Domain: wp-themes-plugins-stats.
  * Main
  *
  * PHP version 7
@@ -16,6 +16,13 @@
  * @license  https://brainstormforce.com
  * @link     https://brainstormforce.com
  */
+
+/**
+ * Exit if accessed directly.
+ */
+if ( ! defined( 'ABSPATH' ) ) {
+	exit();
+}
 
 define( 'ADST_PLUGIN_URL', untrailingslashit( plugins_url( '', __FILE__ ) ) );
 // Including class doc loader.
