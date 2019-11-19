@@ -765,6 +765,7 @@ class ADST_Plugins_Stats_Api {
 				if ( false === $plugins || empty( $plugins ) ) {
 					$second = ( ! empty( $second ) ? $second : 86400 );
 					set_site_transient( $author, $temp, $second );
+					$plugins = get_site_transient( $author );
 				}
 				if ( empty( $plugins ) ) {
 					$plugins = get_option( '_site_transient_' . $author );
@@ -892,6 +893,7 @@ class ADST_Plugins_Stats_Api {
 				if ( false === $plugins || empty( $plugins ) ) {
 					$second = ( ! empty( $second ) ? $second : 86400 );
 					set_site_transient( $author, $temp, $second );
+					$plugins = get_site_transient( $author );
 				}
 				if ( empty( $plugins ) ) {
 					$plugins = get_option( '_site_transient_' . $author );
