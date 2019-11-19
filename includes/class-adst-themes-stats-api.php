@@ -55,6 +55,7 @@ class ADST_Themes_Stats_Api {
 		add_shortcode( 'adv_stats_theme_ratings', array( $this, 'display_theme_ratings' ) );
 		add_shortcode( 'adv_stats_theme_ratings_5star', array( $this, 'display_theme_five_star_ratings' ) );
 		add_shortcode( 'adv_stats_theme_ratings_average', array( $this, 'display_theme_average_ratings' ) );
+		add_shortcode( 'adv_stats_theme_ratings_average_in_star', array( $this, 'display_theme_average_ratings_in_star' ) );
 		add_shortcode( 'adv_stats_theme_downloads', array( $this, 'display_theme_totaldownloads' ) );
 		add_shortcode( 'adv_stats_theme_last_updated', array( $this, 'display_theme_lastupdated' ) );
 		add_shortcode( 'adv_stats_theme_download_link', array( $this, 'display_theme_downloadlink' ) );
@@ -171,6 +172,7 @@ class ADST_Themes_Stats_Api {
 			if ( false === $theme || empty( $theme ) ) {
 				$second = ( ! empty( $second ) ? $second : 86400 );
 				set_site_transient( $slug, $wp_theme, $second );
+				$theme = get_site_transient( $slug );
 			}
 			if ( empty( $theme ) ) {
 				delete_transient( '_site_transient_' . $slug );
@@ -447,6 +449,107 @@ class ADST_Themes_Stats_Api {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Shortcode
+	 *
+	 * @param int $atts Get attributes theme Slug.
+	 * @return array $theme Get theme Details.
+	 */
+	public function display_theme_average_ratings_in_star( $atts ) {
+		$wp_theme_slug = $this->get_theme_shortcode_slug( $atts );
+		if ( '' !== $wp_theme_slug ) {
+			$api_params = array(
+				'theme'    => $wp_theme_slug,
+				'per_page' => self::$per_page,
+				'fields'   => array(
+					'homepage'       => false,
+					'description'    => false,
+					'screenshot_url' => false,
+					'rating'         => true,
+				),
+			);
+			$theme      = get_option( '_site_transient_bsf_tr_theme_info_' . $wp_theme_slug );
+			if ( '' === $theme ) {
+				return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
+			} else {
+				if ( empty( $theme ) ) {
+					$theme = $this->bsf_tr_get_text( 'theme_information', $api_params );
+					if ( 'Please verify theme slug.' === $theme ) {
+						return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
+					}
+					return $this->display_star_rating( $theme );
+				} else {
+					$theme = $this->bsf_delete_transient( $wp_theme_slug );
+					if ( null === $theme ) {
+						return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
+					}
+					return $this->display_star_rating( $theme );
+				}
+			}
+		}
+	}
+
+	/**
+	 * Display star rating of theme.
+	 *
+	 * @param array $theme to get the rating of plugin.
+	 */
+	public function display_star_rating( $theme ) {
+		$rating = $theme->rating;
+		switch ( $rating ) {
+			case ( 0 === $rating ):
+				$stars = array( 0, 0, 0, 0, 0 );
+				break;
+			case ( $rating > 0 && $rating < 5 ):
+				$stars = array( 0, 0, 0, 0, 0 );
+				break;
+			case ( $rating >= 5 && $rating < 15 ):
+				$stars = array( 5, 0, 0, 0, 0 );
+				break;
+			case ( $rating >= 15 && $rating < 25 ):
+				$stars = array( 1, 0, 0, 0, 0 );
+				break;
+			case ( $rating >= 25 && $rating < 35 ):
+				$stars = array( 1, 5, 0, 0, 0 );
+				break;
+			case ( $rating >= 35 && $rating < 45 ):
+				$stars = array( 1, 1, 0, 0, 0 );
+				break;
+			case ( $rating >= 45 && $rating < 55 ):
+				$stars = array( 1, 1, 5, 0, 0 );
+				break;
+			case ( $rating >= 55 && $rating < 65 ):
+				$stars = array( 1, 1, 1, 0, 0 );
+				break;
+			case ( $rating >= 65 && $rating < 75 ):
+				$stars = array( 1, 1, 1, 5, 0 );
+				break;
+			case ( $rating >= 75 && $rating < 85 ):
+				$stars = array( 1, 1, 1, 1, 0 );
+				break;
+			case ( $rating >= 85 && $rating < 95 ):
+				$stars = array( 1, 1, 1, 1, 5 );
+				break;
+			case ( $rating >= 95 ):
+				$stars = array( 1, 1, 1, 1, 1 );
+				break;
+			default:
+				break;
+		}
+		$output = '<span class="eps-star-rating">';
+		foreach ( $stars as $star ) {
+			if ( 0 === $star ) {
+				$output .= '<span class="dashicons dashicons-star-empty" style=" color: #ffb900;"></span>';
+			} elseif ( 5 === $star ) {
+				$output .= '<span class="dashicons dashicons-star-half" style=" color: #ffb900;"></span>';
+			} elseif ( 1 === $star ) {
+				$output .= '<span class="dashicons dashicons-star-filled" style=" color: #ffb900;"></span>';
+			}
+		}
+		$output .= '</span>';
+		return $output;
 	}
 	/**
 	 * Display Theme Downloads.

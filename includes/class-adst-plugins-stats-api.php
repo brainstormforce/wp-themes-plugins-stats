@@ -51,6 +51,7 @@ class ADST_Plugins_Stats_Api {
 		add_shortcode( 'adv_stats_ratings', array( $this, 'display_plugin__ratings' ) );
 		add_shortcode( 'adv_stats_ratings_5star', array( $this, 'display_plugin__five_star_ratings' ) );
 		add_shortcode( 'adv_stats_ratings_average', array( $this, 'display_plugin__average_ratings' ) );
+		add_shortcode( 'adv_stats_plugin_ratings_average_in_star', array( $this, 'display_plugin_average_ratings_in_star' ) );
 		add_shortcode( 'adv_stats_downloads', array( $this, 'display_plugin__totaldownloads' ) );
 		add_shortcode( 'adv_stats_last_updated', array( $this, 'display_plugin__lastupdated' ) );
 		add_shortcode( 'adv_stats_download_link', array( $this, 'display_plugin__downloadlink' ) );
@@ -104,6 +105,7 @@ class ADST_Plugins_Stats_Api {
 				if ( false === $plugin || empty( $plugin ) || '' === $plugin ) {
 					$second = ( ! empty( $second ) ? $second : 86400 );
 					set_site_transient( $slug, $wp_plugin, $second );
+					$plugin = get_site_transient( $slug );
 				}
 
 				if ( empty( $plugin ) ) {
@@ -446,6 +448,105 @@ class ADST_Plugins_Stats_Api {
 				}
 			}
 		}
+	}
+	/**
+	 * Shortcode
+	 *
+	 * @param int $atts Get attributes plugin Slug.
+	 * @return array $plugin Get plugin Details.
+	 */
+	public function display_plugin_average_ratings_in_star( $atts ) {
+		$wp_plugin_slug = $this->get_plugin_shortcode_slug( $atts );
+		if ( '' !== $wp_plugin_slug ) {
+			$api_params = array(
+				'plugin'   => $wp_plugin_slug,
+				'per_page' => self::$per_page,
+				'fields'   => array(
+					'homepage'       => false,
+					'description'    => false,
+					'screenshot_url' => false,
+					'rating'         => true,
+				),
+			);
+			$plugin     = get_option( '_site_transient_bsf_tr_plugin_info_' . $wp_plugin_slug );
+			if ( '' === $plugin ) {
+				return __( 'Please verify plugin slug.', 'wp-themes-plugins-stats' );
+			} else {
+				if ( empty( $plugin ) ) {
+					$plugin = $this->bsf_plugin_get_text( 'plugin_information', $api_params );
+					if ( 'Please verify plugin slug.' === $plugin ) {
+						return __( 'Please verify plugin slug.', 'wp-themes-plugins-stats' );
+					}
+					return $this->display_star_rating( $plugin );
+				} else {
+					$plugin = $this->bsf_delete_transient( $wp_plugin_slug );
+					if ( null === $plugin ) {
+						return __( 'Please verify plugin slug.', 'wp-themes-plugins-stats' );
+					}
+					return $this->display_star_rating( $plugin );
+				}
+			}
+		}
+	}
+	/**
+	 * Display star rating of plugin.
+	 *
+	 * @param array $plugin to get the rating of plugin.
+	 */
+	public function display_star_rating( $plugin ) {
+		$rating = $plugin->rating;
+		switch ( $rating ) {
+			case ( 0 === $rating ):
+				$stars = array( 0, 0, 0, 0, 0 );
+				break;
+			case ( $rating > 0 && $rating < 5 ):
+				$stars = array( 0, 0, 0, 0, 0 );
+				break;
+			case ( $rating >= 5 && $rating < 15 ):
+				$stars = array( 5, 0, 0, 0, 0 );
+				break;
+			case ( $rating >= 15 && $rating < 25 ):
+				$stars = array( 1, 0, 0, 0, 0 );
+				break;
+			case ( $rating >= 25 && $rating < 35 ):
+				$stars = array( 1, 5, 0, 0, 0 );
+				break;
+			case ( $rating >= 35 && $rating < 45 ):
+				$stars = array( 1, 1, 0, 0, 0 );
+				break;
+			case ( $rating >= 45 && $rating < 55 ):
+				$stars = array( 1, 1, 5, 0, 0 );
+				break;
+			case ( $rating >= 55 && $rating < 65 ):
+				$stars = array( 1, 1, 1, 0, 0 );
+				break;
+			case ( $rating >= 65 && $rating < 75 ):
+				$stars = array( 1, 1, 1, 5, 0 );
+				break;
+			case ( $rating >= 75 && $rating < 85 ):
+				$stars = array( 1, 1, 1, 1, 0 );
+				break;
+			case ( $rating >= 85 && $rating < 95 ):
+				$stars = array( 1, 1, 1, 1, 5 );
+				break;
+			case ( $rating >= 95 ):
+				$stars = array( 1, 1, 1, 1, 1 );
+				break;
+			default:
+				break;
+		}
+		$output = '<span class="eps-star-rating">';
+		foreach ( $stars as $star ) {
+			if ( 0 === $star ) {
+				$output .= '<span class="dashicons dashicons-star-empty" style=" color: #ffb900;"></span>';
+			} elseif ( 5 === $star ) {
+				$output .= '<span class="dashicons dashicons-star-half" style=" color: #ffb900;"></span>';
+			} elseif ( 1 === $star ) {
+				$output .= '<span class="dashicons dashicons-star-filled" style=" color: #ffb900;"></span>';
+			}
+		}
+		$output .= '</span>';
+		return $output;
 	}
 	/**
 	 * Shortcode
