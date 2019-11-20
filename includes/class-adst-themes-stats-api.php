@@ -538,7 +538,7 @@ class ADST_Themes_Stats_Api {
 			default:
 				break;
 		}
-		$output = '<span class="eps-star-rating">';
+		$output = '<span class="eps-star-rating-themes eps-star-rating-' . $theme->slug . '">';
 		foreach ( $stars as $star ) {
 			if ( 0 === $star ) {
 				$output .= '<span class="dashicons dashicons-star-empty" style=" color: #ffb900;"></span>';
@@ -738,24 +738,28 @@ class ADST_Themes_Stats_Api {
 					),
 				)
 			);
+
 			if ( ! is_wp_error( $response ) ) {
 				$returned_object = unserialize( wp_remote_retrieve_body( $response ) );//PHPCS:ignore:WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize
 				$themes          = $returned_object->themes;
+				if ( empty( $themes ) ) {
+					return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
+				} else {
+					$temp = 0;
+					foreach ( $themes as $key ) {
+						$temp = $temp + $key->active_installs;
+					}
 
-				$temp = 0;
-				foreach ( $themes as $key ) {
-					$temp = $temp + $key->active_installs;
-				}
-
-				$author = 'bsf_tr_themes_Active_Count_' . $api_params;
-				$themes = get_site_transient( $author );
-
-				if ( false === $themes || empty( $themes ) ) {
-					$second = ( ! empty( $second ) ? $second : 86400 );
-					set_site_transient( $author, $temp, $second );
+					$author = 'bsf_tr_themes_Active_Count_' . $api_params;
 					$themes = get_site_transient( $author );
+
+					if ( false === $themes || empty( $themes ) ) {
+						$second = ( ! empty( $second ) ? $second : 86400 );
+						set_site_transient( $author, $temp, $second );
+						$themes = get_site_transient( $author );
+					}
+					return $themes;
 				}
-				return $themes;
 			}
 		}
 	}
