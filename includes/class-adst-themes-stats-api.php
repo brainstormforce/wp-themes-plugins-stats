@@ -97,25 +97,25 @@ class ADST_Themes_Stats_Api {
 	/**
 	 * Convert number into particular format.
 	 *
-	 * @param int $n Get Count of theme.
-	 * @return float $n Get human readable format.
+	 * @param int $theme_count Get Count of theme.
+	 * @return float $theme_count Get human readable format.
 	 */
-	public function bsf_display_human_readable( $n ) {
-		$n = ( 0 + str_replace( ',', '', $n ) );
-		if ( ! is_numeric( $n ) ) {
+	public function bsf_display_human_readable( $theme_count ) {
+		$theme_count = ( 0 + str_replace( ',', '', $theme_count ) );
+		if ( ! is_numeric( $theme_count ) ) {
 			return false;
-		} elseif ( null === $n ) {
+		} elseif ( null === $theme_count ) {
 			return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
 		}
-		$x = get_option( 'adst_info' );
-		if ( 'K' === $x['Rchoice'] ) {
-				return round( ( $n / 1000 ), 2 ) . $x['Field1'];
-		} elseif ( 'M' === $x['Rchoice'] ) {
-			return round( ( $n / 1000000 ), 3 ) . $x['Field2'];
-		} elseif ( 'normal' === $x['Rchoice'] ) {
-				return number_format( $n, 0, '', $x['Symbol'] );
+		$choice = get_option( 'adst_info' );
+		if ( 'K' === $choice['Rchoice'] ) {
+				return round( ( $theme_count / 1000 ), 2 ) . $choice['Field1'];
+		} elseif ( 'M' === $choice['Rchoice'] ) {
+			return round( ( $theme_count / 1000000 ), 3 ) . $choice['Field2'];
+		} elseif ( 'normal' === $choice['Rchoice'] ) {
+				return number_format( $theme_count, 0, '', $choice['Symbol'] );
 		}
-		return $n;
+		return $theme_count;
 	}
 	/**
 	 * Get the theme Details.
@@ -535,15 +535,15 @@ class ADST_Themes_Stats_Api {
 				if ( 'Please verify theme slug.' === $theme ) {
 					return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
 				}
-					$num = $theme->downloaded;
-					$n   = $this->bsf_display_human_readable( $num );
-					return $n;
+					$theme_count = $theme->downloaded;
+					$downloads   = $this->bsf_display_human_readable( $theme_count );
+					return $downloads;
 			} else {
 				$theme = $this->bsf_delete_transient( $wp_theme_slug );
 
-					$num = $theme->downloaded;
-					$n   = $this->bsf_display_human_readable( $num );
-					return $n;
+					$theme_count = $theme->downloaded;
+					$downloads   = $this->bsf_display_human_readable( $theme_count );
+					return $downloads;
 			}
 		}
 	}
@@ -752,9 +752,9 @@ class ADST_Themes_Stats_Api {
 					if ( false === is_numeric( $themes ) ) {
 						return __( 'Please verify author slug.', 'wp-themes-plugins-stats' );
 					} else {
-						$num = $themes;
-						$n   = $this->bsf_display_human_readable( $num );
-						return $n;
+						$theme_count     = $themes;
+						$active_installs = $this->bsf_display_human_readable( $theme_count );
+						return $active_installs;
 					}
 				}
 			} else {
@@ -765,9 +765,9 @@ class ADST_Themes_Stats_Api {
 				if ( false === is_numeric( $themes ) ) {
 					return __( 'Please verify author slug.', 'wp-themes-plugins-stats' );
 				} else {
-					$num = $themes;
-					$n   = $this->bsf_display_human_readable( $num );
-					return $n;
+					$theme_count     = $themes;
+					$active_installs = $this->bsf_display_human_readable( $theme_count );
+					return $active_installs;
 				}
 			}
 		}
@@ -897,9 +897,9 @@ class ADST_Themes_Stats_Api {
 				if ( false === is_numeric( $themes ) ) {
 					return __( 'Please verify author slug.', 'wp-themes-plugins-stats' );
 				} else {
-					$num = $themes;
-					$n   = $this->bsf_display_human_readable( $num );
-					return $n;
+					$theme_count    = $themes;
+					$download_count = $this->bsf_display_human_readable( $theme_count );
+					return $download_count;
 				}
 			} else {
 				if ( false === is_numeric( $themes ) ) {
@@ -909,9 +909,9 @@ class ADST_Themes_Stats_Api {
 					if ( null === $themes ) {
 						return __( 'Please verify author slug.', 'wp-themes-plugins-stats' );
 					}
-					$num = $themes;
-					$n   = $this->bsf_display_human_readable( $num );
-					return $n;
+					$theme_count    = $themes;
+					$download_count = $this->bsf_display_human_readable( $theme_count );
+					return $download_count;
 				}
 			}
 		}
