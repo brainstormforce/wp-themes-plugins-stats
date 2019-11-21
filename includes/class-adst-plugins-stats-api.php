@@ -4,7 +4,7 @@
  *
  * @package WP Themes & Plugins Stats
  * @author Brainstorm Force
-759 */
+ */
 
 /**
  * Exit if accessed directly.
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Helper class for the ActiveCampaign API.
+ * Helper class for the ADST Plugin Stats API.
  *
  * @since 1.0.0
  */
@@ -456,7 +456,7 @@ class ADST_Plugins_Stats_Api {
 	/**
 	 * Shortcode
 	 *
-	 * @param int $atts Get attributes plugin Slug.
+	 * @param array $atts Get attributes plugin Slug.
 	 * @return array $plugin Get plugin Details.
 	 */
 	public function display_plugin_average_ratings_in_star( $atts ) {
@@ -499,47 +499,8 @@ class ADST_Plugins_Stats_Api {
 	 */
 	public function display_star_rating( $plugin ) {
 		$rating = $plugin->rating;
-		switch ( $rating ) {
-			case ( 0 === $rating ):
-				$stars = array( 0, 0, 0, 0, 0 );
-				break;
-			case ( $rating > 0 && $rating < 5 ):
-				$stars = array( 0, 0, 0, 0, 0 );
-				break;
-			case ( $rating >= 5 && $rating < 15 ):
-				$stars = array( 5, 0, 0, 0, 0 );
-				break;
-			case ( $rating >= 15 && $rating < 25 ):
-				$stars = array( 1, 0, 0, 0, 0 );
-				break;
-			case ( $rating >= 25 && $rating < 35 ):
-				$stars = array( 1, 5, 0, 0, 0 );
-				break;
-			case ( $rating >= 35 && $rating < 45 ):
-				$stars = array( 1, 1, 0, 0, 0 );
-				break;
-			case ( $rating >= 45 && $rating < 55 ):
-				$stars = array( 1, 1, 5, 0, 0 );
-				break;
-			case ( $rating >= 55 && $rating < 65 ):
-				$stars = array( 1, 1, 1, 0, 0 );
-				break;
-			case ( $rating >= 65 && $rating < 75 ):
-				$stars = array( 1, 1, 1, 5, 0 );
-				break;
-			case ( $rating >= 75 && $rating < 85 ):
-				$stars = array( 1, 1, 1, 1, 0 );
-				break;
-			case ( $rating >= 85 && $rating < 95 ):
-				$stars = array( 1, 1, 1, 1, 5 );
-				break;
-			case ( $rating >= 95 ):
-				$stars = array( 1, 1, 1, 1, 1 );
-				break;
-			default:
-				break;
-		}
-		$output = '<span class="eps-star-rating-plugins eps-star-rating-' . $plugin->slug . '">';
+		$stars  = ADST_Helper::get_stars( $rating );
+		$output = '<span class="eps-star-rating-plugins eps-star-rating-' . esc_attr( $plugin->slug ) . '">';
 		foreach ( $stars as $star ) {
 			if ( 0 === $star ) {
 				$output .= '<span class="dashicons dashicons-star-empty" style=" color: #ffb900;"></span>';
