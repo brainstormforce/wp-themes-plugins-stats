@@ -627,7 +627,7 @@ class ADST_Plugins_Stats_Api {
 						return __( 'Please verify plugin slug.', 'wp-themes-plugins-stats' );
 					}
 					$dateformat['Choice'] = ( ! empty( $dateformat['Choice'] ) ? $dateformat['Choice'] : 'Y-m-d' );
-					$new_date             = date( $dateformat['Choice'], strtotime( $plugin->last_updated ) );
+					$new_date             = gmdate( $dateformat['Choice'], strtotime( $plugin->last_updated ) );
 					return $new_date;
 				} else {
 					$plugin = $this->bsf_delete_transient( $wp_plugin_slug );
@@ -635,7 +635,7 @@ class ADST_Plugins_Stats_Api {
 						return __( 'Please verify plugin slug.', 'wp-themes-plugins-stats' );
 					}
 					$dateformat['Choice'] = ( ! empty( $dateformat['Choice'] ) ? $dateformat['Choice'] : 'Y-m-d' );
-					$new_date             = date( $dateformat['Choice'], strtotime( $plugin->last_updated ) );
+					$new_date             = gmdate( $dateformat['Choice'], strtotime( $plugin->last_updated ) );
 					return $new_date;
 				}
 			}

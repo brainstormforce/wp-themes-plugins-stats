@@ -614,13 +614,13 @@ class ADST_Themes_Stats_Api {
 					return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
 				}
 					$dateformat['Choice'] = ( ! empty( $dateformat['Choice'] ) ? sanitize_text_field( $dateformat['Choice'] ) : 'Y-m-d' );
-					$new_date             = date( $dateformat['Choice'], strtotime( $theme->last_updated ) );
+					$new_date             = gmdate( $dateformat['Choice'], strtotime( $theme->last_updated ) );
 					return $new_date;
 			} else {
 				$theme = $this->bsf_delete_transient( $wp_theme_slug );
 
 				$dateformat['Choice'] = ( ! empty( $dateformat['Choice'] ) ? sanitize_text_field( $dateformat['Choice'] ) : 'Y-m-d' );
-				$new_date             = date( $dateformat['Choice'], strtotime( $theme->last_updated ) );
+				$new_date             = gmdate( $dateformat['Choice'], strtotime( $theme->last_updated ) );
 				return $new_date;
 			}
 		}
