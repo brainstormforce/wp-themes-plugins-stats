@@ -1,6 +1,5 @@
 {
   "name": "brainstormforce/wp-themes-plugins-stats",
-  "description": "wp-themes-plugins-stats",
   "require-dev": {
     "brainmaestro/composer-git-hooks": "^2.6",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.4.4",
