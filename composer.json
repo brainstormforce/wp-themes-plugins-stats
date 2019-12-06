@@ -1,15 +1,10 @@
 {
+  "name": "brainstormforce/wp-themes-plugins-stats",
   "require-dev": {
+    "brainmaestro/composer-git-hooks": "^2.6",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.4.4",
-    "wp-coding-standards/wpcs": "dev-master",
     "phpcompatibility/phpcompatibility-wp": "*",
-    "brainmaestro/composer-git-hooks": "^2.6"
-  },
-  "scripts": {
-    "format": "phpcbf --standard=phpcs.xml.dist --report-summary --report-source",
-    "lint": "phpcs --standard=phpcs.xml.dist --report-summary --report-source",
-    "post-install-cmd": "vendor/bin/cghooks add --ignore-lock",
-    "post-update-cmd": "vendor/bin/cghooks update"
+    "wp-coding-standards/wpcs": "dev-master"
   },
   "extra": {
     "hooks": {
@@ -18,5 +13,11 @@
         "sh bin/block-commits-with-merge-conflict.sh"
       ]
     }
+  },
+  "scripts": {
+    "post-install-cmd": "vendor/bin/cghooks add --ignore-lock",
+    "post-update-cmd": "vendor/bin/cghooks update",
+    "format": "phpcbf --standard=phpcs.xml.dist --report-summary --report-source",
+    "lint": "phpcs --standard=phpcs.xml.dist --report-summary --report-source"
   }
 }

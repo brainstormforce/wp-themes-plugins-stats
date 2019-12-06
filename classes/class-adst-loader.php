@@ -25,10 +25,6 @@ class ADST_Loader {
 	 * @var Instance variable
 	 */
 	private static $instance;
-
-	/**
-	 * Gets an instance of our plugin.
-	 */
 	/**
 	 * Gets an instance of our plugin.
 	 */
@@ -70,6 +66,7 @@ class ADST_Loader {
 	 * @return void
 	 */
 	private static function load_files() {
+		require_once ADST_STATS_BASE_DIR . 'includes/class-adst-helper.php';
 		require_once ADST_STATS_BASE_DIR . 'includes/class-adst-themes-stats-api.php';
 		require_once ADST_STATS_BASE_DIR . 'includes/class-adst-plugins-stats-api.php';
 	}

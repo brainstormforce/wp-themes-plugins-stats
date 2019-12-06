@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Helper class for the ActiveCampaign API.
+ * Helper class for the ADST Themes Stats API.
  *
  * @since 1.0.0
  */
@@ -32,12 +32,9 @@ class ADST_Themes_Stats_Api {
 	 */
 	private static $per_page = 1;
 
-		/**
-		 * Gets an instance of our plugin.
-		 */
-		/**
-		 * Gets an instance of our plugin.
-		 */
+	/**
+	 * Gets an instance of our plugin.
+	 */
 	public static function get_instance() {
 		if ( null === self::$instance ) {
 			self::$instance = new self();
@@ -45,6 +42,7 @@ class ADST_Themes_Stats_Api {
 
 		return self::$instance;
 	}
+
 	/**
 	 * Constructor calling W.ORG API Response.
 	 */
@@ -55,6 +53,7 @@ class ADST_Themes_Stats_Api {
 		add_shortcode( 'adv_stats_theme_ratings', array( $this, 'display_theme_ratings' ) );
 		add_shortcode( 'adv_stats_theme_ratings_5star', array( $this, 'display_theme_five_star_ratings' ) );
 		add_shortcode( 'adv_stats_theme_ratings_average', array( $this, 'display_theme_average_ratings' ) );
+		add_shortcode( 'adv_stats_theme_ratings_average_in_star', array( $this, 'display_theme_average_ratings_in_star' ) );
 		add_shortcode( 'adv_stats_theme_downloads', array( $this, 'display_theme_totaldownloads' ) );
 		add_shortcode( 'adv_stats_theme_last_updated', array( $this, 'display_theme_lastupdated' ) );
 		add_shortcode( 'adv_stats_theme_download_link', array( $this, 'display_theme_downloadlink' ) );
@@ -98,25 +97,25 @@ class ADST_Themes_Stats_Api {
 	/**
 	 * Convert number into particular format.
 	 *
-	 * @param int $n Get Count of theme.
-	 * @return float $n Get human readable format.
+	 * @param int $theme_count Get Count of theme.
+	 * @return float $theme_count Get human readable format.
 	 */
-	public function bsf_display_human_readable( $n ) {
-		$n = ( 0 + str_replace( ',', '', $n ) );
-		if ( ! is_numeric( $n ) ) {
+	public function bsf_display_human_readable( $theme_count ) {
+		$theme_count = ( 0 + str_replace( ',', '', $theme_count ) );
+		if ( ! is_numeric( $theme_count ) ) {
 			return false;
-		} elseif ( null === $n ) {
+		} elseif ( null === $theme_count ) {
 			return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
 		}
-		$x = get_option( 'adst_info' );
-		if ( 'K' === $x['Rchoice'] ) {
-				return round( ( $n / 1000 ), 2 ) . $x['Field1'];
-		} elseif ( 'M' === $x['Rchoice'] ) {
-			return round( ( $n / 1000000 ), 3 ) . $x['Field2'];
-		} elseif ( 'normal' === $x['Rchoice'] ) {
-				return number_format( $n, 0, '', $x['Symbol'] );
+		$choice = get_option( 'adst_info' );
+		if ( 'K' === $choice['Rchoice'] ) {
+				return round( ( $theme_count / 1000 ), 2 ) . $choice['Field1'];
+		} elseif ( 'M' === $choice['Rchoice'] ) {
+			return round( ( $theme_count / 1000000 ), 3 ) . $choice['Field2'];
+		} elseif ( 'normal' === $choice['Rchoice'] ) {
+				return number_format( $theme_count, 0, '', $choice['Symbol'] );
 		}
-		return $n;
+		return $theme_count;
 	}
 	/**
 	 * Get the theme Details.
@@ -171,6 +170,7 @@ class ADST_Themes_Stats_Api {
 			if ( false === $theme || empty( $theme ) ) {
 				$second = ( ! empty( $second ) ? $second : 86400 );
 				set_site_transient( $slug, $wp_theme, $second );
+				$theme = get_site_transient( $slug );
 			}
 			if ( empty( $theme ) ) {
 				delete_transient( '_site_transient_' . $slug );
@@ -448,6 +448,68 @@ class ADST_Themes_Stats_Api {
 			}
 		}
 	}
+
+	/**
+	 * Shortcode
+	 *
+	 * @param array $atts Get attributes theme Slug.
+	 * @return array $theme Get theme Details.
+	 */
+	public function display_theme_average_ratings_in_star( $atts ) {
+		$wp_theme_slug = $this->get_theme_shortcode_slug( $atts );
+		if ( '' !== $wp_theme_slug ) {
+			$api_params = array(
+				'theme'    => $wp_theme_slug,
+				'per_page' => self::$per_page,
+				'fields'   => array(
+					'homepage'       => false,
+					'description'    => false,
+					'screenshot_url' => false,
+					'rating'         => true,
+				),
+			);
+			$theme      = get_option( '_site_transient_bsf_tr_theme_info_' . $wp_theme_slug );
+			if ( '' === $theme ) {
+				return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
+			} else {
+				if ( empty( $theme ) ) {
+					$theme = $this->bsf_tr_get_text( 'theme_information', $api_params );
+					if ( 'Please verify theme slug.' === $theme ) {
+						return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
+					}
+					return $this->display_star_rating( $theme );
+				} else {
+					$theme = $this->bsf_delete_transient( $wp_theme_slug );
+					if ( null === $theme ) {
+						return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
+					}
+					return $this->display_star_rating( $theme );
+				}
+			}
+		}
+	}
+
+	/**
+	 * Display star rating of theme.
+	 *
+	 * @param array $theme to get the rating of plugin.
+	 */
+	public function display_star_rating( $theme ) {
+		$rating = $theme->rating;
+		$stars  = ADST_Helper::get_stars( $rating );
+		$output = '<span class="eps-star-rating-themes eps-star-rating-' . esc_attr( $theme->slug ) . '">';
+		foreach ( $stars as $star ) {
+			if ( 0 === $star ) {
+				$output .= '<span class="dashicons dashicons-star-empty" style=" color: #ffb900;"></span>';
+			} elseif ( 5 === $star ) {
+				$output .= '<span class="dashicons dashicons-star-half" style=" color: #ffb900;"></span>';
+			} elseif ( 1 === $star ) {
+				$output .= '<span class="dashicons dashicons-star-filled" style=" color: #ffb900;"></span>';
+			}
+		}
+		$output .= '</span>';
+		return $output;
+	}
 	/**
 	 * Display Theme Downloads.
 	 *
@@ -473,15 +535,15 @@ class ADST_Themes_Stats_Api {
 				if ( 'Please verify theme slug.' === $theme ) {
 					return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
 				}
-					$num = $theme->downloaded;
-					$n   = $this->bsf_display_human_readable( $num );
-					return $n;
+					$theme_count = $theme->downloaded;
+					$downloads   = $this->bsf_display_human_readable( $theme_count );
+					return $downloads;
 			} else {
 				$theme = $this->bsf_delete_transient( $wp_theme_slug );
 
-					$num = $theme->downloaded;
-					$n   = $this->bsf_display_human_readable( $num );
-					return $n;
+					$theme_count = $theme->downloaded;
+					$downloads   = $this->bsf_display_human_readable( $theme_count );
+					return $downloads;
 			}
 		}
 	}
@@ -511,13 +573,13 @@ class ADST_Themes_Stats_Api {
 					return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
 				}
 					$dateformat['Choice'] = ( ! empty( $dateformat['Choice'] ) ? sanitize_text_field( $dateformat['Choice'] ) : 'Y-m-d' );
-					$new_date             = date( $dateformat['Choice'], strtotime( $theme->last_updated ) );
+					$new_date             = gmdate( $dateformat['Choice'], strtotime( $theme->last_updated ) );
 					return $new_date;
 			} else {
 				$theme = $this->bsf_delete_transient( $wp_theme_slug );
 
 				$dateformat['Choice'] = ( ! empty( $dateformat['Choice'] ) ? sanitize_text_field( $dateformat['Choice'] ) : 'Y-m-d' );
-				$new_date             = date( $dateformat['Choice'], strtotime( $theme->last_updated ) );
+				$new_date             = gmdate( $dateformat['Choice'], strtotime( $theme->last_updated ) );
 				return $new_date;
 			}
 		}
@@ -635,24 +697,28 @@ class ADST_Themes_Stats_Api {
 					),
 				)
 			);
+
 			if ( ! is_wp_error( $response ) ) {
 				$returned_object = unserialize( wp_remote_retrieve_body( $response ) );//PHPCS:ignore:WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize
 				$themes          = $returned_object->themes;
+				if ( empty( $themes ) ) {
+					return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
+				} else {
+					$temp = 0;
+					foreach ( $themes as $key ) {
+						$temp = $temp + $key->active_installs;
+					}
 
-				$temp = 0;
-				foreach ( $themes as $key ) {
-					$temp = $temp + $key->active_installs;
-				}
-
-				$author = 'bsf_tr_themes_Active_Count_' . $api_params;
-				$themes = get_site_transient( $author );
-
-				if ( false === $themes || empty( $themes ) ) {
-					$second = ( ! empty( $second ) ? $second : 86400 );
-					set_site_transient( $author, $temp, $second );
+					$author = 'bsf_tr_themes_Active_Count_' . $api_params;
 					$themes = get_site_transient( $author );
+
+					if ( false === $themes || empty( $themes ) ) {
+						$second = ( ! empty( $second ) ? $second : 86400 );
+						set_site_transient( $author, $temp, $second );
+						$themes = get_site_transient( $author );
+					}
+					return $themes;
 				}
-				return $themes;
 			}
 		}
 	}
@@ -686,9 +752,9 @@ class ADST_Themes_Stats_Api {
 					if ( false === is_numeric( $themes ) ) {
 						return __( 'Please verify author slug.', 'wp-themes-plugins-stats' );
 					} else {
-						$num = $themes;
-						$n   = $this->bsf_display_human_readable( $num );
-						return $n;
+						$theme_count     = $themes;
+						$active_installs = $this->bsf_display_human_readable( $theme_count );
+						return $active_installs;
 					}
 				}
 			} else {
@@ -699,9 +765,9 @@ class ADST_Themes_Stats_Api {
 				if ( false === is_numeric( $themes ) ) {
 					return __( 'Please verify author slug.', 'wp-themes-plugins-stats' );
 				} else {
-					$num = $themes;
-					$n   = $this->bsf_display_human_readable( $num );
-					return $n;
+					$theme_count     = $themes;
+					$active_installs = $this->bsf_display_human_readable( $theme_count );
+					return $active_installs;
 				}
 			}
 		}
@@ -831,9 +897,9 @@ class ADST_Themes_Stats_Api {
 				if ( false === is_numeric( $themes ) ) {
 					return __( 'Please verify author slug.', 'wp-themes-plugins-stats' );
 				} else {
-					$num = $themes;
-					$n   = $this->bsf_display_human_readable( $num );
-					return $n;
+					$theme_count    = $themes;
+					$download_count = $this->bsf_display_human_readable( $theme_count );
+					return $download_count;
 				}
 			} else {
 				if ( false === is_numeric( $themes ) ) {
@@ -843,9 +909,9 @@ class ADST_Themes_Stats_Api {
 					if ( null === $themes ) {
 						return __( 'Please verify author slug.', 'wp-themes-plugins-stats' );
 					}
-					$num = $themes;
-					$n   = $this->bsf_display_human_readable( $num );
-					return $n;
+					$theme_count    = $themes;
+					$download_count = $this->bsf_display_human_readable( $theme_count );
+					return $download_count;
 				}
 			}
 		}

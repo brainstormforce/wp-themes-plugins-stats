@@ -1,15 +1,15 @@
-﻿=== WP Themes & Plugins Stats ===
-Contributors: brainstormforce 
-Donate link: https://www.paypal.me/BrainstormForce
-Tags: active-install, stats, themes-stats, plugin-stats, total download & active install count of plugin and theme by author.    
-Requires at least: 4.2
-Requires PHP: 5.2
-Tested up to: 5.3
-Stable tag: 1.0.1
-License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html 
+# WP Themes & Plugins Stats #
+**Contributors:** [brainstormforce](https://profiles.wordpress.org/brainstormforce)  
+**Donate link:** https://www.paypal.me/BrainstormForce  
+**Tags:** active-install, stats, themes-stats, plugin-stats, total download & active install count of plugin and theme by author.      
+**Requires at least:** 4.2  
+**Requires PHP:** 5.2  
+**Tested up to:** 5.3  
+**Stable tag:** 1.0.1  
+**License:** GPLv2 or later  
+**License URI:** https://www.gnu.org/licenses/gpl-2.0.html   
 
-== Description ==
+## Description ##
 
 The WP Themes & Plugins Stats plugin automatically fetch theme and plugin stats ( name, active installs, 5-star ratings, etc. ) from the WordPress.org API and store it. These stats can be shown anywhere on the website using shortcodes. 
 
@@ -21,7 +21,7 @@ The WP Themes & Plugins Stats plugin provides an easy and simple way to display 
 
 Display Stats Using Shortcodes
 
-== Different shortcodes are available to display the following counts - for both - Theme and Plugins from WordPress.org repository. ==
+## Different shortcodes are available to display the following counts - for both - Theme and Plugins from WordPress.org repository. ##
 
 + Theme/Plugin Name 
 + Total Active Installs
@@ -36,7 +36,7 @@ Display Stats Using Shortcodes
 + Total Active Installation of All Themes/Plugins [For authors]
 + Total Download Count of All Themes/Plugins [For authors]
 
-== The plugin provides global settings under the “General ” tab. You can format the stat value/ number. ==
+## The plugin provides global settings under the “General ” tab. You can format the stat value/ number. ##
 
 1. Set an interval to check and update stats values 
 As mentioned earlier stats keep changing every day. You can choose a number of days for updations. The plugin will fetch the latest stats after this interval and update values on the website automatically.  
@@ -50,7 +50,7 @@ WordPress default date formats are available for customizations.
 
 Connect to theme/plugins with WordPress.org API
 
-== Choosing a theme/plugin to fetch stats from is very simple. ==
+## Choosing a theme/plugin to fetch stats from is very simple. ##
 
 1. Visit theme/plugin on WordPress.org repository
 2. Copy the slug
@@ -58,7 +58,7 @@ Connect to theme/plugins with WordPress.org API
 
 The plugin will fetch stats via slug. 
 
-== How To Use This Plugin? ==
+## How To Use This Plugin? ##
 
 Once this plugin is installed, you can customize it under Settings > WP Themes & Plugins Stats.
 
@@ -72,19 +72,19 @@ That's it! Visit Post/Page to see results.
 These shortcodes can be added in any page builder including, Elementor, Beaver Builder, etc.
 You can use the shortcode multiple times on a page. 
 
-== Screenshots ==
+## Screenshots ##
 1. Global settings under the 'General' tab
 2. Getting Started help under 'Shortcodes' tab
 3. All available shortcodes are listed under 'Shortcodes' tab
 4. List of shortcodes and their outputs for theme
 5. List of shortcodes and their outputs for plugin
 
-== Changelog ==
+## Changelog ##
 
-== Version 1.0.1 ==
+## Version 1.0.1 ##
 * New : New shortcode for themes/plugins to display ratings in a star.
 * Fix : Transient set for wrong themes/plugins slug.
 
-== Version 1.0.0 ==
+## Version 1.0.0 ##
 * Initial release
 
