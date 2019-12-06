@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WP Themes & Plugins Stats
  * Description:  The plugin automatically fetch information about Themes and Plugins stats with the help of WordPress.org  API. Shortcodes make it easy to display those stats anywhere on the website.
- * Version:     1.0.0
+ * Version:     1.0.1
  * Author:      Brainstorm Force
  * Author URI:  https://brainstormforce.com
  * Text Domain: wp-themes-plugins-stats.

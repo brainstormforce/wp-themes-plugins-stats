@@ -53,7 +53,7 @@ class ADST_Loader {
 	 */
 	private function define_constants() {
 		$file = dirname( dirname( __FILE__ ) );
-		define( 'ADST_STATS_VERSION', '1.0.0' );
+		define( 'ADST_STATS_VERSION', '1.0.1' );
 		define( 'ADST_STATS_BASE_DIR_NAME', plugin_basename( $file ) );
 		define( 'ADST_STATS_BASE_FILE', trailingslashit( $file ) . ADST_STATS_BASE_DIR_NAME . '.php' );
 		define( 'ADST_STATS_BASE_DIR', plugin_dir_path( ADST_STATS_BASE_FILE ) );
