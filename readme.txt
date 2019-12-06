@@ -82,8 +82,8 @@ You can use the shortcode multiple times on a page.
 == Changelog ==
 
 == Version 1.0.1 ==
-* New : New shortcode for themes/plugins to display ratings in a star.
-* Fix : Transient set for wrong themes/plugins slug.
+* New : New shortcode for themes/plugins to display star ratings.
+* Fix : Wrong Transient set for themes/plugins slug.
 
 == Version 1.0.0 ==
 * Initial release
