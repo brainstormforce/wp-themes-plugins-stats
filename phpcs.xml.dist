@@ -11,9 +11,8 @@
 	<arg name="basepath" value="./"/><!-- Strip the file paths down to the relevant bit -->
 	<arg name="colors"/>
 	<arg name="extensions" value="php"/>
-	<arg name="parallel" value="8"/><!-- Enables parallel processing when available for faster results. -->
 
-	<rule ref="PHPCompatibility"/>
+	<rule ref="PHPCompatibility-WP"/>
 	<config name="testVersion" value="5.3-"/>
 	
 	<config name="minimum_supported_wp_version" value="4.6"/>
@@ -37,9 +36,6 @@
 			<property name="blank_line_check" value="true"/>
 		</properties>
 	</rule>
-
-	<!-- Check all PHP files in directory tree by default. -->
-	<arg name="extensions" value="php"/>
 	<file>.</file>
 
 	<!-- Show sniff codes in all reports -->
