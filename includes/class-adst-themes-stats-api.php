@@ -195,31 +195,8 @@ class ADST_Themes_Stats_Api {
 					if ( ! empty ( $rating ) ) {
 						$five_rating = ( $rating / 100 ) * 5;
 				
-						$output = '<span class="eps-star-rating" title="' . $five_rating . " " . __( 'out of 5 stars', 'eps' ) . '">';
-				
-						if ( $rating < 5 ) {
-							$stars = array( 0,0,0,0,0 );
-						} else if ( $rating >= 5 && $rating < 15 ) {
-							$stars = array( 5,0,0,0,0 );
-						} else if ( $rating >= 15 && $rating < 25 ) {
-							$stars = array( 1,0,0,0,0 );
-						} else if ( $rating >= 25 && $rating < 35 ) {
-							$stars = array( 1,5,0,0,0 );
-						} else if ( $rating >= 35 && $rating < 45 ) {
-							$stars = array( 1,1,0,0,0 );
-						} else if ( $rating >= 45 && $rating < 55 ) {
-							$stars = array( 1,1,5,0,0 );
-						} else if ( $rating >= 55 && $rating < 65 ) {
-							$stars = array( 1,1,1,0,0 );
-						} else if ( $rating >= 65 && $rating < 75 ) {
-							$stars = array( 1,1,1,5,0 );
-						} else if ( $rating >= 75 && $rating < 85 ) {
-							$stars = array( 1,1,1,1,0 );
-						} else if ( $rating >= 85 && $rating < 95 ) {
-							$stars = array( 1,1,1,1,5 );
-						} else if ( $rating >= 95 ) {
-							$stars = array( 1,1,1,1,1 );
-						}
+						$output = '<span class="adv-stats-star-rating" title="' . $five_rating . " " . __( 'out of 5 stars', 'wp-themes-plugins-stats' ) . '">';
+						$stars  = ADST_Helper::get_stars( $rating );
 				
 						foreach( $stars as $star ) {
 							if ( $star == 0 ) {
