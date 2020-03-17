@@ -222,11 +222,11 @@ class ADST_Plugins_Stats_Api {
 			
 					foreach( $stars as $star ) {
 						if ( $star == 0 ) {
-							$output .= '<span class="dashicons dashicons-star-empty"></span>';
+							$output .= '<span class="dashicons dashicons-star-empty" style=" color: #ffb900;"></span>';
 						} else if ( $star == 5 ) {
-							$output .= '<span class="dashicons dashicons-star-half"></span>';
+							$output .= '<span class="dashicons dashicons-star-half" style=" color: #ffb900;"></span>';
 						} else if ( $star == 1 ) {
-							$output .= '<span class="dashicons dashicons-star-filled"></span>';
+							$output .= '<span class="dashicons dashicons-star-filled" style=" color: #ffb900;"></span>';
 						}
 					}
 			
