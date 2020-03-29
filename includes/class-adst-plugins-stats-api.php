@@ -56,7 +56,7 @@ class ADST_Plugins_Stats_Api {
 	 * @param array $atts  An array shortcode attributes
 	 */
 	public function shortcode( $atts ) {
-	
+
 		$atts = shortcode_atts( array( 
 			'type'		 => 'single',
 			'slug' 	  	 => '',
@@ -103,9 +103,10 @@ class ADST_Plugins_Stats_Api {
 			)
 		);
 		
+		
 		// Return early is an incorrect field is passed
 		if ( ! in_array( $atts['field'], $allowed_fields[ $atts['type'] ] ) ) {
-			return;
+			return "Plugin Not Found";
 		}
 
 		$second         = 0;
@@ -129,7 +130,7 @@ class ADST_Plugins_Stats_Api {
 			if ( ! $plugin_data ) {
 
 				$response = wp_remote_get( 'http://api.wordpress.org/plugins/info/1.0/' . esc_attr( $atts['slug'] ) . '.json?fields=active_installs' );
-		
+
 				if ( is_wp_error( $response ) ) {
 					return;
 				} else {
@@ -140,13 +141,13 @@ class ADST_Plugins_Stats_Api {
 						$second = ( ! empty( $second ) ? $second : 86400 );
 						set_transient( 'bsf_tr_plugin_info_' . esc_attr( $atts['slug'] ), $plugin_data, $second );
 					} else {
-						return;
+						return "Plugin slug is incorrect!";
 					}
 				}
 			} else{
 					$second = ( ! empty( $second ) ? $second : 86400 );
-					set_transient( 'bsf_tr_theme_info_' . esc_attr( $atts['slug'] ), $plugin_data, $second );
-					$plugin_data = get_transient( 'bsf_tr_theme_info_' . esc_attr( $atts['slug'] ) );
+					set_transient( 'bsf_tr_plugin_info_' . esc_attr( $atts['slug'] ), $plugin_data, $second );
+					$plugin_data = get_transient( 'bsf_tr_plugin_info_' . esc_attr( $atts['slug'] ) );
 			}
 			$output = $this->field_output( $atts, $plugin_data );
 
@@ -162,7 +163,7 @@ class ADST_Plugins_Stats_Api {
 	 * @param array $plugin_data  An array of all retrived plugin data from wp.org
 	 */
 	public function field_output( $atts, $plugin_data ) {
-	
+		
 		// Generate the shortcode output, some fields need special handling
 		switch ( $atts['field'] ) {
 			case 'active_installs':
@@ -236,7 +237,6 @@ class ADST_Plugins_Stats_Api {
 				$output   = $sections['faq'];
 				break;
 			case 'download_link':
-				// var_dump($atts);
 				$label = isset( $atts['label'] ) ? $atts['label'] : '';
 				$link = $plugin_data[ 'download_link' ];
 				$label = ( ! empty( $label ) ? esc_attr( $label ) : esc_url( $link ) );				
@@ -262,7 +262,7 @@ class ADST_Plugins_Stats_Api {
 	/**
 	 * Convert number into particular format.
 	 *
-	 * @param int $plugins_count Get Count of theme.
+	 * @param int $plugins_count Get Count of plugins.
 	 * @return float $plugins_count Get human readable format.
 	 */
 	public function bsf_display_human_readable( $plugins_count ) {
@@ -270,7 +270,7 @@ class ADST_Plugins_Stats_Api {
 			if ( ! is_numeric( $plugins_count ) ) {
 				return false;
 			} elseif ( null === $plugins_count ) {
-				return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
+				return __( 'Please verify plugin slug.', 'wp-themes-plugins-stats' );
 			}
 			$choice = get_option( 'adst_info' );
 			if ( 'K' === $choice['Rchoice'] ) {

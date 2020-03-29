@@ -20,20 +20,20 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class ADST_Themes_Stats_Api {
 	/**
-	 * The unique instance of the plugin.
+	 * The unique instance of the themes.
 	 *
 	 * @var Instance variable
 	 */
 	private static $instance;
 	/**
-	 * The unique per_page of the plugin.
+	 * The unique per_page of the themes.
 	 *
 	 * @var Per_page variable
 	 */
 	private static $per_page = 1;
 
 	/**
-	 * Gets an instance of our plugin.
+	 * Gets an instance of our themes.
 	 */
 	public static function get_instance() {
 		if ( null === self::$instance ) {
@@ -51,14 +51,14 @@ class ADST_Themes_Stats_Api {
 	}
 
 		/**
-		 * Shortcode: Get plugin data from wp.org
+		 * Shortcode: Get themes data from wp.org
 		 *
 		 * @since 1.0.0
 		 *
 		 * @param array $atts  An array shortcode attributes
 		 */
 		public function shortcode( $atts ) {
-		
+			
 			$atts = shortcode_atts( array( 
 				'type'		 => 'single',
 				'slug' 	  	 => '',
@@ -107,7 +107,7 @@ class ADST_Themes_Stats_Api {
 			
 			// Return early is an incorrect field is passed
 			if ( ! in_array( $atts['field'], $allowed_fields[ $atts['type'] ] ) ) {
-				return;
+				return "Theme Not Found";
 			}
 
 			$second         = 0;
@@ -124,10 +124,10 @@ class ADST_Themes_Stats_Api {
 
 			}
 
-	           // Get the plugin data if it has already been stored as a transient
+	           // Get the themes data if it has already been stored as a transient
 				$theme_data = get_transient( 'bsf_tr_theme_info_' . esc_attr( $atts['slug'] ) );
 
-				// If there is no transient, get the plugin data from wp.org
+				// If there is no transient, get the themes data from wp.org
 				if ( ! $theme_data ) {
 					$response = wp_remote_get( 'https://api.wordpress.org/themes/info/1.1/?action=theme_information&request[slug]='. esc_attr( $atts['slug'] ).'&request[fields][ratings]=true&request[fields][versions]=true&request[fields][active_installs]=true');
 			
@@ -136,12 +136,12 @@ class ADST_Themes_Stats_Api {
 					} else {
 						$theme_data = (array) json_decode( wp_remote_retrieve_body( $response ) );
 				
-						// If someone typed in the plugin slug incorrectly, the body will return null
+						// If someone typed in the themes slug incorrectly, the body will return null
 						if ( ! empty( $theme_data ) ) {
 							$second = ( ! empty( $second ) ? $second : 86400 );
 							set_transient( 'bsf_tr_theme_info_' . esc_attr( $atts['slug'] ), $theme_data, $second );
 						} else {
-							return;
+							return "Theme slug is incorrect!";
 						}
 					}
 				} else{
@@ -161,7 +161,7 @@ class ADST_Themes_Stats_Api {
 		 * @since 1.0.0
 		 *
 		 * @param array $atts         An array shortcode attributes
-		 * @param array $theme_data  An array of all retrived plugin data from wp.org
+		 * @param array $theme_data  An array of all retrived theme data from wp.org
 		 */
 		public function field_output( $atts, $theme_data ) {		
 			// Generate the shortcode output, some fields need special handling
@@ -177,7 +177,7 @@ class ADST_Themes_Stats_Api {
 			
 					if ( ! empty ( $contributors ) ) {
 						foreach ( $contributors as $contributor => $link ) {
-							$output[] = '<a href="' . esc_url( $link ) . '" target="_blank">' . esc_attr( $contributor ) . '</a>';
+							$output[] = '<a href="' . esc_url( $link ) . '" target="_blank">' . esc_html( $contributor ) . '</a>';
 						}
 						$output = implode( ', ', $output );
 					}
