@@ -46,8 +46,8 @@ class ADST_Plugins_Stats_Api {
 	 */
 	public function __construct() {
 		add_shortcode( 'adv_stats_plugins', array( $this, 'shortcode' ) );
-		add_shortcode( 'adv_stats_plugin_active_count', array( $this, 'shortcode_for_total_plugins_active_installs' ) );
-		add_shortcode( 'adv_stats_plugin_downloads_count', array( $this, 'shortcode_for_total_plugins_downloads' ) );
+		add_shortcode( 'adv_stats_total_active', array( $this, 'shortcode_for_total_plugins_active_installs' ) );
+		add_shortcode( 'adv_stats_downloads_counts', array( $this, 'shortcode_for_total_plugins_downloads' ) );
 	}
 
 	/**
@@ -60,10 +60,10 @@ class ADST_Plugins_Stats_Api {
 	public function shortcode( $atts ) {
 		$atts = shortcode_atts(
 			array(
-				'type'  => 'single',
-				'slug'  => '',
-				'field' => 'active_installs',
-				'label' => '',
+				'type'   => 'single',
+				'plugin' => '',
+				'field'  => 'active_installs',
+				'label'  => '',
 			),
 			$atts
 		);
@@ -125,11 +125,11 @@ class ADST_Plugins_Stats_Api {
 		}
 
 		// Get the plugin data if it has already been stored as a transient.
-		$plugin_data = get_transient( 'bsf_tr_plugin_info_' . esc_attr( $atts['slug'] ) );
+		$plugin_data = get_transient( 'bsf_tr_plugin_info_' . esc_attr( $atts['plugin'] ) );
 
 		// If there is no transient, get the plugin data from wp.org.
 		if ( ! $plugin_data ) {
-			$response = wp_remote_get( 'http://api.wordpress.org/plugins/info/1.0/' . esc_attr( $atts['slug'] ) . '.json?fields=active_installs' );
+			$response = wp_remote_get( 'http://api.wordpress.org/plugins/info/1.0/' . esc_attr( $atts['plugin'] ) . '.json?fields=active_installs' );
 
 			if ( is_wp_error( $response ) ) {
 				return;
@@ -139,15 +139,15 @@ class ADST_Plugins_Stats_Api {
 				// If someone typed in the plugin slug incorrectly, the body will return null.
 				if ( ! empty( $plugin_data ) ) {
 					$second = ( ! empty( $second ) ? $second : 86400 );
-					set_transient( 'bsf_tr_plugin_info_' . esc_attr( $atts['slug'] ), $plugin_data, $second );
+					set_transient( 'bsf_tr_plugin_info_' . esc_attr( $atts['plugin'] ), $plugin_data, $second );
 				} else {
 					return 'Plugin slug is incorrect!';
 				}
 			}
 		} else {
 				$second = ( ! empty( $second ) ? $second : 86400 );
-				set_transient( 'bsf_tr_plugin_info_' . esc_attr( $atts['slug'] ), $plugin_data, $second );
-				$plugin_data = get_transient( 'bsf_tr_plugin_info_' . esc_attr( $atts['slug'] ) );
+				set_transient( 'bsf_tr_plugin_info_' . esc_attr( $atts['plugin'] ), $plugin_data, $second );
+				$plugin_data = get_transient( 'bsf_tr_plugin_info_' . esc_attr( $atts['plugin'] ) );
 		}
 			$output = $this->field_output( $atts, $plugin_data );
 
@@ -167,10 +167,18 @@ class ADST_Plugins_Stats_Api {
 		// Generate the shortcode output, some fields need special handling.
 		switch ( $atts['field'] ) {
 			case 'active_installs':
-				$output = $this->bsf_display_human_readable( $plugin_data['active_installs'] );
+				if ( ! empty( $plugin_data['active_installs'] ) ) {
+					$output = $this->bsf_display_human_readable( $plugin_data['active_installs'] );
+				} else {
+					$output = 'Please verify plugin slug.';
+				}
 				break;
 			case 'downloaded':
-				$output = $this->bsf_display_human_readable( $plugin_data['downloaded'] );
+				if ( ! empty( $plugin_data['downloaded'] ) ) {
+					$output = $this->bsf_display_human_readable( $plugin_data['downloaded'] );
+				} else {
+					$output = 'Please verify plugin slug.';
+				}
 				break;
 			case 'contributors':
 				$contributors = (array) $plugin_data['contributors'];
@@ -183,14 +191,16 @@ class ADST_Plugins_Stats_Api {
 				}
 				break;
 			case 'five_rating':
-				$rating = $plugin_data['rating'];
+				$rating = isset( $plugin_data['rating'] ) ? $plugin_data['rating'] : '';
 
 				if ( ! empty( $rating ) ) {
 					$output = ( $rating / 100 ) * 5;
+				} else {
+					$output = 'Please verify plugin slug.';
 				}
 				break;
 			case 'star_rating':
-				$rating = $plugin_data['rating'];
+				$rating = isset( $plugin_data['rating'] ) ? $plugin_data['rating'] : '';
 
 				if ( ! empty( $rating ) ) {
 					$five_rating = ( $rating / 100 ) * 5;
@@ -209,12 +219,14 @@ class ADST_Plugins_Stats_Api {
 					}
 
 					$output .= '</span>';
+				} else {
+					$output = 'Please verify plugin slug.';
 				}
 				break;
 			case 'last_updated':
 				$dateformat           = get_option( 'adst_info' );
 				$dateformat['Choice'] = ( ! empty( $dateformat['Choice'] ) ? sanitize_text_field( $dateformat['Choice'] ) : 'Y-m-d' );
-				$output               = gmdate( $dateformat['Choice'], strtotime( $plugin_data['last_updated'] ) );
+				$output               = isset( $plugin_data['last_updated'] ) ? gmdate( $dateformat['Choice'], strtotime( $plugin_data['last_updated'] ) ) : 'Please verify plugin slug.';
 				break;
 			case 'description':
 				$sections = (array) $plugin_data['sections'];
@@ -238,7 +250,7 @@ class ADST_Plugins_Stats_Api {
 				break;
 			case 'download_link':
 				$label  = isset( $atts['label'] ) ? $atts['label'] : '';
-				$link   = $plugin_data['download_link'];
+				$link   = isset( $plugin_data['download_link'] ) ? $plugin_data['download_link'] : '';
 				$label  = ( ! empty( $label ) ? esc_attr( $label ) : esc_url( $link ) );
 				$output = '<a href="' . esc_url( $link ) . '" target="_blank">' . $label . '</a>';
 				break;
@@ -254,7 +266,7 @@ class ADST_Plugins_Stats_Api {
 				}
 				break;
 			default:
-				$output = $plugin_data[ $atts['field'] ];
+				$output = isset( $plugin_data[ $atts['field'] ] ) ? $plugin_data[ $atts['field'] ] : '';
 		}
 
 		return $output;
@@ -266,13 +278,13 @@ class ADST_Plugins_Stats_Api {
 	 * @return float $plugins_count Get human readable format.
 	 */
 	public function bsf_display_human_readable( $plugins_count ) {
-			$plugins_count = ( 0 + str_replace( ',', '', $plugins_count ) );
 		if ( ! is_numeric( $plugins_count ) ) {
 			return false;
 		} elseif ( null === $plugins_count ) {
 			return __( 'Please verify plugin slug.', 'wp-themes-plugins-stats' );
 		}
-			$choice = get_option( 'adst_info' );
+		$plugins_count = ( 0 + str_replace( ',', '', $plugins_count ) );
+		$choice        = get_option( 'adst_info' );
 		if ( 'K' === $choice['Rchoice'] ) {
 				return round( ( $plugins_count / 1000 ), 2 ) . $choice['Field1'];
 		} elseif ( 'M' === $choice['Rchoice'] ) {
@@ -348,7 +360,7 @@ class ADST_Plugins_Stats_Api {
 					$plugin_data = get_transient( 'bsf_tr_plugins_Active_Count_' . esc_attr( $atts['author'] ) );
 			}
 
-			$output = $this->bsf_display_human_readable( $plugin_data );
+			$output = isset( $plugin_data ) ? $this->bsf_display_human_readable( $plugin_data ) : 'Please verify plugin slug.';
 			return $output;
 		}
 	}
@@ -418,7 +430,7 @@ class ADST_Plugins_Stats_Api {
 					$plugin_data = get_transient( 'bsf_tr_plugin_downloaded_Count_' . esc_attr( $atts['author'] ) );
 			}
 
-			$output = $this->bsf_display_human_readable( $plugin_data );
+			$output = isset( $plugin_data ) ? $this->bsf_display_human_readable( $plugin_data ) : 'Please verify plugin slug.';
 			return $output;
 		}
 	}

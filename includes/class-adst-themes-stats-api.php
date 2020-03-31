@@ -63,7 +63,7 @@ class ADST_Themes_Stats_Api {
 		$atts = shortcode_atts(
 			array(
 				'type'  => 'single',
-				'slug'  => '',
+				'theme' => '',
 				'field' => 'active_installs',
 				'label' => '',
 			),
@@ -127,11 +127,11 @@ class ADST_Themes_Stats_Api {
 		}
 
 		// Get the themes data if it has already been stored as a transient.
-		$theme_data = get_transient( 'bsf_tr_theme_info_' . esc_attr( $atts['slug'] ) );
+		$theme_data = get_transient( 'bsf_tr_theme_info_' . esc_attr( $atts['theme'] ) );
 
 			// If there is no transient, get the themes data from wp.org.
 		if ( ! $theme_data ) {
-			$response = wp_remote_get( 'https://api.wordpress.org/themes/info/1.1/?action=theme_information&request[slug]=' . esc_attr( $atts['slug'] ) . '&request[fields][ratings]=true&request[fields][versions]=true&request[fields][active_installs]=true' );
+			$response = wp_remote_get( 'https://api.wordpress.org/themes/info/1.1/?action=theme_information&request[slug]=' . esc_attr( $atts['theme'] ) . '&request[fields][ratings]=true&request[fields][versions]=true&request[fields][active_installs]=true' );
 
 			if ( is_wp_error( $response ) ) {
 				return;
@@ -141,15 +141,15 @@ class ADST_Themes_Stats_Api {
 				// If someone typed in the themes slug incorrectly, the body will return null.
 				if ( ! empty( $theme_data ) ) {
 					$second = ( ! empty( $second ) ? $second : 86400 );
-					set_transient( 'bsf_tr_theme_info_' . esc_attr( $atts['slug'] ), $theme_data, $second );
+					set_transient( 'bsf_tr_theme_info_' . esc_attr( $atts['theme'] ), $theme_data, $second );
 				} else {
 						return 'Theme slug is incorrect!';
 				}
 			}
 		} else {
 			$second = ( ! empty( $second ) ? $second : 86400 );
-			set_transient( 'bsf_tr_theme_info_' . esc_attr( $atts['slug'] ), $theme_data, $second );
-			$theme_data = get_transient( 'bsf_tr_theme_info_' . esc_attr( $atts['slug'] ) );
+			set_transient( 'bsf_tr_theme_info_' . esc_attr( $atts['theme'] ), $theme_data, $second );
+			$theme_data = get_transient( 'bsf_tr_theme_info_' . esc_attr( $atts['theme'] ) );
 		}
 
 			$output = $this->field_output( $atts, $theme_data );
@@ -169,10 +169,18 @@ class ADST_Themes_Stats_Api {
 		// Generate the shortcode output, some fields need special handling.
 		switch ( $atts['field'] ) {
 			case 'active_installs':
-				$output = $this->bsf_display_human_readable( $theme_data['active_installs'] );
+				if ( isset( $theme_data['active_installs'] ) ) {
+					$output = $this->bsf_display_human_readable( $theme_data['active_installs'] );
+				} else {
+					$output = 'Please verify theme slug.';
+				}
 				break;
 			case 'downloaded':
-				$output = $this->bsf_display_human_readable( $theme_data['downloaded'] );
+				if ( isset( $theme_data['downloaded'] ) ) {
+					$output = $this->bsf_display_human_readable( $theme_data['downloaded'] );
+				} else {
+					$output = 'Please verify theme slug.';
+				}
 				break;
 			case 'contributors':
 				$contributors = (array) $theme_data['contributors'];
@@ -185,14 +193,16 @@ class ADST_Themes_Stats_Api {
 				}
 				break;
 			case 'five_rating':
-				$rating = $theme_data['rating'];
+				$rating = isset( $theme_data['rating'] ) ? $theme_data['rating'] : '';
 
 				if ( ! empty( $rating ) ) {
 					$output = ( $rating / 100 ) * 5;
+				} else {
+					$output = 'Please verify theme slug.';
 				}
 				break;
 			case 'star_rating':
-				$rating = $theme_data['rating'];
+				$rating = isset( $theme_data['rating'] ) ? $theme_data['rating'] : '';
 
 				if ( ! empty( $rating ) ) {
 					$five_rating = ( $rating / 100 ) * 5;
@@ -211,12 +221,18 @@ class ADST_Themes_Stats_Api {
 					}
 
 					$output .= '</span>';
+				} else {
+					$output = 'Please verify theme slug.';
 				}
 				break;
 			case 'last_updated':
 				$dateformat           = get_option( 'adst_info' );
 				$dateformat['Choice'] = ( ! empty( $dateformat['Choice'] ) ? sanitize_text_field( $dateformat['Choice'] ) : 'Y-m-d' );
-				$output               = gmdate( $dateformat['Choice'], strtotime( $theme_data['last_updated'] ) );
+				if ( isset( $theme_data['last_updated'] ) ) {
+					$output = gmdate( $dateformat['Choice'], strtotime( $theme_data['last_updated'] ) );
+				} else {
+					$output = 'Please verify theme slug.';
+				}
 				break;
 			case 'description':
 				$sections = (array) $theme_data['sections'];
@@ -240,7 +256,7 @@ class ADST_Themes_Stats_Api {
 				break;
 			case 'download_link':
 				$label  = isset( $atts['label'] ) ? $atts['label'] : '';
-				$link   = $theme_data['download_link'];
+				$link   = isset( $theme_data['download_link'] ) ? $theme_data['download_link'] : '';
 				$label  = ( ! empty( $label ) ? esc_attr( $label ) : esc_url( $link ) );
 				$output = '<a href="' . esc_url( $link ) . '" target="_blank">' . $label . '</a>';
 				break;
@@ -255,7 +271,7 @@ class ADST_Themes_Stats_Api {
 				}
 				break;
 			default:
-				$output = $theme_data[ $atts['field'] ];
+				$output = isset( $theme_data[ $atts['field'] ] ) ? $theme_data[ $atts['field'] ] : '';
 		}
 
 		return $output;
@@ -267,13 +283,13 @@ class ADST_Themes_Stats_Api {
 		 * @return float $theme_count Get human readable format.
 		 */
 	public function bsf_display_human_readable( $theme_count ) {
-			$theme_count = ( 0 + str_replace( ',', '', $theme_count ) );
 		if ( ! is_numeric( $theme_count ) ) {
 			return false;
 		} elseif ( null === $theme_count ) {
 			return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
 		}
-			$choice = get_option( 'adst_info' );
+		$theme_count = ( 0 + str_replace( ',', '', $theme_count ) );
+		$choice      = get_option( 'adst_info' );
 		if ( 'K' === $choice['Rchoice'] ) {
 				return round( ( $theme_count / 1000 ), 2 ) . $choice['Field1'];
 		} elseif ( 'M' === $choice['Rchoice'] ) {
@@ -343,7 +359,7 @@ class ADST_Themes_Stats_Api {
 					$theme_data = get_transient( 'bsf_tr_themes_Active_Count_' . esc_attr( $atts['author'] ) );
 			}
 
-			$output = $this->bsf_display_human_readable( $theme_data['themes'][0]->active_installs );
+			$output = isset( $theme_data['themes'][0]->active_installs ) ? $this->bsf_display_human_readable( $theme_data['themes'][0]->active_installs ) : '';
 			return $output;
 		}
 	}
@@ -407,7 +423,7 @@ class ADST_Themes_Stats_Api {
 					$theme_data = get_transient( 'bsf_tr_themes_downloaded_Count_' . esc_attr( $atts['author'] ) );
 			}
 
-			$output = $this->bsf_display_human_readable( $theme_data['themes'][0]->downloaded );
+			$output = isset( $theme_data['themes'][0]->downloaded ) ? $this->bsf_display_human_readable( $theme_data['themes'][0]->downloaded ) : '';
 			return $output;
 		}
 	}

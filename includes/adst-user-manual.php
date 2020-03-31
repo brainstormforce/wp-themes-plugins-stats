@@ -41,7 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( 'Theme Name', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_themes slug="theme_slug" field="name"]</code>
+		<code>[adv_stats_themes theme="theme_slug" field="name"]</code>
 	</td>
 	</tr>
 	<tr>
@@ -49,7 +49,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( 'Total Active Installs', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_themes slug="theme_slug" field="active_installs"]</code>
+		<code>[adv_stats_themes theme="theme_slug" field="active_installs"]</code>
 	</td>
 	</tr>
 	<tr>
@@ -57,7 +57,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( 'Last Updated', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_themes slug="theme_slug" field="last_updated"]</code>
+		<code>[adv_stats_themes theme="theme_slug" field="last_updated"]</code>
 	</td>
 	</tr>
 	<tr>
@@ -65,7 +65,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( 'Theme Version', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_themes slug="theme_slug" field="version"]</code>
+		<code>[adv_stats_themes theme="theme_slug" field="version"]</code>
 	</td>
 	</tr>
 	<tr>
@@ -73,7 +73,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( 'Theme Ratings Count', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_themes slug="theme_slug" field="rating"]</code>
+		<code>[adv_stats_themes theme="theme_slug" field="rating"]</code>
 	</td>
 	</tr>
 	<tr>
@@ -81,7 +81,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( '5 Star Ratings Count', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_themes slug="theme_slug" field="star_rating"]</code>
+		<code>[adv_stats_themes theme="theme_slug" field="star_rating"]</code>
 	</td>
 	</tr>
 	<tr>
@@ -89,7 +89,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( 'Average Ratings in Number', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_themes slug="theme_slug" field="five_rating"]</code>
+		<code>[adv_stats_themes theme="theme_slug" field="five_rating"]</code>
 	</td>
 	</tr>
 	<tr>
@@ -97,7 +97,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( 'Average Ratings in Star', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_themes slug="theme_slug" field="num_ratings"]</code>
+		<code>[adv_stats_themes theme="theme_slug" field="num_ratings"]</code>
 	</td>
 	</tr>
 	<tr>
@@ -105,7 +105,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( 'Total Downloads', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_themes slug="theme_slug" field="downloaded"]</code>
+		<code>[adv_stats_themes theme="theme_slug" field="downloaded"]</code>
 	</td>
 	</tr>
 	<tr>
@@ -113,7 +113,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( 'Download Link', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_themes slug="theme_slug" field="download_link" label='Download Link']</code>
+		<code>[adv_stats_themes theme="theme_slug" field="download_link" label='Download Link']</code>
 	</td>
 	</tr>
 	<tr>
@@ -145,7 +145,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( 'Plugin Name', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_plugins slug="plugin_slug" field="name"]</code>
+		<code>[adv_stats_plugins plugin="plugin_slug" field="name"]</code>
 	</td>
 	</tr>
 	<tr>
@@ -153,7 +153,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( 'Total Active Installs', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_plugins slug="plugin_slug" field="active_installs"]</code>
+		<code>[adv_stats_plugins plugin="plugin_slug" field="active_installs"]</code>
 	</td>
 	</tr>
 	<tr>
@@ -161,7 +161,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( 'Last Updated', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_plugins slug="plugin_slug" field="last_updated"]</code>
+		<code>[adv_stats_plugins plugin="plugin_slug" field="last_updated"]</code>
 	</td>
 	</tr>
 	<tr>
@@ -169,7 +169,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( 'Plugin Version', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_plugins slug="plugin_slug" field="version"]</code>
+		<code>[adv_stats_plugins plugin="plugin_slug" field="version"]</code>
 	</td>
 	</tr>
 	<tr>
@@ -177,7 +177,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( 'Plugin Ratings Count', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_plugins slug="plugin_slug" field="rating"]</code>
+		<code>[adv_stats_plugins plugin="plugin_slug" field="rating"]</code>
 	</td>
 	</tr>
 	<tr>
@@ -185,7 +185,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( '5 Star Ratings Count', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_plugins slug="plugin_slug" field="star_rating"]</code>
+		<code>[adv_stats_plugins plugin="plugin_slug" field="star_rating"]</code>
 	</td>
 	</tr>
 	<tr>
@@ -193,7 +193,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( 'Average Ratings in Number', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_plugins slug="plugin_slug" field="five_rating"]</code>
+		<code>[adv_stats_plugins plugin="plugin_slug" field="five_rating"]</code>
 	</td>
 	</tr>
 	<tr>
@@ -201,7 +201,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( 'Average Ratings in Star', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_plugins slug="plugin_slug" field="num_ratings"]</code>
+		<code>[adv_stats_plugins plugin="plugin_slug" field="num_ratings"]</code>
 	</td>
 	</tr>
 	<tr>
@@ -209,7 +209,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( 'Total Downloads', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_downloads plugin='plugin_slug']</code>
+		<code>[adv_stats_plugins plugin='plugin_slug' field="downloaded"]</code>
 	</td>
 	</tr>
 	<tr>
@@ -217,7 +217,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( 'Download Link', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_plugins slug="plugin_slug" field="download_link" label='Download Link']</code>
+		<code>[adv_stats_plugins plugin="plugin_slug" field="download_link" label='Download Link']</code>
 	</td>
 	</tr>
 	<tr>
