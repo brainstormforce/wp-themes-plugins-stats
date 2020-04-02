@@ -65,7 +65,8 @@ Once this plugin is installed, you can customize it under Settings > WP Themes &
 Step 1: Under the General tab, manage the global stats number format. Set the required parameters, like update interval, count format, date format. 
 Step 2: From the shortcodes tab, choose and copy the required code.
 Step 3: Paste it on a required page/post.  
-Step 4: Add a slug/author name for theme/plugin. 
+Step 4: Add a slug/author name for theme/plugin.
+Step 5: Add a field name for theme/plugin. 
 
 That's it! Visit Post/Page to see results.
 
@@ -83,7 +84,7 @@ You can use the shortcode multiple times on a page.
 
 = 1.0.2 =
 - New : Optimized the code.
-- New : Change in few shortcodes of themes/plugins.
+- New : Change in shortcodes of themes/plugins.
 - Fix : Transient not Updating for themes/plugins slug.
 
 = 1.0.1 =

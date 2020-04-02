@@ -72,40 +72,22 @@ class ADST_Themes_Stats_Api {
 
 		// The list of currently allowed fields.
 		$allowed_fields = array(
-			'single'    => array(
+			'single' => array(
 				'active_installs',
 				'downloaded',
 				'name',
 				'slug',
 				'version',
 				'author',
-				'author_profile',
-				'contributors',
-				'requires',
-				'tested',
-				// 'compatibility',
 				'rating',
 				'five_rating',
 				'star_rating',
 				'num_ratings',
-				// 'ratings',
 				'last_updated',
-				'added',
 				'homepage',
 				'description',
-				'installation',
-				'screenshots',
-				'changelog',
-				'faq',
-				'short_description',
 				'download_link',
-				'support_link',
 				'tags',
-				'donate_link',
-			),
-			'aggregate' => array(
-				'active_installs',
-				'downloaded',
 			),
 		);
 
@@ -182,16 +164,6 @@ class ADST_Themes_Stats_Api {
 					$output = 'Please verify theme slug.';
 				}
 				break;
-			case 'contributors':
-				$contributors = (array) $theme_data['contributors'];
-
-				if ( ! empty( $contributors ) ) {
-					foreach ( $contributors as $contributor => $link ) {
-						$output[] = '<a href="' . esc_url( $link ) . '" target="_blank">' . esc_html( $contributor ) . '</a>';
-					}
-					$output = implode( ', ', $output );
-				}
-				break;
 			case 'five_rating':
 				$rating = isset( $theme_data['rating'] ) ? $theme_data['rating'] : '';
 
@@ -235,24 +207,12 @@ class ADST_Themes_Stats_Api {
 				}
 				break;
 			case 'description':
-				$sections = (array) $theme_data['sections'];
-				$output   = $sections['description'];
-				break;
-			case 'installation':
-				$sections = (array) $theme_data['sections'];
-				$output   = $sections['installation'];
-				break;
-			case 'screenshots':
-				$sections = (array) $theme_data['sections'];
-				$output   = $sections['screenshots'];
-				break;
-			case 'changelog':
-				$sections = (array) $theme_data['sections'];
-				$output   = $sections['changelog'];
-				break;
-			case 'faq':
-				$sections = (array) $theme_data['sections'];
-				$output   = $sections['faq'];
+				$sections = ( ! empty( $theme_data['sections'] ) ? (array) $theme_data['sections'] : '' );
+				if ( ! empty( $sections['description'] ) ) {
+					$output = $sections['description'];
+				} else {
+					$output = 'Please verify theme slug.';
+				}
 				break;
 			case 'download_link':
 				$label  = isset( $atts['label'] ) ? $atts['label'] : '';
@@ -260,18 +220,16 @@ class ADST_Themes_Stats_Api {
 				$label  = ( ! empty( $label ) ? esc_attr( $label ) : esc_url( $link ) );
 				$output = '<a href="' . esc_url( $link ) . '" target="_blank">' . $label . '</a>';
 				break;
-			case 'support_link':
-				$slug   = $theme_data['slug'];
-				$output = 'https://wordpress.org/support/plugin/' . $slug;
-				break;
 			case 'tags':
-				$tags = (array) $theme_data['tags'];
+				$tags = ( ! empty( $theme_data['tags'] ) ? (array) $theme_data['tags'] : '' );
 				if ( ! empty( $tags ) ) {
 					$output = implode( ', ', $tags );
+				} else {
+					$output = 'Please verify theme slug.';
 				}
 				break;
 			default:
-				$output = isset( $theme_data[ $atts['field'] ] ) ? $theme_data[ $atts['field'] ] : '';
+				$output = isset( $theme_data[ $atts['field'] ] ) ? $theme_data[ $atts['field'] ] : 'Please verify theme slug.';
 		}
 
 		return $output;

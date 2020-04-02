@@ -70,7 +70,7 @@ class ADST_Plugins_Stats_Api {
 
 		// The list of currently allowed fields.
 		$allowed_fields = array(
-			'single'    => array(
+			'single' => array(
 				'active_installs',
 				'downloaded',
 				'name',
@@ -78,15 +78,12 @@ class ADST_Plugins_Stats_Api {
 				'version',
 				'author',
 				'author_profile',
-				'contributors',
 				'requires',
 				'tested',
-				// 'compatibility',
 				'rating',
 				'five_rating',
 				'star_rating',
 				'num_ratings',
-				// 'ratings',
 				'last_updated',
 				'added',
 				'homepage',
@@ -95,15 +92,10 @@ class ADST_Plugins_Stats_Api {
 				'screenshots',
 				'changelog',
 				'faq',
-				'short_description',
 				'download_link',
 				'support_link',
 				'tags',
 				'donate_link',
-			),
-			'aggregate' => array(
-				'active_installs',
-				'downloaded',
 			),
 		);
 
@@ -132,7 +124,7 @@ class ADST_Plugins_Stats_Api {
 			$response = wp_remote_get( 'http://api.wordpress.org/plugins/info/1.0/' . esc_attr( $atts['plugin'] ) . '.json?fields=active_installs' );
 
 			if ( is_wp_error( $response ) ) {
-				return;
+				return 'Plugin slug is incorrect!';
 			} else {
 				$plugin_data = (array) json_decode( wp_remote_retrieve_body( $response ) );
 
@@ -188,11 +180,12 @@ class ADST_Plugins_Stats_Api {
 						$output[] = '<a href="' . esc_url( $link ) . '" target="_blank">' . esc_attr( $contributor ) . '</a>';
 					}
 					$output = implode( ', ', $output );
+				} else {
+					$output = 'Please verify plugin slug.';
 				}
 				break;
 			case 'five_rating':
 				$rating = isset( $plugin_data['rating'] ) ? $plugin_data['rating'] : '';
-
 				if ( ! empty( $rating ) ) {
 					$output = ( $rating / 100 ) * 5;
 				} else {
@@ -259,14 +252,15 @@ class ADST_Plugins_Stats_Api {
 				$output = 'https://wordpress.org/support/plugin/' . $slug;
 				break;
 			case 'tags':
-				$tags = (array) $plugin_data['tags'];
-
+				$tags = ( ! empty( $plugin_data['tags'] ) ? (array) $plugin_data['tags'] : '' );
 				if ( ! empty( $tags ) ) {
 					$output = implode( ', ', $tags );
+				} else {
+					$output = 'Please verify plugin slug.';
 				}
 				break;
 			default:
-				$output = isset( $plugin_data[ $atts['field'] ] ) ? $plugin_data[ $atts['field'] ] : '';
+				$output = isset( $plugin_data[ $atts['field'] ] ) ? $plugin_data[ $atts['field'] ] : 'Please verify plugin slug.';
 		}
 
 		return $output;
@@ -296,7 +290,7 @@ class ADST_Plugins_Stats_Api {
 	}
 
 		/**
-		 * Shortcode: Get plugins total active installs  data from wp.org.
+		 * Shortcode: Get plugins total active installs data from wp.org.
 		 *
 		 * @since 1.0.0
 		 *
@@ -336,7 +330,7 @@ class ADST_Plugins_Stats_Api {
 				$response = wp_remote_get( 'https://api.wordpress.org/plugins/info/1.1/?action=query_plugins&request[author]=' . esc_attr( $atts['author'] ) . '&request[fields][active_installs]=true' );
 
 				if ( is_wp_error( $response ) ) {
-					return;
+					return 'Plugin author is incorrect!';
 				} else {
 						$plugin_data = (array) json_decode( wp_remote_retrieve_body( $response ) );
 
@@ -406,7 +400,7 @@ class ADST_Plugins_Stats_Api {
 				$response = wp_remote_get( 'https://api.wordpress.org/plugins/info/1.1/?action=query_plugins&request[author]=' . esc_attr( $atts['author'] ) . '&request[fields][downloaded]=true' );
 
 				if ( is_wp_error( $response ) ) {
-					return;
+					return 'Plugin author is incorrect!';
 				} else {
 						$plugin_data = (array) json_decode( wp_remote_retrieve_body( $response ) );
 
