@@ -135,8 +135,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</tr>
 </tbody>
 </table>
-<b><?php esc_attr_e( 'For more information about the Themes', 'wp-themes-plugins-stats' ); ?></b><?php esc_attr_e( ': Replace the field in the themes shortcode with below parameter to get the more details.', 'wp-themes-plugins-stats' ); ?><br>
-<?php esc_attr_e( 'slug,author,homepage,description,tags.', 'wp-themes-plugins-stats' ); ?>
+<b><?php esc_attr_e( 'For more information about the Themes', 'wp-themes-plugins-stats' ); ?></b><?php esc_attr_e( ': You can use the following parameters in the field of the themes shortcode to get the more details about theme.', 'wp-themes-plugins-stats' ); ?><br>
+<?php esc_attr_e( '( slug,author,homepage,description,tags )', 'wp-themes-plugins-stats' ); ?>
 <br>
 <br>
 <h2>
@@ -242,9 +242,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</tr>
 </tbody>
 </table>
-<b><?php esc_attr_e( 'For more information about the Plugins', 'wp-themes-plugins-stats' ); ?></b><?php esc_attr_e( ': Replace the field in the plugins shortcode with below parameter to get the details.', 'wp-themes-plugins-stats' ); ?><br>
+<b><?php esc_attr_e( 'For more information about the Plugins', 'wp-themes-plugins-stats' ); ?></b><?php esc_attr_e( ': You can use the following parameters in the field of the plugins shortcode to get the more details about plugin.', 'wp-themes-plugins-stats' ); ?><br>
 <?php esc_attr_e(
-	'slug,author,author_profile,requires,tested,added,homepage,description,
-	installation,screenshots,changelog,faq,support_link,tags,donate_link.',
+	'( slug,author,author_profile,requires,tested,added,homepage,description,
+	installation,screenshots,changelog,faq,support_link,tags,donate_link )',
 	'wp-themes-plugins-stats'
 ); ?>
