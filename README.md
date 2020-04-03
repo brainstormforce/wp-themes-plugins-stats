@@ -82,12 +82,12 @@ You can use the shortcode multiple times on a page.
 
 ## Changelog ##
 
-### 1.2.0
+### 1.2.0 ###
 - New : Optimized the code.
 - New : Change in shortcodes of themes/plugins.
 - New : Added support of different parameter in the shortcodes to get more information of themes/plugins.
 - Fix : Transient not Updating for themes/plugins slug.
-###
+
 ### 1.0.1 ###
 - New : New shortcode for themes/plugins to display star ratings.
 - Fix : Wrong Transient set for themes/plugins slug.
