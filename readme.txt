@@ -5,7 +5,7 @@ Tags: active-install, stats, themes-stats, plugin-stats, total download & active
 Requires at least: 4.2
 Requires PHP: 5.2
 Tested up to: 5.4
-Stable tag: 1.2.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html 
 
@@ -82,7 +82,7 @@ You can use the shortcode multiple times on a page.
 
 == Changelog ==
 
-= 1.2.0 =
+= 1.1.0 =
 - New : Optimized the code.
 - New : Change in shortcodes of themes/plugins.
 - New : Added support of different parameter in the shortcodes to get more information of themes/plugins.
