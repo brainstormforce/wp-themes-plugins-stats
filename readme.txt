@@ -4,8 +4,8 @@ Donate link: https://www.paypal.me/BrainstormForce
 Tags: active-install, stats, themes-stats, plugin-stats, total download & active install count of plugin and theme by author.    
 Requires at least: 4.2
 Requires PHP: 5.2
-Tested up to: 5.3
-Stable tag: 1.0.1
+Tested up to: 5.4
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html 
 
@@ -65,7 +65,8 @@ Once this plugin is installed, you can customize it under Settings > WP Themes &
 Step 1: Under the General tab, manage the global stats number format. Set the required parameters, like update interval, count format, date format. 
 Step 2: From the shortcodes tab, choose and copy the required code.
 Step 3: Paste it on a required page/post.  
-Step 4: Add a slug/author name for theme/plugin. 
+Step 4: Add a slug/author name for theme/plugin.
+Step 5: Add a field name for theme/plugin. 
 
 That's it! Visit Post/Page to see results.
 
@@ -80,6 +81,12 @@ You can use the shortcode multiple times on a page.
 5. List of shortcodes and their outputs for plugin
 
 == Changelog ==
+
+= 1.1.0 =
+- New : Optimized the code.
+- New : Change in shortcodes of themes/plugins.
+- New : Added support of different parameter in the shortcodes to get more information of themes/plugins.
+- Fix : Transient not Updating for themes/plugins slug.
 
 = 1.0.1 =
 - New : New shortcode for themes/plugins to display star ratings.
