@@ -45,12 +45,12 @@ class ADST_Plugins_Stats_Api {
 	 * Constructor calling W.ORG API Response.
 	 */
 	public function __construct() {
-		//new shortcodes
+		// new shortcodes.
 		add_shortcode( 'adv_stats_plugins', array( $this, 'shortcode' ) );
 		add_shortcode( 'adv_stats_total_active', array( $this, 'shortcode_for_total_plugins_active_installs' ) );
 		add_shortcode( 'adv_stats_downloads_counts', array( $this, 'shortcode_for_total_plugins_downloads' ) );
 
-		//old shortcodes
+		// old shortcodes.
 		add_shortcode( 'adv_stats_name', array( $this, 'display_plugin_name' ) );
 		add_shortcode( 'adv_stats_active_install', array( $this, 'display_plugin_active_installs' ) );
 		add_shortcode( 'adv_stats_version', array( $this, 'display_plugin__version' ) );
@@ -639,7 +639,7 @@ class ADST_Plugins_Stats_Api {
 			return $plugin;
 		}
 	}
-	
+
 	/**
 	 * Shortcode
 	 *

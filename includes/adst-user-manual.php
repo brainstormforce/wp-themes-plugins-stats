@@ -256,10 +256,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<pre><code>[adv_stats_plugins plugin="plugin_slug" field="parameter"]</code></pre>
 
 	<p><?php esc_attr_e( 'For more information about the Plugins', 'wp-themes-plugins-stats' ); ?></b><?php esc_attr_e( ': You can use the following parameters in the field of the plugins shortcode to get the more details about plugin.', 'wp-themes-plugins-stats' ); ?><br>
-		<?php esc_attr_e(
+		<?php
+		esc_attr_e(
 			'( name,active_installs,last_updated,version,rating,star_rating,five_rating,num_ratings,downloaded,download_link,slug,author,author_profile,requires,tested,added,homepage,description,
 			installation,screenshots,changelog,faq,support_link,tags,donate_link )',
-			'wp-themes-plugins-stats'); ?>
+			'wp-themes-plugins-stats'
+		);
+		?>
 	</p>
 
 </ul>

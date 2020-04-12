@@ -47,12 +47,12 @@ class ADST_Themes_Stats_Api {
 	 * Constructor calling W.ORG API Response.
 	 */
 	public function __construct() {
-		//new shortcodes
+		// new shortcodes.
 		add_shortcode( 'adv_stats_themes', array( $this, 'shortcode' ) );
 		add_shortcode( 'adv_stats_theme_active_count', array( $this, 'shortcode_for_total_theme_active_installs' ) );
 		add_shortcode( 'adv_stats_theme_downloads_count', array( $this, 'shortcode_for_total_theme_downloads' ) );
 
-		//old shortcodes
+		// old shortcodes.
 		add_shortcode( 'adv_stats_theme_name', array( $this, 'display_theme_name' ) );
 		add_shortcode( 'adv_stats_theme_active_install', array( $this, 'display_theme_active_installs' ) );
 		add_shortcode( 'adv_stats_theme_version', array( $this, 'display_theme_version' ) );
@@ -434,7 +434,7 @@ class ADST_Themes_Stats_Api {
 		}
 		return $theme;
 	}
-	
+
 	/**
 	 * Get the theme Details.
 	 *
