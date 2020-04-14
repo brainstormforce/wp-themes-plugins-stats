@@ -114,7 +114,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( 'Download Link', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_themes theme="theme_slug" field="download_link" label='Download Link']</code>
+		<code>[adv_stats_themes theme="theme_slug" field="download_link" label="Download Link"]</code>
 	</td>
 	</tr>
 	<tr>
@@ -122,7 +122,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( 'Total Active Installation of All Themes', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_theme_active_count author='author_name']</code>
+		<code>[adv_stats_theme_active_count author="author_name"]</code>
 	</td>
 	</tr>
 	<tr>
@@ -130,7 +130,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( 'Total Download Count of All Themes', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_theme_downloads_count author='author_name']</code>
+		<code>[adv_stats_theme_downloads_count author="author_name"]</code>
 	</td>
 	</tr>
 </tbody>
@@ -141,12 +141,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<pre><code>[adv_stats_themes theme="theme_slug" field="parameter"]</code></pre>
 
-	<p><?php esc_attr_e( 'For more information about the Themes', 'wp-themes-plugins-stats' ); ?></b><?php esc_attr_e( ': You can use the following parameters in the field of the themes shortcode to get the more details about theme.', 'wp-themes-plugins-stats' ); ?><br>
+	<p><?php esc_attr_e( 'For more information about the Themes', 'wp-themes-plugins-stats' ); ?></b><?php esc_attr_e( ': You can use the following parameters in the field of the themes shortcode to get the more details about the theme.', 'wp-themes-plugins-stats' ); ?><br>
 		<?php esc_attr_e( '( name,active_installs,last_updated,version,rating,star_rating,five_rating,num_ratings,downloaded,download_link,slug,author,homepage,description,tags )', 'wp-themes-plugins-stats' ); ?>
 	</p>
 
 </ul>
-<br>
 <br>
 <h2>
 	<?php esc_attr_e( 'Shortcodes for Plugin Stats', 'wp-themes-plugins-stats' ); ?>
@@ -230,7 +229,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( 'Download Link', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_plugins plugin="plugin_slug" field="download_link" label='Download Link']</code>
+		<code>[adv_stats_plugins plugin="plugin_slug" field="download_link" label="Download Link"]</code>
 	</td>
 	</tr>
 	<tr>
@@ -238,7 +237,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( 'Total Active Installation of All Plugins', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_total_active author='author_name']</code>
+		<code>[adv_stats_total_active author="author_name"]</code>
 	</td>
 	</tr>
 	<tr>
@@ -246,7 +245,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_attr_e( 'Total Download Count of All Plugins', 'wp-themes-plugins-stats' ); ?>
 	</td>
 	<td class="adst-table-header-cell">
-		<code>[adv_stats_downloads_counts author='author_name']</code>
+		<code>[adv_stats_downloads_counts author="author_name"]</code>
 	</td>
 	</tr>
 </tbody>
@@ -258,10 +257,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<pre><code>[adv_stats_plugins plugin="plugin_slug" field="parameter"]</code></pre>
 
 	<p><?php esc_attr_e( 'For more information about the Plugins', 'wp-themes-plugins-stats' ); ?></b><?php esc_attr_e( ': You can use the following parameters in the field of the plugins shortcode to get the more details about plugin.', 'wp-themes-plugins-stats' ); ?><br>
-		<?php esc_attr_e(
-			'( name,active_installs,last_updated,version,rating,star_rating,five_rating,num_ratings,downloaded,download_link,slug,author,author_profile,requires,tested,added,homepage,description,
+		<?php
+		esc_attr_e(
+			'( author,author_profile,requires,tested,added,homepage,description,
 			installation,screenshots,changelog,faq,support_link,tags,donate_link )',
-			'wp-themes-plugins-stats'); ?>
+			'wp-themes-plugins-stats'
+		);
+		?>
 	</p>
 
 </ul>

@@ -69,6 +69,8 @@ class ADST_Loader {
 		require_once ADST_STATS_BASE_DIR . 'includes/class-adst-helper.php';
 		require_once ADST_STATS_BASE_DIR . 'includes/class-adst-themes-stats-api.php';
 		require_once ADST_STATS_BASE_DIR . 'includes/class-adst-plugins-stats-api.php';
+		require_once ADST_STATS_BASE_DIR . 'backword-compatibility/class-adst-themes-stats-api-bcp.php';
+		require_once ADST_STATS_BASE_DIR . 'backword-compatibility/class-adst-plugins-stats-api-bcp.php';
 	}
 	/**
 	 * Process plugin's Stylesheet to General setting Tab form Data.
