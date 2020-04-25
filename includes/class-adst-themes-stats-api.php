@@ -110,7 +110,7 @@ class ADST_Themes_Stats_Api {
 		}
 
 		// Get the themes data if it has already been stored as a transient.
-		$theme_data = get_transient( 'bsf_tr_theme_info_' . esc_attr( $atts['theme'] ) );
+		$theme_data = get_transient( 'new_bsf_tr_theme_info_' . esc_attr( $atts['theme'] ) );
 
 			// If there is no transient, get the themes data from wp.org.
 		if ( ! $theme_data ) {
@@ -124,15 +124,15 @@ class ADST_Themes_Stats_Api {
 				// If someone typed in the themes slug incorrectly, the body will return null.
 				if ( ! empty( $theme_data ) ) {
 					$second = ( ! empty( $second ) ? $second : 86400 );
-					set_transient( 'bsf_tr_theme_info_' . esc_attr( $atts['theme'] ), $theme_data, $second );
+					set_transient( 'new_bsf_tr_theme_info_' . esc_attr( $atts['theme'] ), $theme_data, $second );
 				} else {
 						return 'Theme slug is incorrect!';
 				}
 			}
 		} else {
 			$second = ( ! empty( $second ) ? $second : 86400 );
-			set_transient( 'bsf_tr_theme_info_' . esc_attr( $atts['theme'] ), $theme_data, $second );
-			$theme_data = get_transient( 'bsf_tr_theme_info_' . esc_attr( $atts['theme'] ) );
+			set_transient( 'new_bsf_tr_theme_info_' . esc_attr( $atts['theme'] ), $theme_data, $second );
+			$theme_data = get_transient( 'new_bsf_tr_theme_info_' . esc_attr( $atts['theme'] ) );
 		}
 
 			$output = $this->field_output( $atts, $theme_data );
@@ -293,7 +293,7 @@ class ADST_Themes_Stats_Api {
 			}
 
 			// Get the themes data if it has already been stored as a transient.
-			$theme_data = get_transient( 'bsf_tr_themes_Active_Count_' . esc_attr( $atts['author'] ) );
+			$theme_data = get_transient( 'new_bsf_tr_themes_Active_Count_' . esc_attr( $atts['author'] ) );
 
 			// If there is no transient, get the themes data from wp.org.
 			if ( ! $theme_data ) {
@@ -307,15 +307,15 @@ class ADST_Themes_Stats_Api {
 						// If someone typed in the themes author incorrectly, the body will return null.
 					if ( ! empty( $theme_data ) ) {
 						$second = ( ! empty( $second ) ? $second : 86400 );
-						set_transient( 'bsf_tr_themes_Active_Count_' . esc_attr( $atts['author'] ), $theme_data, $second );
+						set_transient( 'new_bsf_tr_themes_Active_Count_' . esc_attr( $atts['author'] ), $theme_data, $second );
 					} else {
 						return 'Theme author is incorrect!';
 					}
 				}
 			} else {
 					$second = ( ! empty( $second ) ? $second : 86400 );
-					set_transient( 'bsf_tr_themes_Active_Count_' . esc_attr( $atts['author'] ), $theme_data, $second );
-					$theme_data = get_transient( 'bsf_tr_themes_Active_Count_' . esc_attr( $atts['author'] ) );
+					set_transient( 'new_bsf_tr_themes_Active_Count_' . esc_attr( $atts['author'] ), $theme_data, $second );
+					$theme_data = get_transient( 'new_bsf_tr_themes_Active_Count_' . esc_attr( $atts['author'] ) );
 			}
 
 			$output = isset( $theme_data['themes'][0]->active_installs ) ? $this->bsf_display_human_readable( $theme_data['themes'][0]->active_installs ) : '';
@@ -357,7 +357,7 @@ class ADST_Themes_Stats_Api {
 			}
 
 			// Get the themes data if it has already been stored as a transient.
-			$theme_data = get_transient( 'bsf_tr_themes_downloaded_Count_' . esc_attr( $atts['author'] ) );
+			$theme_data = get_transient( 'new_bsf_tr_themes_downloaded_Count_' . esc_attr( $atts['author'] ) );
 
 			// If there is no transient, get the themes data from wp.org.
 			if ( ! $theme_data ) {
@@ -371,15 +371,15 @@ class ADST_Themes_Stats_Api {
 						// If someone typed in the themes author incorrectly, the body will return null.
 					if ( ! empty( $theme_data ) ) {
 						$second = ( ! empty( $second ) ? $second : 86400 );
-						set_transient( 'bsf_tr_themes_downloaded_Count_' . esc_attr( $atts['author'] ), $theme_data, $second );
+						set_transient( 'new_bsf_tr_themes_downloaded_Count_' . esc_attr( $atts['author'] ), $theme_data, $second );
 					} else {
 						return 'Theme author is incorrect!';
 					}
 				}
 			} else {
 					$second = ( ! empty( $second ) ? $second : 86400 );
-					set_transient( 'bsf_tr_themes_downloaded_Count_' . esc_attr( $atts['author'] ), $theme_data, $second );
-					$theme_data = get_transient( 'bsf_tr_themes_downloaded_Count_' . esc_attr( $atts['author'] ) );
+					set_transient( 'new_bsf_tr_themes_downloaded_Count_' . esc_attr( $atts['author'] ), $theme_data, $second );
+					$theme_data = get_transient( 'new_bsf_tr_themes_downloaded_Count_' . esc_attr( $atts['author'] ) );
 			}
 
 			$output = isset( $theme_data['themes'][0]->downloaded ) ? $this->bsf_display_human_readable( $theme_data['themes'][0]->downloaded ) : '';

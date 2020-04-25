@@ -80,19 +80,15 @@ class ADST_Themes_Stats_Api_Bcp {
 			$day        = ( ( $expiration * 24 ) * 60 ) * 60;
 			$expiration = ( $second + $day );
 		}
-					$theme      = get_site_transient( $slug );
-					$name       = $wp_theme_slug;
-					$theme_slug = $theme->slug;
-		if ( ! empty( $theme ) || $name === $theme_slug ) {
+		$theme = get_site_transient( $slug );
+		if ( false === $theme ) {
+			// this code runs when there is no valid transient set.
 			delete_transient( $slug );
-			set_site_transient( $slug, $theme, $expiration );
-			$theme = get_option( "_site_transient_$slug" );
-			if ( empty( $theme ) ) {
-				return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
-			}
+			$theme = $this->bsf_tr_get_text( 'theme_information', $api_params );
+			return $theme;
+		} else {
 			return $theme;
 		}
-		return $theme;
 	}
 	/**
 	 * Convert number into particular format.
@@ -279,11 +275,11 @@ class ADST_Themes_Stats_Api_Bcp {
 				if ( 'Please verify theme slug.' === $theme ) {
 					return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
 				}
-					$active_install = $this->bsf_display_human_readable( $theme->{'active_installs'} );
+					$active_install = $this->bsf_display_human_readable( $theme->active_installs );
 					return $active_install;
 			} else {
 				$theme              = $this->bsf_delete_transient( $wp_theme_slug );
-					$active_install = $this->bsf_display_human_readable( $theme->{'active_installs'} );
+					$active_install = $this->bsf_display_human_readable( $theme->active_installs );
 				if ( null === $active_install ) {
 					return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
 				}

@@ -118,7 +118,7 @@ class ADST_Plugins_Stats_Api {
 		}
 
 		// Get the plugin data if it has already been stored as a transient.
-		$plugin_data = get_transient( 'bsf_tr_plugin_info_' . esc_attr( $atts['plugin'] ) );
+		$plugin_data = get_transient( 'new_bsf_tr_plugin_info_' . esc_attr( $atts['plugin'] ) );
 
 		// If there is no transient, get the plugin data from wp.org.
 		if ( ! $plugin_data ) {
@@ -132,15 +132,15 @@ class ADST_Plugins_Stats_Api {
 				// If someone typed in the plugin slug incorrectly, the body will return null.
 				if ( ! empty( $plugin_data ) ) {
 					$second = ( ! empty( $second ) ? $second : 86400 );
-					set_transient( 'bsf_tr_plugin_info_' . esc_attr( $atts['plugin'] ), $plugin_data, $second );
+					set_transient( 'new_bsf_tr_plugin_info_' . esc_attr( $atts['plugin'] ), $plugin_data, $second );
 				} else {
 					return 'Plugin slug is incorrect!';
 				}
 			}
 		} else {
 				$second = ( ! empty( $second ) ? $second : 86400 );
-				set_transient( 'bsf_tr_plugin_info_' . esc_attr( $atts['plugin'] ), $plugin_data, $second );
-				$plugin_data = get_transient( 'bsf_tr_plugin_info_' . esc_attr( $atts['plugin'] ) );
+				set_transient( 'new_bsf_tr_plugin_info_' . esc_attr( $atts['plugin'] ), $plugin_data, $second );
+				$plugin_data = get_transient( 'new_bsf_tr_plugin_info_' . esc_attr( $atts['plugin'] ) );
 		}
 			$output = $this->field_output( $atts, $plugin_data );
 
@@ -325,7 +325,7 @@ class ADST_Plugins_Stats_Api {
 			}
 
 			// Get the plugins data if it has already been stored as a transient.
-			$plugin_data = get_transient( 'bsf_tr_plugins_Active_Count_' . esc_attr( $atts['author'] ) );
+			$plugin_data = get_transient( 'new_bsf_tr_plugins_Active_Count_' . esc_attr( $atts['author'] ) );
 
 			// If there is no transient, get the plugins data from wp.org.
 			if ( ! $plugin_data ) {
@@ -345,15 +345,15 @@ class ADST_Plugins_Stats_Api {
 					if ( ! empty( $plugin_data ) ) {
 						$second = ( ! empty( $second ) ? $second : 86400 );
 
-						set_transient( 'bsf_tr_plugins_Active_Count_' . esc_attr( $atts['author'] ), $total_active_installs, $second );
+						set_transient( 'new_bsf_tr_plugins_Active_Count_' . esc_attr( $atts['author'] ), $total_active_installs, $second );
 					} else {
 						return 'Plugin author is incorrect!';
 					}
 				}
 			} else {
 					$second = ( ! empty( $second ) ? $second : 86400 );
-					set_transient( 'bsf_tr_plugins_Active_Count_' . esc_attr( $atts['author'] ), $plugin_data, $second );
-					$plugin_data = get_transient( 'bsf_tr_plugins_Active_Count_' . esc_attr( $atts['author'] ) );
+					set_transient( 'new_bsf_tr_plugins_Active_Count_' . esc_attr( $atts['author'] ), $plugin_data, $second );
+					$plugin_data = get_transient( 'new_bsf_tr_plugins_Active_Count_' . esc_attr( $atts['author'] ) );
 			}
 
 			$output = isset( $plugin_data ) ? $this->bsf_display_human_readable( $plugin_data ) : 'Please verify plugin slug.';
@@ -395,7 +395,7 @@ class ADST_Plugins_Stats_Api {
 			}
 
 			// Get the plugins data if it has already been stored as a transient.
-			$plugin_data = get_transient( 'bsf_tr_plugin_downloaded_Count_' . esc_attr( $atts['author'] ) );
+			$plugin_data = get_transient( 'new_bsf_tr_plugin_downloaded_Count_' . esc_attr( $atts['author'] ) );
 
 			// If there is no transient, get the plugins data from wp.org.
 			if ( ! $plugin_data ) {
@@ -415,15 +415,15 @@ class ADST_Plugins_Stats_Api {
 						// If someone typed in the plugins author incorrectly, the body will return null.
 					if ( ! empty( $plugin_data ) ) {
 						$second = ( ! empty( $second ) ? $second : 86400 );
-						set_transient( 'bsf_tr_plugin_downloaded_Count_' . esc_attr( $atts['author'] ), $total_downloads_count, $second );
+						set_transient( 'new_bsf_tr_plugin_downloaded_Count_' . esc_attr( $atts['author'] ), $total_downloads_count, $second );
 					} else {
 						return 'Plugin author is incorrect!';
 					}
 				}
 			} else {
 					$second = ( ! empty( $second ) ? $second : 86400 );
-					set_transient( 'bsf_tr_plugin_downloaded_Count_' . esc_attr( $atts['author'] ), $plugin_data, $second );
-					$plugin_data = get_transient( 'bsf_tr_plugin_downloaded_Count_' . esc_attr( $atts['author'] ) );
+					set_transient( 'new_bsf_tr_plugin_downloaded_Count_' . esc_attr( $atts['author'] ), $plugin_data, $second );
+					$plugin_data = get_transient( 'new_bsf_tr_plugin_downloaded_Count_' . esc_attr( $atts['author'] ) );
 			}
 
 			$output = isset( $plugin_data ) ? $this->bsf_display_human_readable( $plugin_data ) : 'Please verify plugin slug.';

@@ -243,13 +243,13 @@ class ADST_Plugins_Stats_Api_Bcp {
 			$day        = ( ( $expiration * 24 ) * 60 ) * 60;
 			$expiration = ( $second + $day );
 		}
-		$plugin      = get_site_transient( 'bsf_tr_plugin_info_' . $wp_plugin_slug );
-		$name        = $wp_plugin_slug;
-		$plugin_slug = $plugin->slug;
-		if ( ! empty( $plugin ) && $name === $plugin_slug ) {
+		$plugin = get_site_transient( 'bsf_tr_plugin_info_' . $wp_plugin_slug );
+		if ( false === $plugin ) {
+			// this code runs when there is no valid transient set.
 			delete_transient( $slug );
-			set_site_transient( $slug, $plugin, $expiration );
-			$plugin = get_option( "_site_transient_$slug" );
+			$plugin = $this->bsf_plugin_get_text( 'plugin_information', $api_params );
+			return $plugin;
+		} else {
 			return $plugin;
 		}
 	}
