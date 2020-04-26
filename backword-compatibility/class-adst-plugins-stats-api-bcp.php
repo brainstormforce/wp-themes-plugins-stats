@@ -250,6 +250,7 @@ class ADST_Plugins_Stats_Api_Bcp {
 			$plugin = $this->bsf_plugin_get_text( 'plugin_information', $api_params );
 			return $plugin;
 		} else {
+			$plugin = $this->bsf_plugin_get_text( 'plugin_information', $api_params );
 			return $plugin;
 		}
 	}

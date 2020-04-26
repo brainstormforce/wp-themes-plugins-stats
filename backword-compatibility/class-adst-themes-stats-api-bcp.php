@@ -87,6 +87,7 @@ class ADST_Themes_Stats_Api_Bcp {
 			$theme = $this->bsf_tr_get_text( 'theme_information', $api_params );
 			return $theme;
 		} else {
+			$theme = $this->bsf_tr_get_text( 'theme_information', $api_params );
 			return $theme;
 		}
 	}
