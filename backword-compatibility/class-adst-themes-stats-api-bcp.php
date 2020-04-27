@@ -62,12 +62,13 @@ class ADST_Themes_Stats_Api_Bcp {
 	}
 
 	/**
-	 * Delete Transient
+	 * Delete Transient.
 	 *
 	 * @param int $wp_theme_slug Get slug of theme.
+	 * @param int $api_params Get attributes theme Details.
 	 * @return var $wp_theme_slug to delete transient.
 	 */
-	public function bsf_delete_transient( $wp_theme_slug ) {
+	public function bsf_delete_transient( $wp_theme_slug, $api_params ) {
 					$adst_info         = get_option( 'adst_info' );
 					$expiration        = $adst_info['Frequency'];
 					$update_theme_info = get_option( 'adst_theme_info' );
@@ -87,7 +88,6 @@ class ADST_Themes_Stats_Api_Bcp {
 			$theme = $this->bsf_tr_get_text( 'theme_information', $api_params );
 			return $theme;
 		} else {
-			$theme = $this->bsf_tr_get_text( 'theme_information', $api_params );
 			return $theme;
 		}
 	}
@@ -226,7 +226,7 @@ class ADST_Themes_Stats_Api_Bcp {
 					return $theme->name;
 				}
 			} else {
-				$theme = $this->bsf_delete_transient( $wp_theme_slug );
+				$theme = $this->bsf_delete_transient( $wp_theme_slug, $api_params );
 
 				if ( ! empty( $theme ) ) {
 					return $theme->name;
@@ -279,7 +279,7 @@ class ADST_Themes_Stats_Api_Bcp {
 					$active_install = $this->bsf_display_human_readable( $theme->active_installs );
 					return $active_install;
 			} else {
-				$theme              = $this->bsf_delete_transient( $wp_theme_slug );
+				$theme              = $this->bsf_delete_transient( $wp_theme_slug, $api_params );
 					$active_install = $this->bsf_display_human_readable( $theme->active_installs );
 				if ( null === $active_install ) {
 					return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
@@ -315,7 +315,7 @@ class ADST_Themes_Stats_Api_Bcp {
 				}
 					return $theme->version;
 			} else {
-				$theme = $this->bsf_delete_transient( $wp_theme_slug );
+				$theme = $this->bsf_delete_transient( $wp_theme_slug, $api_params );
 
 				return $theme->version;
 			}
@@ -351,7 +351,7 @@ class ADST_Themes_Stats_Api_Bcp {
 				}
 					return $theme->num_ratings;
 			} else {
-				$theme = $this->bsf_delete_transient( $wp_theme_slug );
+				$theme = $this->bsf_delete_transient( $wp_theme_slug, $api_params );
 				return $theme->num_ratings;
 			}
 		}
@@ -382,7 +382,7 @@ class ADST_Themes_Stats_Api_Bcp {
 				}
 					return $theme->ratings[5];
 			} else {
-				$theme = $this->bsf_delete_transient( $wp_theme_slug );
+				$theme = $this->bsf_delete_transient( $wp_theme_slug, $api_params );
 
 				return $theme->ratings[5];
 			}
@@ -433,7 +433,7 @@ class ADST_Themes_Stats_Api_Bcp {
 					return 'Out Of Value Must Be Nummeric!';
 				}
 			} else {
-				$theme = $this->bsf_delete_transient( $wp_theme_slug );
+				$theme = $this->bsf_delete_transient( $wp_theme_slug, $api_params );
 
 				if ( is_numeric( $outof ) || empty( $outof ) ) {
 					$outof = ( ! empty( $outof ) ? $outof : 100 );
@@ -476,7 +476,7 @@ class ADST_Themes_Stats_Api_Bcp {
 					}
 					return $this->display_star_rating( $theme );
 				} else {
-					$theme = $this->bsf_delete_transient( $wp_theme_slug );
+					$theme = $this->bsf_delete_transient( $wp_theme_slug, $api_params );
 					if ( null === $theme ) {
 						return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
 					}
@@ -536,7 +536,7 @@ class ADST_Themes_Stats_Api_Bcp {
 					$downloads   = $this->bsf_display_human_readable( $theme_count );
 					return $downloads;
 			} else {
-				$theme = $this->bsf_delete_transient( $wp_theme_slug );
+				$theme = $this->bsf_delete_transient( $wp_theme_slug, $api_params );
 
 					$theme_count = $theme->downloaded;
 					$downloads   = $this->bsf_display_human_readable( $theme_count );
@@ -573,7 +573,7 @@ class ADST_Themes_Stats_Api_Bcp {
 					$new_date             = gmdate( $dateformat['Choice'], strtotime( $theme->last_updated ) );
 					return $new_date;
 			} else {
-				$theme = $this->bsf_delete_transient( $wp_theme_slug );
+				$theme = $this->bsf_delete_transient( $wp_theme_slug, $api_params );
 
 				$dateformat['Choice'] = ( ! empty( $dateformat['Choice'] ) ? sanitize_text_field( $dateformat['Choice'] ) : 'Y-m-d' );
 				$new_date             = gmdate( $dateformat['Choice'], strtotime( $theme->last_updated ) );
@@ -624,7 +624,7 @@ class ADST_Themes_Stats_Api_Bcp {
 					$label = ( ! empty( $wp_theme_label ) ? esc_attr( $wp_theme_label ) : esc_url( $theme->download_link ) );
 					return '<a href="' . esc_url( $theme->download_link ) . '" target="_blank">' . $label . '</a>';
 			} else {
-				$theme = $this->bsf_delete_transient( $wp_theme_slug );
+				$theme = $this->bsf_delete_transient( $wp_theme_slug, $api_params );
 
 				$label = ( ! empty( $wp_theme_label ) ? esc_attr( $wp_theme_label ) : esc_url( $theme->download_link ) );
 				return '<a href="' . esc_url( $theme->download_link ) . '" target="_blank">' . $label . '</a>';
