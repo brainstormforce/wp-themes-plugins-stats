@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class ADST_Plugins_Stats_Api {
+class ADST_Plugins_Stats_Api_Bcp {
 	/**
 	 * The unique instance of the plugin.
 	 *
@@ -923,4 +923,4 @@ class ADST_Plugins_Stats_Api {
 	}
 }
 
-$adst_plugins_stats_api = ADST_Plugins_Stats_Api::get_instance();
+$adst_plugins_stats_api_bcp = ADST_Plugins_Stats_Api_Bcp::get_instance();

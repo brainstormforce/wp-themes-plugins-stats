@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class ADST_Themes_Stats_Api {
+class ADST_Themes_Stats_Api_Bcp {
 	/**
 	 * The unique instance of the plugin.
 	 *
@@ -283,7 +283,7 @@ class ADST_Themes_Stats_Api {
 					return $active_install;
 			} else {
 				$theme              = $this->bsf_delete_transient( $wp_theme_slug );
-				$theme = $this->bsf_tr_get_text( 'theme_information', $api_params );
+				$theme              = $this->bsf_tr_get_text( 'theme_information', $api_params );
 					$active_install = $this->bsf_display_human_readable( $theme->{'active_installs'} );
 				if ( null === $active_install ) {
 					return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
@@ -919,4 +919,4 @@ class ADST_Themes_Stats_Api {
 	}
 }
 
-$adst_themes_stats_api = ADST_Themes_Stats_Api::get_instance();
+$adst_themes_stats_api_bcp = ADST_Themes_Stats_Api_Bcp::get_instance();
