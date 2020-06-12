@@ -66,7 +66,6 @@ Step 1: Under the General tab, manage the global stats number format. Set the re
 Step 2: From the shortcodes tab, choose and copy the required code.
 Step 3: Paste it on a required page/post.  
 Step 4: Add a slug/author name for theme/plugin.
-Step 5: Add a field name for theme/plugin. 
 
 That's it! Visit Post/Page to see results.
 
@@ -84,8 +83,6 @@ You can use the shortcode multiple times on a page.
 
 = 1.1.0 =
 - New : Optimized the code.
-- New : Change in shortcodes of themes/plugins.
-- New : Added support of different parameter in the shortcodes to get more information of themes/plugins.
 - Fix : Transient not Updating for themes/plugins slug.
 
 = 1.0.1 =
