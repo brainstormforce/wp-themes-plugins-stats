@@ -110,31 +110,26 @@ class ADST_Themes_Stats_Api_Bcp {
 		$theme_data = get_transient( 'bsf_tr_theme_info_' . esc_attr( $theme_slug ) );
 
 		// If there is no transient, get the theme data from wp.org.
-		if ( ! $theme_data || false === $theme_data ) {
+		if ( false === $theme_data ) {
 			$response = wp_remote_get( 'https://api.wordpress.org/themes/info/1.1/?action=theme_information&request[slug]=' . esc_attr( $theme_slug ) . '&request[fields][ratings]=true&request[fields][versions]=true&request[fields][active_installs]=true' );
 
-			if ( is_wp_error( $response ) ) {
-				return 'Please verify theme slug.';
-			} else {
-				$theme_data = (array) json_decode( wp_remote_retrieve_body( $response ) );
+			$theme_data = (array) json_decode( wp_remote_retrieve_body( $response ) );
 
-				$slug          = 'bsf_tr_theme_info_' . $theme_slug;
-				$update_option = array(
-					'slug'  => ( ! empty( $slug ) ? sanitize_text_field( $slug ) : '' ),
-					'theme' => ( ! empty( $theme_data ) ? $theme_data : '' ),
-				);
-				update_option( 'adst_theme_info', $update_option );
-
-				$theme_db_data = get_option( 'adst_theme_info' );// DB value.
-
-				// If someone typed in the theme slug incorrectly, the body will return null.
-				if ( ! empty( $theme_data ) ) {
-					$second = ( ! empty( $second ) ? $second : 86400 );
-					set_transient( 'bsf_tr_theme_info_' . esc_attr( $theme_slug ), $theme_data, $second );
-				} else {
-					return 'Please verify theme slug.';
-				}
+			if ( is_wp_error( $response ) || empty( $theme_data ) ) {
+				return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
 			}
+
+			$slug          = 'bsf_tr_theme_info_' . $theme_slug;
+			$update_option = array(
+				'slug'  => ( ! empty( $slug ) ? sanitize_text_field( $slug ) : '' ),
+				'theme' => ( ! empty( $theme_data ) ? $theme_data : '' ),
+			);
+			update_option( 'adst_theme_info', $update_option );
+
+			$theme_db_data = get_option( 'adst_theme_info' );// DB value.
+
+			$second = ( ! empty( $second ) ? $second : 86400 );
+			set_transient( 'bsf_tr_theme_info_' . esc_attr( $theme_slug ), $theme_data, $second );
 		} else {
 			$second = ( ! empty( $second ) ? $second : 86400 );
 			set_transient( 'bsf_tr_theme_info_' . esc_attr( $theme_slug ), $theme_data, $second );
@@ -189,7 +184,7 @@ class ADST_Themes_Stats_Api_Bcp {
 			if ( ! empty( $theme ) ) {
 					return $theme['name'];
 			} else {
-				return 'Themes data is empty!';
+				return __( 'Themes data is empty!', 'wp-themes-plugins-stats' );
 			}
 		}
 	}
@@ -230,7 +225,7 @@ class ADST_Themes_Stats_Api_Bcp {
 			if ( ! empty( $theme ) ) {
 					return $this->bsf_display_human_readable( $theme['active_installs'] );
 			} else {
-				return 'Themes data is empty!';
+				return __( 'Themes data is empty!', 'wp-themes-plugins-stats' );
 			}
 		}
 	}
@@ -258,7 +253,7 @@ class ADST_Themes_Stats_Api_Bcp {
 			if ( ! empty( $theme ) ) {
 					return $theme['version'];
 			} else {
-				return 'Themes data is empty!';
+				return __( 'Themes data is empty!', 'wp-themes-plugins-stats' );
 			}
 		}
 	}
@@ -286,7 +281,7 @@ class ADST_Themes_Stats_Api_Bcp {
 			if ( ! empty( $theme ) ) {
 					return $theme['num_ratings'];
 			} else {
-				return 'Themes data is empty!';
+				return __( 'Themes data is empty!', 'wp-themes-plugins-stats' );
 			}
 		}
 	}
@@ -314,7 +309,7 @@ class ADST_Themes_Stats_Api_Bcp {
 			if ( ! empty( $theme ) ) {
 					return $theme['ratings']->{5};
 			} else {
-				return 'Themes data is empty!';
+				return __( 'Themes data is empty!', 'wp-themes-plugins-stats' );
 			}
 		}
 	}
@@ -355,10 +350,10 @@ class ADST_Themes_Stats_Api_Bcp {
 					$outof = ( ( $theme['rating'] ) / 100 ) * $outof;
 					return $outof;
 				} else {
-					return 'Out Of Value Must Be Nummeric!';
+					return __( 'Out Of Value Must Be Nummeric!', 'wp-themes-plugins-stats' );
 				}
 			} else {
-				return 'Themes data is empty!';
+				return __( 'Themes data is empty!', 'wp-themes-plugins-stats' );
 			}
 		}
 	}
@@ -405,7 +400,7 @@ class ADST_Themes_Stats_Api_Bcp {
 
 					return $output;
 			} else {
-				return 'Themes data is empty!';
+				return __( 'Themes data is empty!', 'wp-themes-plugins-stats' );
 			}
 		}
 	}
@@ -434,7 +429,7 @@ class ADST_Themes_Stats_Api_Bcp {
 			if ( ! empty( $theme ) ) {
 					return $this->bsf_display_human_readable( $theme['downloaded'] );
 			} else {
-				return 'Themes data is empty!';
+				return __( 'Themes data is empty!', 'wp-themes-plugins-stats' );
 			}
 		}
 	}
@@ -465,7 +460,7 @@ class ADST_Themes_Stats_Api_Bcp {
 					$new_date             = gmdate( $dateformat['Choice'], strtotime( $theme['last_updated'] ) );
 					return $new_date;
 			} else {
-				return 'Themes data is empty!';
+				return __( 'Themes data is empty!', 'wp-themes-plugins-stats' );
 			}
 		}
 	}
@@ -506,7 +501,7 @@ class ADST_Themes_Stats_Api_Bcp {
 					$label = ( ! empty( $wp_theme_label ) ? esc_attr( $wp_theme_label ) : esc_url( $theme['download_link'] ) );
 					return '<a href="' . esc_url( $theme['download_link'] ) . '" target="_blank">' . $label . '</a>';
 			} else {
-				return 'Themes data is empty!';
+				return __( 'Themes data is empty!', 'wp-themes-plugins-stats' );
 			}
 		}
 	}
@@ -539,10 +534,11 @@ class ADST_Themes_Stats_Api_Bcp {
 		if ( ! $themes_data || false === $themes_data ) {
 			$response = wp_remote_get( 'https://api.wordpress.org/themes/info/1.1/?action=query_themes&request[author]=' . $author_slug . '&request[fields][active_installs]=true&request[fields][downloaded]=true' );
 
-			if ( is_wp_error( $response ) ) {
-				return 'Author slug is incorrect!';
-			} else {
-				$themes_data = (array) json_decode( wp_remote_retrieve_body( $response ) );
+			$themes_data = (array) json_decode( wp_remote_retrieve_body( $response ) );
+
+			if ( is_wp_error( $response ) || empty( $themes_data ) ) {
+				return __( 'Author slug is incorrect!', 'wp-themes-plugins-stats' );
+			}
 
 				$slug          = 'bsf_tr_themes_Active_Count_' . $author_slug;
 				$update_option = array(
@@ -553,14 +549,8 @@ class ADST_Themes_Stats_Api_Bcp {
 
 				$theme_db_data = get_option( 'adst_theme_info' );// DB value.
 
-				// If someone typed in the plugin slug incorrectly, the body will return null.
-				if ( ! empty( $themes_data ) ) {
-					$second = ( ! empty( $second ) ? $second : 86400 );
-					set_transient( 'bsf_tr_themes_Active_Count_' . esc_attr( $author_slug ), $themes_data, $second );
-				} else {
-					return 'Author slug is incorrect!';
-				}
-			}
+				$second = ( ! empty( $second ) ? $second : 86400 );
+				set_transient( 'bsf_tr_themes_Active_Count_' . esc_attr( $author_slug ), $themes_data, $second );
 		} else {
 			$second = ( ! empty( $second ) ? $second : 86400 );
 			set_transient( 'bsf_tr_themes_Active_Count_' . esc_attr( $author_slug ), $themes_data, $second );
@@ -602,7 +592,7 @@ class ADST_Themes_Stats_Api_Bcp {
 
 				return $this->bsf_display_human_readable( $total_active_count );
 		} else {
-			return 'Themes data is empty!';
+			return __( 'Themes data is empty!', 'wp-themes-plugins-stats' );
 		}
 	}
 	/**
@@ -638,7 +628,7 @@ class ADST_Themes_Stats_Api_Bcp {
 
 				return $this->bsf_display_human_readable( $total_downloaded_count );
 		} else {
-			return 'Themes data is empty!';
+			return __( 'Themes data is empty!', 'wp-themes-plugins-stats' );
 		}
 	}
 }
