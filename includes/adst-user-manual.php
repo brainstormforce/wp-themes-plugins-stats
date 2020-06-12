@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 	<div class="adst-global-settings">
 	<h2> <?php esc_html_e( 'Getting Started!', 'wp-themes-plugins-stats' ); ?></h2>
-	<?php esc_html_e( 'This plugin automatically tracks theme and plugin information from the WordPress repository, store it  and display it on your website.', 'wp-themes-plugins-stats' ); ?><br></br><?php esc_html_e( 'The plugin uses shortcodes to display stats. You would just need to add theme/plugin slug/author name with respective field and paste the shortcode in the required location.', 'wp-themes-plugins-stats' ); ?>
+	<?php esc_html_e( 'This plugin automatically tracks theme and plugin information from the WordPress repository, store it  and display it on your website.', 'wp-themes-plugins-stats' ); ?><br></br><?php esc_html_e( 'The plugin uses shortcodes to display stats. You would just need to add theme/plugin slug/author name and paste the shortcode in the required location.', 'wp-themes-plugins-stats' ); ?>
 	<label class="adst-page-title" for="howtouse"></label>
 		<h2>
 		<?php
@@ -30,7 +30,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<b><?php esc_attr_e( 'Step 2', 'wp-themes-plugins-stats' ); ?></b><?php esc_attr_e( ': Choose and copy the shortcode from the following table.', 'wp-themes-plugins-stats' ); ?><br><br>
 	<b><?php esc_attr_e( 'Step 3', 'wp-themes-plugins-stats' ); ?></b><?php esc_attr_e( ': Paste it on a required page/post.', 'wp-themes-plugins-stats' ); ?><br><br>
 	<b><?php esc_attr_e( 'Step 4', 'wp-themes-plugins-stats' ); ?></b><?php esc_attr_e( ': Add a slug/author name for theme/plugin.', 'wp-themes-plugins-stats' ); ?><br><br>
-	<b><?php esc_attr_e( 'Step 5', 'wp-themes-plugins-stats' ); ?></b><?php esc_attr_e( ': Add a field name for theme/plugin.', 'wp-themes-plugins-stats' ); ?><br><br>
 	<b></b><?php esc_attr_e( ' That' . "'" . 's it! Visit Post/Page to see results.', 'wp-themes-plugins-stats' ); //PHPCS:ignore:WordPress.WP.I18n.NonSingularStringLiteralText ?><br><br><br>
 <h2>
 	<?php esc_attr_e( 'Shortcodes for Theme Stats', 'wp-themes-plugins-stats' ); ?>
@@ -135,17 +134,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</tr>
 </tbody>
 </table>
-<ul>
-
-	<li> <h4><?php esc_html_e( 'New Shortcode for Themes', 'wp-themes-plugins-stats' ); ?></h4> </li>
-
-	<pre><code>[adv_stats_themes theme="theme_slug" field="parameter"]</code></pre>
-
-	<p><?php esc_attr_e( 'For more information about the Themes', 'wp-themes-plugins-stats' ); ?></b><?php esc_attr_e( ': You can use the following parameters in the field of the themes shortcode to get the more details about the theme.', 'wp-themes-plugins-stats' ); ?><br>
-		<?php esc_attr_e( '( name,active_installs,last_updated,version,rating,star_rating,five_rating,num_ratings,downloaded,download_link,slug,author,homepage,description,tags )', 'wp-themes-plugins-stats' ); ?>
-	</p>
-
-</ul>
 <br>
 <h2>
 	<?php esc_attr_e( 'Shortcodes for Plugin Stats', 'wp-themes-plugins-stats' ); ?>
@@ -250,21 +238,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</tr>
 </tbody>
 </table>
-<ul>
 
-	<li> <h4><?php esc_html_e( 'New Shortcode for Plugins', 'wp-themes-plugins-stats' ); ?></h4> </li>
-
-	<pre><code>[adv_stats_plugins plugin="plugin_slug" field="parameter"]</code></pre>
-
-	<p><?php esc_attr_e( 'For more information about the Plugins', 'wp-themes-plugins-stats' ); ?></b><?php esc_attr_e( ': You can use the following parameters in the field of the plugins shortcode to get the more details about plugin.', 'wp-themes-plugins-stats' ); ?><br>
-		<?php
-		esc_attr_e(
-			'( author,author_profile,requires,tested,added,homepage,description,
-			installation,screenshots,changelog,faq,support_link,tags,donate_link )',
-			'wp-themes-plugins-stats'
-		);
-		?>
-	</p>
-
-</ul>
 
