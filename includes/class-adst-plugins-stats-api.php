@@ -123,9 +123,9 @@ class ADST_Plugins_Stats_Api {
 	}
 
 	/**
-	 * Get slug of Plugins.
+	 * Sanitize the plugins ratings.
 	 *
-	 * @param array $data Get attributes of plugin ratings.
+	 * @param array $data Get ratings attributes of plugin.
 	 * @return string.
 	 */
 	public function sanitize_text_field( $data ) {
@@ -133,7 +133,7 @@ class ADST_Plugins_Stats_Api {
 	}
 
 	/**
-	 * Get slug of Plugins.
+	 * Sanitize attributes of plugins api data.
 	 *
 	 * @param array $plugin_data Get attributes of plugin data.
 	 * @return string.

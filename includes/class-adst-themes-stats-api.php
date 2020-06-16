@@ -143,7 +143,7 @@ class ADST_Themes_Stats_Api {
 	}
 
 	/**
-	 * Get slug of Themes.
+	 * Sanitize Themes ratings.
 	 *
 	 * @param array $data Get attributes of theme ratings.
 	 * @return string.
@@ -153,7 +153,7 @@ class ADST_Themes_Stats_Api {
 	}
 
 	/**
-	 * Get slug of Themes.
+	 * Sanitize attributes of theme api data.
 	 *
 	 * @param array $theme_data Get attributes of theme data.
 	 * @return string.
