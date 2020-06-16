@@ -96,6 +96,8 @@ class ADST_Plugins_Stats_Api {
 				return __( 'Plugin slug is incorrect!', 'wp-themes-plugins-stats' );
 			}
 
+			$plugin_data = $this->sanitize_plugin_data( $plugin_data );
+
 			$slug          = 'bsf_tr_plugin_info_' . $plugin_slug;
 			$update_option = array(
 				'slug'   => ( ! empty( $slug ) ? sanitize_text_field( $slug ) : '' ),
@@ -109,13 +111,60 @@ class ADST_Plugins_Stats_Api {
 			set_transient( 'bsf_tr_plugin_info_' . esc_attr( $plugin_slug ), $plugin_data, $second );
 		} else {
 			$second = ( ! empty( $second ) ? $second : 86400 );
+
+			$plugin_data = $this->sanitize_plugin_data( $plugin_data );
+
 			set_transient( 'bsf_tr_plugin_info_' . esc_attr( $plugin_slug ), $plugin_data, $second );
+
 			$plugin_data = get_transient( 'bsf_tr_plugin_info_' . esc_attr( $plugin_slug ) );
 		}
 
 			return $plugin_data;
 	}
 
+	/**
+	 * Get slug of Plugins.
+	 *
+	 * @param array $data Get attributes of plugin ratings.
+	 * @return string.
+	 */
+	public function sanitize_text_field( $data ) {
+		return sanitize_text_field( $data );
+	}
+
+	/**
+	 * Get slug of Plugins.
+	 *
+	 * @param array $plugin_data Get attributes of plugin data.
+	 * @return string.
+	 */
+	public function sanitize_plugin_data( $plugin_data ) {
+		$data = array();
+
+		$data['name'] = sanitize_text_field( $plugin_data['name'] );
+
+		$data['slug'] = sanitize_text_field( $plugin_data['slug'] );
+
+		$data['version'] = sanitize_text_field( $plugin_data['version'] );
+
+		$plugin_data['ratings'] = json_decode( wp_json_encode( $plugin_data['ratings'] ), true );
+
+		$data['ratings'] = array_map( array( $this, 'sanitize_text_field' ), $plugin_data['ratings'] );
+
+		$data['rating'] = sanitize_text_field( $plugin_data['rating'] );
+
+		$data['active_installs'] = sanitize_text_field( $plugin_data['active_installs'] );
+
+		$data['num_ratings'] = sanitize_text_field( $plugin_data['num_ratings'] );
+
+		$data['downloaded'] = sanitize_text_field( $plugin_data['downloaded'] );
+
+		$data['last_updated'] = sanitize_text_field( $plugin_data['last_updated'] );
+
+		$data['download_link'] = sanitize_text_field( $plugin_data['download_link'] );
+
+		return $data;
+	}
 
 	/**
 	 * Get slug of Plugins.
@@ -308,7 +357,7 @@ class ADST_Plugins_Stats_Api {
 			$plugin = $this->get_api_data( 'plugin_information', $api_params );
 
 			if ( ! empty( $plugin ) ) {
-					return ( $plugin['ratings']->{5} );
+					return ( $plugin['ratings']['5'] );
 			} else {
 				return __( 'Plugin data is empty!', 'wp-themes-plugins-stats' );
 			}

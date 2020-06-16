@@ -119,6 +119,8 @@ class ADST_Themes_Stats_Api {
 				return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
 			}
 
+			$theme_data = $this->sanitize_theme_data( $theme_data );
+
 			$slug          = 'bsf_tr_theme_info_' . $theme_slug;
 			$update_option = array(
 				'slug'  => ( ! empty( $slug ) ? sanitize_text_field( $slug ) : '' ),
@@ -131,13 +133,59 @@ class ADST_Themes_Stats_Api {
 			$second = ( ! empty( $second ) ? $second : 86400 );
 			set_transient( 'bsf_tr_theme_info_' . esc_attr( $theme_slug ), $theme_data, $second );
 		} else {
-			$second = ( ! empty( $second ) ? $second : 86400 );
+			$second     = ( ! empty( $second ) ? $second : 86400 );
+			$theme_data = $this->sanitize_theme_data( $theme_data );
 			set_transient( 'bsf_tr_theme_info_' . esc_attr( $theme_slug ), $theme_data, $second );
 			$theme_data = get_transient( 'bsf_tr_theme_info_' . esc_attr( $theme_slug ) );
 		}
 
 			return $theme_data;
 	}
+
+	/**
+	 * Get slug of Themes.
+	 *
+	 * @param array $data Get attributes of theme ratings.
+	 * @return string.
+	 */
+	public function sanitize_text_field( $data ) {
+		return sanitize_text_field( $data );
+	}
+
+	/**
+	 * Get slug of Themes.
+	 *
+	 * @param array $theme_data Get attributes of theme data.
+	 * @return string.
+	 */
+	public function sanitize_theme_data( $theme_data ) {
+		$data = array();
+
+		$data['name'] = sanitize_text_field( $theme_data['name'] );
+
+		$data['slug'] = sanitize_text_field( $theme_data['slug'] );
+
+		$data['version'] = sanitize_text_field( $theme_data['version'] );
+
+		$theme_data['ratings'] = json_decode( wp_json_encode( $theme_data['ratings'] ), true );
+
+		$data['ratings'] = array_map( array( $this, 'sanitize_text_field' ), $theme_data['ratings'] );
+
+		$data['rating'] = sanitize_text_field( $theme_data['rating'] );
+
+		$data['active_installs'] = sanitize_text_field( $theme_data['active_installs'] );
+
+		$data['num_ratings'] = sanitize_text_field( $theme_data['num_ratings'] );
+
+		$data['downloaded'] = sanitize_text_field( $theme_data['downloaded'] );
+
+		$data['last_updated'] = sanitize_text_field( $theme_data['last_updated'] );
+
+		$data['download_link'] = sanitize_text_field( $theme_data['download_link'] );
+
+		return $data;
+	}
+
 	/**
 	 * Get slug of Themes.
 	 *
@@ -318,7 +366,7 @@ class ADST_Themes_Stats_Api {
 			$theme = $this->get_api_data( 'theme_information', $api_params );
 
 			if ( ! empty( $theme ) ) {
-					return $theme['ratings']->{5};
+					return $theme['ratings']['5'];
 			} else {
 				return __( 'Themes data is empty!', 'wp-themes-plugins-stats' );
 			}
