@@ -187,7 +187,7 @@ class ADST_Plugins_Stats_Api {
 		}
 	}
 	/**
-	 * Shortcode
+	 * Display Name of Plugin.
 	 *
 	 * @param int $atts Get attributes plugin Slug.
 	 * @return array $plugin Get plugin Details.
@@ -216,7 +216,7 @@ class ADST_Plugins_Stats_Api {
 		}
 	}
 	/**
-	 * Shortcode
+	 * Display Active Install Count.
 	 *
 	 * @param int $atts Get attributes plugin Slug.
 	 * @return array $plugin Get plugin Details.
@@ -266,7 +266,7 @@ class ADST_Plugins_Stats_Api {
 		return $plugin_count;
 	}
 	/**
-	 * Shortcode
+	 * Display Theme Version.
 	 *
 	 * @param int $atts Get attributes plugin Slug.
 	 * @return array $plugin Get plugin Details.
@@ -295,7 +295,7 @@ class ADST_Plugins_Stats_Api {
 		}
 	}
 	/**
-	 * Shortcode
+	 * Display Theme Ratings.
 	 *
 	 * @param int $atts Get attributes plugin Slug.
 	 * @return array $plugin Get plugin Details.
@@ -324,7 +324,7 @@ class ADST_Plugins_Stats_Api {
 		}
 	}
 	/**
-	 * Shortcode
+	 * Function for plugins api parameter.
 	 *
 	 * @param int $wp_plugin_slug Get attributes plugin Slug.
 	 * @return array $plugin Get plugin Details.
@@ -344,7 +344,7 @@ class ADST_Plugins_Stats_Api {
 		return $api_params;
 	}
 	/**
-	 * Shortcode
+	 * Display Five Star Ratings.
 	 *
 	 * @param int $atts Get attributes plugin Slug.
 	 * @return array $plugin Get plugin Details.
@@ -364,7 +364,7 @@ class ADST_Plugins_Stats_Api {
 		}
 	}
 	/**
-	 * Shortcode
+	 * Display Average Ratings.
 	 *
 	 * @param int $atts Get attributes plugin Slug.
 	 * @return array $plugin Get plugin Details.
@@ -401,7 +401,7 @@ class ADST_Plugins_Stats_Api {
 		}
 	}
 	/**
-	 * Shortcode
+	 * Shortcode for ratings in star.
 	 *
 	 * @param array $atts Get attributes plugin Slug.
 	 * @return array $plugin Get plugin Details.
@@ -438,7 +438,7 @@ class ADST_Plugins_Stats_Api {
 		}
 	}
 	/**
-	 * Shortcode
+	 * Display Theme Downloads.
 	 *
 	 * @param int $atts Get attributes plugin Slug.
 	 * @return array $plugin Get plugin Details.
@@ -467,7 +467,7 @@ class ADST_Plugins_Stats_Api {
 		}
 	}
 	/**
-	 * Shortcode
+	 * Display Last Updated.
 	 *
 	 * @param int $atts Get attributes plugin Slug.
 	 * @return array $plugin Get plugin Details.
@@ -499,7 +499,7 @@ class ADST_Plugins_Stats_Api {
 		}
 	}
 	/**
-	 * Shortcode
+	 * Display Download Link.
 	 *
 	 * @param int    $atts Get attributes plugin Slug.
 	 * @param string $label Get label as per user.
@@ -648,7 +648,7 @@ class ADST_Plugins_Stats_Api {
 		}
 	}
 	/**
-	 * Shortcode
+	 * Display Total Download Count.
 	 *
 	 * @param int $atts Get attributes plugin Slug.
 	 * @return array $plugin Get plugin Details.

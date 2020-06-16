@@ -334,7 +334,7 @@ class ADST_Themes_Stats_Api {
 		}
 	}
 	/**
-	 * Shortcode
+	 * Function for themes ratings api parameter.
 	 *
 	 * @param int $wp_theme_slug Get attributes plugin Slug.
 	 * @return array $theme Get themes Details.
@@ -409,7 +409,7 @@ class ADST_Themes_Stats_Api {
 	}
 
 	/**
-	 * Shortcode
+	 * Shortcode for average ratings in star.
 	 *
 	 * @param array $atts Get attributes theme Slug.
 	 * @return array $theme Get theme Details.
