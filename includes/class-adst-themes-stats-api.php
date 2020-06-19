@@ -216,16 +216,7 @@ class ADST_Themes_Stats_Api {
 	public function display_theme_name( $atts ) {
 		$wp_theme_slug = $this->get_theme_shortcode_slug( $atts );
 		if ( '' !== $wp_theme_slug ) {
-			$api_params = array(
-				'theme'    => $wp_theme_slug,
-				'per_page' => self::$per_page,
-				'fields'   => array(
-					'homepage'       => false,
-					'description'    => false,
-					'screenshot_url' => false,
-					'name'           => true,
-				),
-			);
+			$api_params = $this->get_api_param_for_theme( $wp_theme_slug );
 
 			$theme = $this->get_api_data( 'theme_information', $api_params );
 
@@ -256,17 +247,7 @@ class ADST_Themes_Stats_Api {
 		$wp_theme_author = $atts['theme_author'];
 
 		if ( '' !== $wp_theme_slug ) {
-			$api_params = array(
-				'theme'    => $wp_theme_slug,
-				'author'   => $wp_theme_author,
-				'per_page' => self::$per_page,
-				'fields'   => array(
-					'homepage'        => false,
-					'description'     => false,
-					'screenshot_url'  => false,
-					'active_installs' => true,
-				),
-			);
+			$api_params = $this->get_api_param_for_theme( $wp_theme_slug );
 
 			$theme = $this->get_api_data( 'theme_information', $api_params );
 
@@ -285,16 +266,7 @@ class ADST_Themes_Stats_Api {
 	public function display_theme_version( $atts ) {
 		$wp_theme_slug = $this->get_theme_shortcode_slug( $atts );
 		if ( '' !== $wp_theme_slug ) {
-			$api_params = array(
-				'theme'    => $wp_theme_slug,
-				'per_page' => self::$per_page,
-				'fields'   => array(
-					'homepage'        => false,
-					'description'     => false,
-					'screenshot_url'  => false,
-					'active_installs' => true,
-				),
-			);
+			$api_params = $this->get_api_param_for_theme( $wp_theme_slug );
 
 			$theme = $this->get_api_data( 'theme_information', $api_params );
 
@@ -313,16 +285,7 @@ class ADST_Themes_Stats_Api {
 	public function display_theme_ratings( $atts ) {
 		$wp_theme_slug = $this->get_theme_shortcode_slug( $atts );
 		if ( '' !== $wp_theme_slug ) {
-			$api_params = array(
-				'theme'    => $wp_theme_slug,
-				'per_page' => self::$per_page,
-				'fields'   => array(
-					'homepage'       => false,
-					'description'    => false,
-					'screenshot_url' => false,
-					'num_ratings'    => true,
-				),
-			);
+			$api_params = $this->get_api_param_for_theme( $wp_theme_slug );
 
 			$theme = $this->get_api_data( 'theme_information', $api_params );
 
@@ -339,15 +302,26 @@ class ADST_Themes_Stats_Api {
 	 * @param int $wp_theme_slug Get attributes plugin Slug.
 	 * @return array $theme Get themes Details.
 	 */
-	public function get_api_param_for_theme_ratings( $wp_theme_slug ) {
+	public function get_api_param_for_theme( $wp_theme_slug ) {
 		$api_params = array(
 			'theme'    => $wp_theme_slug,
 			'per_page' => self::$per_page,
 			'fields'   => array(
-				'homepage'       => false,
-				'description'    => false,
-				'screenshot_url' => false,
-				'rating'         => true,
+				'homepage'        => false,
+				'description'     => false,
+				'screenshot_url'  => false,
+				'rating'          => true,
+				'active_installs' => true,
+				'downloaded'      => true,
+				'name'            => true,
+				'slug'            => true,
+				'version'         => true,
+				'author'          => true,
+				'five_rating'     => true,
+				'star_rating'     => true,
+				'num_ratings'     => true,
+				'last_updated'    => true,
+				'download_link'   => true,
 			),
 		);
 
@@ -361,7 +335,7 @@ class ADST_Themes_Stats_Api {
 	public function display_theme_five_star_ratings( $atts ) {
 		$wp_theme_slug = $this->get_theme_shortcode_slug( $atts );
 		if ( '' !== $wp_theme_slug ) {
-			$api_params = $this->get_api_param_for_theme_ratings( $wp_theme_slug );
+			$api_params = $this->get_api_param_for_theme( $wp_theme_slug );
 
 			$theme = $this->get_api_data( 'theme_information', $api_params );
 
@@ -390,7 +364,7 @@ class ADST_Themes_Stats_Api {
 		$outof         = $atts['outof'];
 
 		if ( '' !== $wp_theme_slug ) {
-			$api_params = $this->get_api_param_for_theme_ratings( $wp_theme_slug );
+			$api_params = $this->get_api_param_for_theme( $wp_theme_slug );
 
 			$theme = $this->get_api_data( 'theme_information', $api_params );
 
@@ -417,7 +391,7 @@ class ADST_Themes_Stats_Api {
 	public function display_theme_average_ratings_in_star( $atts ) {
 		$wp_theme_slug = $this->get_theme_shortcode_slug( $atts );
 		if ( '' !== $wp_theme_slug ) {
-			$api_params = $this->get_api_param_for_theme_ratings( $wp_theme_slug );
+			$api_params = $this->get_api_param_for_theme( $wp_theme_slug );
 
 			$theme = $this->get_api_data( 'theme_information', $api_params );
 
@@ -453,17 +427,7 @@ class ADST_Themes_Stats_Api {
 	public function display_theme_totaldownloads( $atts ) {
 		$wp_theme_slug = $this->get_theme_shortcode_slug( $atts );
 		if ( '' !== $wp_theme_slug ) {
-			$api_params = array(
-				'theme'    => $wp_theme_slug,
-
-				'per_page' => self::$per_page,
-				'fields'   => array(
-					'homepage'       => false,
-					'description'    => false,
-					'screenshot_url' => false,
-					'downloaded'     => true,
-				),
-			);
+			$api_params = $this->get_api_param_for_theme( $wp_theme_slug );
 
 			$theme = $this->get_api_data( 'theme_information', $api_params );
 
@@ -483,16 +447,7 @@ class ADST_Themes_Stats_Api {
 		$dateformat    = get_option( 'adst_info' );
 		$wp_theme_slug = $this->get_theme_shortcode_slug( $atts );
 		if ( '' !== $wp_theme_slug ) {
-			$api_params = array(
-				'theme'    => $wp_theme_slug,
-				'per_page' => self::$per_page,
-				'fields'   => array(
-					'homepage'       => false,
-					'description'    => false,
-					'screenshot_url' => false,
-					'last_updated'   => true,
-				),
-			);
+			$api_params = $this->get_api_param_for_theme( $wp_theme_slug );
 
 			$theme = $this->get_api_data( 'theme_information', $api_params );
 

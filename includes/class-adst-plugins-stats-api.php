@@ -195,16 +195,7 @@ class ADST_Plugins_Stats_Api {
 	public function display_plugin_name( $atts ) {
 		$wp_plugin_slug = $this->get_plugin_shortcode_slug( $atts );
 		if ( '' !== $wp_plugin_slug ) {
-			$api_params = array(
-				'plugin'   => $wp_plugin_slug,
-				'per_page' => self::$per_page,
-				'fields'   => array(
-					'homepage'       => false,
-					'description'    => false,
-					'screenshot_url' => false,
-					'name'           => true,
-				),
-			);
+			$api_params = $this->get_api_param_for_plugins( $wp_plugin_slug );
 
 			$plugin = $this->get_api_data( 'plugin_information', $api_params );
 
@@ -224,16 +215,7 @@ class ADST_Plugins_Stats_Api {
 	public function display_plugin_active_installs( $atts ) {
 		$wp_plugin_slug = $this->get_plugin_shortcode_slug( $atts );
 		if ( '' !== $wp_plugin_slug ) {
-			$api_params = array(
-				'plugin'   => $wp_plugin_slug,
-				'per_page' => self::$per_page,
-				'fields'   => array(
-					'homepage'        => false,
-					'description'     => false,
-					'screenshot_url'  => false,
-					'active_installs' => true,
-				),
-			);
+			$api_params = $this->get_api_param_for_plugins( $wp_plugin_slug );
 
 			$plugin = $this->get_api_data( 'plugin_information', $api_params );
 
@@ -274,16 +256,7 @@ class ADST_Plugins_Stats_Api {
 	public function display_plugin__version( $atts ) {
 		$wp_plugin_slug = $this->get_plugin_shortcode_slug( $atts );
 		if ( '' !== $wp_plugin_slug ) {
-			$api_params = array(
-				'plugin'   => $wp_plugin_slug,
-				'per_page' => self::$per_page,
-				'fields'   => array(
-					'homepage'        => false,
-					'description'     => false,
-					'screenshot_url'  => false,
-					'active_installs' => true,
-				),
-			);
+			$api_params = $this->get_api_param_for_plugins( $wp_plugin_slug );
 
 			$plugin = $this->get_api_data( 'plugin_information', $api_params );
 
@@ -303,16 +276,7 @@ class ADST_Plugins_Stats_Api {
 	public function display_plugin__ratings( $atts ) {
 		$wp_plugin_slug = $this->get_plugin_shortcode_slug( $atts );
 		if ( '' !== $wp_plugin_slug ) {
-			$api_params = array(
-				'plugin'   => $wp_plugin_slug,
-				'per_page' => self::$per_page,
-				'fields'   => array(
-					'homepage'       => false,
-					'description'    => false,
-					'screenshot_url' => false,
-					'num_ratings'    => true,
-				),
-			);
+			$api_params = $this->get_api_param_for_plugins( $wp_plugin_slug );
 
 			$plugin = $this->get_api_data( 'plugin_information', $api_params );
 
@@ -329,15 +293,26 @@ class ADST_Plugins_Stats_Api {
 	 * @param int $wp_plugin_slug Get attributes plugin Slug.
 	 * @return array $plugin Get plugin Details.
 	 */
-	public function get_api_param_for_plugins_ratings( $wp_plugin_slug ) {
+	public function get_api_param_for_plugins( $wp_plugin_slug ) {
 		$api_params = array(
 			'plugin'   => $wp_plugin_slug,
 			'per_page' => self::$per_page,
 			'fields'   => array(
-				'homepage'       => false,
-				'description'    => false,
-				'screenshot_url' => false,
-				'rating'         => true,
+				'homepage'        => false,
+				'description'     => false,
+				'screenshot_url'  => false,
+				'rating'          => true,
+				'active_installs' => true,
+				'downloaded'      => true,
+				'name'            => true,
+				'slug'            => true,
+				'version'         => true,
+				'author'          => true,
+				'five_rating'     => true,
+				'star_rating'     => true,
+				'num_ratings'     => true,
+				'last_updated'    => true,
+				'download_link'   => true,
 			),
 		);
 
@@ -352,7 +327,7 @@ class ADST_Plugins_Stats_Api {
 	public function display_plugin__five_star_ratings( $atts ) {
 		$wp_plugin_slug = $this->get_plugin_shortcode_slug( $atts );
 		if ( '' !== $wp_plugin_slug ) {
-			$api_params = $this->get_api_param_for_plugins_ratings( $wp_plugin_slug );
+			$api_params = $this->get_api_param_for_plugins( $wp_plugin_slug );
 
 			$plugin = $this->get_api_data( 'plugin_information', $api_params );
 
@@ -383,7 +358,7 @@ class ADST_Plugins_Stats_Api {
 			return __( 'Please verify plugin slug.', 'wp-themes-plugins-stats' );
 		}
 		if ( '' !== $wp_plugin_slug ) {
-			$api_params = $this->get_api_param_for_plugins_ratings( $wp_plugin_slug );
+			$api_params = $this->get_api_param_for_plugins( $wp_plugin_slug );
 
 			$plugin = $this->get_api_data( 'plugin_information', $api_params );
 
@@ -409,7 +384,7 @@ class ADST_Plugins_Stats_Api {
 	public function display_plugin_average_ratings_in_star( $atts ) {
 		$wp_plugin_slug = $this->get_plugin_shortcode_slug( $atts );
 		if ( '' !== $wp_plugin_slug ) {
-			$api_params = $this->get_api_param_for_plugins_ratings( $wp_plugin_slug );
+			$api_params = $this->get_api_param_for_plugins( $wp_plugin_slug );
 
 			$plugin = $this->get_api_data( 'plugin_information', $api_params );
 
@@ -446,16 +421,7 @@ class ADST_Plugins_Stats_Api {
 	public function display_plugin__totaldownloads( $atts ) {
 		$wp_plugin_slug = $this->get_plugin_shortcode_slug( $atts );
 		if ( '' !== $wp_plugin_slug ) {
-			$api_params = array(
-				'plugin'   => $wp_plugin_slug,
-				'per_page' => self::$per_page,
-				'fields'   => array(
-					'homepage'       => false,
-					'description'    => false,
-					'screenshot_url' => false,
-					'rating'         => true,
-				),
-			);
+			$api_params = $this->get_api_param_for_plugins( $wp_plugin_slug );
 
 			$plugin = $this->get_api_data( 'plugin_information', $api_params );
 
@@ -476,16 +442,7 @@ class ADST_Plugins_Stats_Api {
 		$dateformat     = get_option( 'adst_info' );
 		$wp_plugin_slug = $this->get_plugin_shortcode_slug( $atts );
 		if ( '' !== $wp_plugin_slug ) {
-			$api_params = array(
-				'plugin'   => $wp_plugin_slug,
-				'per_page' => self::$per_page,
-				'fields'   => array(
-					'homepage'       => false,
-					'description'    => false,
-					'screenshot_url' => false,
-					'last_updated'   => true,
-				),
-			);
+			$api_params = $this->get_api_param_for_plugins( $wp_plugin_slug );
 
 			$plugin = $this->get_api_data( 'plugin_information', $api_params );
 
@@ -520,16 +477,7 @@ class ADST_Plugins_Stats_Api {
 			return __( 'Please verify plugin slug.', 'wp-themes-plugins-stats' );
 		}
 		if ( '' !== $wp_plugin_slug ) {
-			$api_params = array(
-				'plugin'   => $wp_plugin_slug,
-				'per_page' => self::$per_page,
-				'fields'   => array(
-					'homepage'       => false,
-					'description'    => false,
-					'screenshot_url' => false,
-					'rating'         => true,
-				),
-			);
+			$api_params = $this->get_api_param_for_plugins( $wp_plugin_slug );
 
 			$plugin = $this->get_api_data( 'plugin_information', $api_params );
 
