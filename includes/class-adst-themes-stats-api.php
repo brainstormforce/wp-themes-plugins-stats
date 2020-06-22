@@ -501,6 +501,28 @@ class ADST_Themes_Stats_Api {
 			}
 		}
 	}
+
+	/**
+	 * Sanitize attributes of themes api data.
+	 *
+	 * @param array $theme_data Get attributes of themes data.
+	 * @return string.
+	 */
+	public function sanitize_themes_data( $theme_data ) {
+		$data = array();
+
+		$data['name'] = sanitize_text_field( $theme_data->name );
+
+		$data['slug'] = sanitize_text_field( $theme_data->slug );
+
+		$data['version'] = sanitize_text_field( $theme_data->version );
+
+		$data['active_installs'] = sanitize_text_field( $theme_data->active_installs );
+
+		$data['downloaded'] = sanitize_text_field( $theme_data->downloaded );
+
+		return $data;
+	}
 	/**
 	 * Get the theme Details.
 	 *
@@ -527,7 +549,7 @@ class ADST_Themes_Stats_Api {
 		$themes_data = get_transient( 'bsf_tr_themes_Active_Count_' . esc_attr( $author_slug ) );
 
 		// If there is no transient, get the plugin data from wp.org.
-		if ( ! $themes_data || false === $themes_data ) {
+		if ( false === $themes_data ) {
 			$response = wp_remote_get( 'https://api.wordpress.org/themes/info/1.1/?action=query_themes&request[author]=' . $author_slug . '&request[fields][active_installs]=true&request[fields][downloaded]=true' );
 
 			$themes_data = (array) json_decode( wp_remote_retrieve_body( $response ) );
@@ -536,20 +558,39 @@ class ADST_Themes_Stats_Api {
 				return __( 'Author slug is incorrect!', 'wp-themes-plugins-stats' );
 			}
 
+			$themes_array = $themes_data['themes'];
+
+			$total_active_count = 0;
+
+			$total_downloaded_count = 0;
+
+			foreach ( $themes_array as $key ) {
+				$themes_data = $this->sanitize_themes_data( $key );
+
+				$total_active_count = $total_active_count + $themes_data['active_installs'];
+
+				$total_downloaded_count = $total_downloaded_count + $themes_data['downloaded'];
+			}
+
 				$slug          = 'bsf_tr_themes_Active_Count_' . $author_slug;
 				$update_option = array(
-					'slug'  => ( ! empty( $slug ) ? sanitize_text_field( $slug ) : '' ),
-					'theme' => ( ! empty( $themes_data ) ? $themes_data : '' ),
+					'slug'                   => ( ! empty( $slug ) ? sanitize_text_field( $slug ) : '' ),
+					'total_active_count'     => ( ! empty( $total_active_count ) ? $total_active_count : '' ),
+					'total_downloaded_count' => ( ! empty( $total_downloaded_count ) ? $total_downloaded_count : '' ),
 				);
-				update_option( 'adst_theme_info', $update_option );
+				update_option( 'adst_themes_info', $update_option );
 
-				$theme_db_data = get_option( 'adst_theme_info' );// DB value.
+				$theme_db_data = get_option( 'adst_themes_info' );// DB value.
 
 				$second = ( ! empty( $second ) ? $second : 86400 );
-				set_transient( 'bsf_tr_themes_Active_Count_' . esc_attr( $author_slug ), $themes_data, $second );
+				set_transient( 'bsf_tr_themes_Active_Count_' . esc_attr( $author_slug ), $theme_db_data, $second );
 		} else {
+			$theme_db_data = get_option( 'adst_themes_info' );// DB value.
+
 			$second = ( ! empty( $second ) ? $second : 86400 );
-			set_transient( 'bsf_tr_themes_Active_Count_' . esc_attr( $author_slug ), $themes_data, $second );
+
+			set_transient( 'bsf_tr_themes_Active_Count_' . esc_attr( $author_slug ), $theme_db_data, $second );
+
 			$themes_data = get_transient( 'bsf_tr_themes_Active_Count_' . esc_attr( $author_slug ) );
 		}
 
@@ -593,15 +634,7 @@ class ADST_Themes_Stats_Api {
 		$theme = $this->bsf_get_theme_active_count( 'query_plugins', $api_params );
 
 		if ( ! empty( $theme ) ) {
-				$total_active_count = 0;
-
-				$themes_array = $theme['themes'];
-
-			foreach ( $themes_array as $key ) {
-				$total_active_count = $total_active_count + $key->active_installs;
-			}
-
-				return $this->bsf_display_human_readable( $total_active_count );
+				return $this->bsf_display_human_readable( $theme['total_active_count'] );
 		} else {
 			return __( 'Themes data is empty!', 'wp-themes-plugins-stats' );
 		}
@@ -623,15 +656,7 @@ class ADST_Themes_Stats_Api {
 		$theme = $this->bsf_get_theme_active_count( 'query_plugins', $api_params );
 
 		if ( ! empty( $theme ) ) {
-				$total_downloaded_count = 0;
-
-				$themes_array = $theme['themes'];
-
-			foreach ( $themes_array as $key ) {
-					$total_downloaded_count = $total_downloaded_count + $key->downloaded;
-			}
-
-				return $this->bsf_display_human_readable( $total_downloaded_count );
+				return $this->bsf_display_human_readable( $theme['total_downloaded_count'] );
 		} else {
 			return __( 'Themes data is empty!', 'wp-themes-plugins-stats' );
 		}
