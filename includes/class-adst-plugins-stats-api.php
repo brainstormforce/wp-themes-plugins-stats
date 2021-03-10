@@ -147,9 +147,13 @@ class ADST_Plugins_Stats_Api {
 
 		$data['version'] = sanitize_text_field( $plugin_data['version'] );
 
+		if (!empty($plugin_data['ratings'])) {
+
 		$plugin_data['ratings'] = json_decode( wp_json_encode( $plugin_data['ratings'] ), true );
 
 		$data['ratings'] = array_map( array( $this, 'sanitize_text_field' ), $plugin_data['ratings'] );
+
+		}
 
 		$data['rating'] = sanitize_text_field( $plugin_data['rating'] );
 
@@ -330,7 +334,7 @@ class ADST_Plugins_Stats_Api {
 			$api_params = $this->get_api_param_for_plugins( $wp_plugin_slug );
 
 			$plugin = $this->get_api_data( 'plugin_information', $api_params );
-
+			
 			if ( ! empty( $plugin ) ) {
 					return ( $plugin['ratings']['5'] );
 			} else {
