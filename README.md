@@ -83,7 +83,7 @@ You can use the shortcode multiple times on a page.
 
 ### 1.1.1 ###
 - Fix : Added compatibility with WordPress v5.7 for jQuery migration warnings on the admin page.
-- Fix : PHP Warnings in few cases.
+- Fix : PHP Warnings for empty ratings and total counts.
 
 ### 1.1.0 ###
 - New : Optimized the code.
