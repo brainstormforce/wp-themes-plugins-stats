@@ -67,21 +67,23 @@ class ADST_Themes_Stats_Api {
 	 * @return float $theme_count Get human readable format.
 	 */
 	public function bsf_display_human_readable( $theme_count ) {
-		$theme_count = ( 0 + str_replace( ',', '', $theme_count ) );
-		if ( ! is_numeric( $theme_count ) ) {
-			return false;
-		} elseif ( null === $theme_count ) {
-			return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
+		if(!empty($theme_count)){
+			$theme_count = ( 0 + str_replace( ',', '', $theme_count ) );
+			if ( ! is_numeric( $theme_count ) ) {
+				return false;
+			} elseif ( null === $theme_count ) {
+				return __( 'Please verify theme slug.', 'wp-themes-plugins-stats' );
+			}
+			$choice = get_option( 'adst_info' );
+			if ( 'K' === $choice['Rchoice'] ) {
+					return round( ( $theme_count / 1000 ), 2 ) . $choice['Field1'];
+			} elseif ( 'M' === $choice['Rchoice'] ) {
+				return round( ( $theme_count / 1000000 ), 3 ) . $choice['Field2'];
+			} elseif ( 'normal' === $choice['Rchoice'] ) {
+					return number_format( $theme_count, 0, '', $choice['Symbol'] );
+			}
+			return $theme_count;
 		}
-		$choice = get_option( 'adst_info' );
-		if ( 'K' === $choice['Rchoice'] ) {
-				return round( ( $theme_count / 1000 ), 2 ) . $choice['Field1'];
-		} elseif ( 'M' === $choice['Rchoice'] ) {
-			return round( ( $theme_count / 1000000 ), 3 ) . $choice['Field2'];
-		} elseif ( 'normal' === $choice['Rchoice'] ) {
-				return number_format( $theme_count, 0, '', $choice['Symbol'] );
-		}
-		return $theme_count;
 	}
 
 	/**
@@ -167,9 +169,13 @@ class ADST_Themes_Stats_Api {
 
 		$data['version'] = sanitize_text_field( $theme_data['version'] );
 
+		if (!empty($theme_data['ratings'])) {
+
 		$theme_data['ratings'] = json_decode( wp_json_encode( $theme_data['ratings'] ), true );
 
 		$data['ratings'] = array_map( array( $this, 'sanitize_text_field' ), $theme_data['ratings'] );
+
+		}
 
 		$data['rating'] = sanitize_text_field( $theme_data['rating'] );
 
@@ -547,7 +553,7 @@ class ADST_Themes_Stats_Api {
 
 		// Get the plugin data if it has already been stored as a transient.
 		$themes_data = get_transient( 'bsf_tr_themes_Active_Count_' . esc_attr( $author_slug ) );
-
+		
 		// If there is no transient, get the plugin data from wp.org.
 		if ( false === $themes_data ) {
 			$response = wp_remote_get( 'https://api.wordpress.org/themes/info/1.1/?action=query_themes&request[author]=' . $author_slug . '&request[fields][active_installs]=true&request[fields][downloaded]=true' );
@@ -632,7 +638,7 @@ class ADST_Themes_Stats_Api {
 		);
 
 		$theme = $this->bsf_get_theme_active_count( 'query_plugins', $api_params );
-
+		
 		if ( ! empty( $theme ) ) {
 				return $this->bsf_display_human_readable( $theme['total_active_count'] );
 		} else {
