@@ -1,11 +1,11 @@
 ﻿=== WP Themes & Plugins Stats ===
-Contributors: brainstormforce 
+Contributors: pratikchaskar 
 Donate link: https://www.paypal.me/BrainstormForce
 Tags: active-install, stats, themes-stats, plugin-stats, total download & active install count of plugin and theme by author.    
 Requires at least: 4.2
 Requires PHP: 5.2
-Tested up to: 6.0
-Stable tag: 1.1.1
+Tested up to: 6.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html 
 
@@ -80,6 +80,9 @@ You can use the shortcode multiple times on a page.
 5. List of shortcodes and their outputs for plugin
 
 == Changelog ==
+
+= 1.1.2 =
+- Improvement: Added compatibility to WordPress 6.1
 
 = 1.1.1 =
 - Fix : Added compatibility with WordPress v5.7 for jQuery migration warnings on the admin page.
